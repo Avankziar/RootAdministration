@@ -1,0 +1,8 @@
+name: RootAdministration
+main: main.java.me.avankziar.spigot.rootadministration.RootA
+version: 1
+load: STARTUP
+author: Avankziar
+api-version: 1.19
+description: A administration plugin for server and mysql data
+depend: [InterfaceHub]
