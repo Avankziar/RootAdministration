@@ -1,7 +1,7 @@
-package main.java.me.avankziar.rootadministration.spigot.ifh;
+package main.java.me.avankziar.roota.spigot.ifh;
 
 import main.java.me.avankziar.ifh.spigot.administration.Administration;
-import main.java.me.avankziar.rootadministration.spigot.RootA;
+import main.java.me.avankziar.roota.spigot.RootA;
 
 public class AdministrationProvider implements Administration
 {

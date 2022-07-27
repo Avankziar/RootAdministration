@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.spigot.database;
+package main.java.me.avankziar.roota.spigot.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.util.LinkedHashMap;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import main.java.me.avankziar.rootadministration.general.Language;
-import main.java.me.avankziar.rootadministration.general.YamlManager;
-import main.java.me.avankziar.rootadministration.spigot.RootA;
+import main.java.me.avankziar.roota.general.Language;
+import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.roota.spigot.RootA;
 
 public class YamlHandler
 {

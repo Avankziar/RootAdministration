@@ -1,5 +1,5 @@
 name: RootAdministration
-main: main.java.me.avankziar.bungee.rootadministration.RootA
+main: main.java.me.avankziar.roota.bungee.RootA
 version: 1
 author: Avankziar
 depends: [InterfaceHub]

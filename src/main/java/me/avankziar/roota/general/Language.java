@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.general;
+package main.java.me.avankziar.roota.general;
 
 import java.util.LinkedHashMap;
 

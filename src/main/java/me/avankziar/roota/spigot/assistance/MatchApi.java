@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.spigot.assistance;
+package main.java.me.avankziar.roota.spigot.assistance;
 
 import java.util.UUID;
 

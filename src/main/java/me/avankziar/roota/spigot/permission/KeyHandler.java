@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.spigot.permission;
+package main.java.me.avankziar.roota.spigot.permission;
 
 public class KeyHandler
 {

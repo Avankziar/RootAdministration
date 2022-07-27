@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.spigot.ifh;
+package main.java.me.avankziar.roota.spigot.ifh;
 
 import java.util.ArrayList;
 import java.util.Collection;

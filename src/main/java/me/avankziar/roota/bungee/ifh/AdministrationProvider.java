@@ -1,7 +1,7 @@
-package main.java.me.avankziar.rootadministration.bungee.ifh;
+package main.java.me.avankziar.roota.bungee.ifh;
 
 import main.java.me.avankziar.ifh.bungee.administration.Administration;
-import main.java.me.avankziar.rootadministration.bungee.RootA;
+import main.java.me.avankziar.roota.bungee.RootA;
 
 public class AdministrationProvider implements Administration
 {

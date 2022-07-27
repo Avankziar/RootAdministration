@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.bungee.database;
+package main.java.me.avankziar.roota.bungee.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
 
-import main.java.me.avankziar.rootadministration.bungee.RootA;
-import main.java.me.avankziar.rootadministration.general.Language;
-import main.java.me.avankziar.rootadministration.general.YamlManager;
+import main.java.me.avankziar.roota.bungee.RootA;
+import main.java.me.avankziar.roota.general.Language;
+import main.java.me.avankziar.roota.general.YamlManager;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;

@@ -1,11 +1,11 @@
-package main.java.me.avankziar.rootadministration.general;
+package main.java.me.avankziar.roota.general;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import main.java.me.avankziar.rootadministration.general.Language.ISO639_2B;
+import main.java.me.avankziar.roota.general.Language.ISO639_2B;
 
 public class YamlManager
 {

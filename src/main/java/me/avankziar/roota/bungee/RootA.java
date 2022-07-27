@@ -1,13 +1,13 @@
-package main.java.me.avankziar.rootadministration.bungee;
+package main.java.me.avankziar.roota.bungee;
 
 import java.util.logging.Logger;
 
 import main.java.me.avankziar.ifh.bungee.InterfaceHub;
 import main.java.me.avankziar.ifh.bungee.plugin.ServicePriority;
-import main.java.me.avankziar.rootadministration.bungee.database.YamlHandler;
-import main.java.me.avankziar.rootadministration.bungee.ifh.AdministrationProvider;
-import main.java.me.avankziar.rootadministration.bungee.metric.Metrics;
-import main.java.me.avankziar.rootadministration.general.YamlManager;
+import main.java.me.avankziar.roota.bungee.database.YamlHandler;
+import main.java.me.avankziar.roota.bungee.ifh.AdministrationProvider;
+import main.java.me.avankziar.roota.bungee.metric.Metrics;
+import main.java.me.avankziar.roota.general.YamlManager;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -25,12 +25,12 @@ public class RootA extends Plugin
 		log = getLogger();
 		
 		//https://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=SCC
-		log.info(" ███████╗ ██████╗ ██████╗ | Version: "+plugin.getDescription().getVersion());
-		log.info(" ██╔════╝██╔════╝██╔════╝ | Author: "+plugin.getDescription().getAuthor());
-		log.info(" ███████╗██║     ██║      | Plugin Website: ");
-		log.info(" ╚════██║██║     ██║      | Depend Plugins: "+plugin.getDescription().getDepends().toString());
-		log.info(" ███████║╚██████╗╚██████╗ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepends().toString());
-		log.info(" ╚══════╝ ╚═════╝ ╚═════╝ | Have Fun^^");
+		log.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | Version: "+plugin.getDescription().getVersion());
+		log.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthor());
+		log.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: ");
+		log.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepends().toString());
+		log.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepends().toString());
+		log.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | Have Fun^^");
 		
 		yamlHandler = new YamlHandler(plugin);
 		

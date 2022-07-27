@@ -1,4 +1,4 @@
-package main.java.me.avankziar.rootadministration.spigot;
+package main.java.me.avankziar.roota.spigot;
 
 import java.util.logging.Logger;
 
@@ -8,11 +8,11 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import main.java.me.avankziar.rootadministration.general.YamlManager;
-import main.java.me.avankziar.rootadministration.spigot.database.YamlHandler;
-import main.java.me.avankziar.rootadministration.spigot.ifh.AdministrationProvider;
-import main.java.me.avankziar.rootadministration.spigot.ifh.PermissionProvider;
-import main.java.me.avankziar.rootadministration.spigot.metric.Metrics;
+import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.roota.spigot.database.YamlHandler;
+import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
+import main.java.me.avankziar.roota.spigot.ifh.PermissionProvider;
+import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
 public class RootA extends JavaPlugin
 {
