@@ -80,7 +80,7 @@ public class RootA extends Plugin
              		cp, plugin, ServicePriority.Normal);
             log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
     		
-        } catch(NoClassDefFoundError e) {}
+        } catch(NoClassDefFoundError e){}
 	}
 	
 	public void setupBstats()
