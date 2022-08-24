@@ -96,7 +96,7 @@ public class RootA extends JavaPlugin
 			             		p,
 			             		plugin,
 			             		ServicePriority.Normal);
-			        	log.info(pluginName + " detected InterfaceHub >>> Permission.class is provided!");
+			        	log.info(pluginName + " detected InterfaceHub >>> Permission.class is consumed!");
 						cancel();
 						return;
 					}
