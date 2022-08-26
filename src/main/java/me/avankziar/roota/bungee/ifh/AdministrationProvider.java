@@ -20,12 +20,12 @@ public class AdministrationProvider implements Administration
 	
 	private String get(String pathName)
 	{
-		return plugin.getYamlHandler().getConfig().getString("MySQL."+pathName, null);
+		return plugin.getYamlHandler().getConfig().getString("Mysql."+pathName, null);
 	}
 	
 	private boolean getb(String pathName)
 	{
-		return plugin.getYamlHandler().getConfig().getBoolean("MySQL."+pathName, false);
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+pathName, false);
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class AdministrationProvider implements Administration
 	@Override
 	public int getPort(String pathName)
 	{
-		return plugin.getYamlHandler().getConfig().getInt("MySQL."+pathName+".Port", 3306);
+		return plugin.getYamlHandler().getConfig().getInt("Mysql."+pathName+".Port", 3306);
 	}
 	
 	@Override

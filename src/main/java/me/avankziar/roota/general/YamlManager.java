@@ -178,7 +178,7 @@ public class YamlManager
 		configKeys.put("Mysql.one.User"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"admin"}));
-		configKeys.put("Mysql.oone.Password"
+		configKeys.put("Mysql.one.Password"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"not_0123456789"}));
 	}
