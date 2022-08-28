@@ -6,12 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import main.java.me.avankziar.roota.general.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
-import main.java.me.avankziar.roota.spigot.ifh.PermissionProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
 public class RootA extends JavaPlugin
@@ -77,32 +75,6 @@ public class RootA extends JavaPlugin
              		this,
              		ServicePriority.Normal);
             log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
-            new BukkitRunnable()
-			{
-				int i = 0;
-				@Override
-				public void run()
-				{
-					if(i > 20)
-					{
-						cancel();
-						return;
-					}
-					if (plugin.getServer().getPluginManager().isPluginEnabled("LuckPerms")) 
-					{
-						PermissionProvider p = new PermissionProvider();
-			        	plugin.getServer().getServicesManager().register(
-			        			main.java.me.avankziar.ifh.spigot.permission.Permission.class,
-			             		p,
-			             		plugin,
-			             		ServicePriority.Normal);
-			        	log.info(pluginName + " detected InterfaceHub >>> Permission.class is consumed!");
-						cancel();
-						return;
-					}
-					i++;
-				}
-			}.runTaskTimer(plugin, 0, 20L);
         }
 	}
 	

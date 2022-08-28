@@ -133,6 +133,17 @@ public class YamlManager
 					, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 					"hub"}));
 		}
+		configKeys.put("PluginForwarding"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				"aep>>>default", 
+				"ash>>>one",
+				"afkr>>default",
+				"btm>>>default",
+				"mhr>>>default",
+				"scc>>>default"}));
+		configKeys.put("Mysql.default.IsActive"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				false}));
 		configKeys.put("Mysql.default.Host"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"127.0.0.1"}));
@@ -157,6 +168,9 @@ public class YamlManager
 		configKeys.put("Mysql.default.Password"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"not_0123456789"}));
+		configKeys.put("Mysql.default.IsActive"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				false}));
 		configKeys.put("Mysql.one.Host"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"127.0.0.1"}));
