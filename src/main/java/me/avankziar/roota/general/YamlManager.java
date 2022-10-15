@@ -21,7 +21,6 @@ import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.map.MapCursor;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
@@ -1792,40 +1791,39 @@ public class YamlManager
 		{
 			String ger = "";
 			String eng = "";
-			ger = "ger = \""+pet.getName()+"\"; eng = \""+pet.getName()+"\";";
-			if(pet == PotionEffectType.ABSORPTION){} 
-			else if(pet == PotionEffectType.BAD_OMEN){}
-			else if(pet == PotionEffectType.BLINDNESS){}
-			else if(pet == PotionEffectType.CONDUIT_POWER){}
-			else if(pet == PotionEffectType.CONFUSION){}
-			else if(pet == PotionEffectType.DAMAGE_RESISTANCE){}
-			else if(pet == PotionEffectType.DARKNESS){}
-			else if(pet == PotionEffectType.DOLPHINS_GRACE){}
-			else if(pet == PotionEffectType.FAST_DIGGING){}
-			else if(pet == PotionEffectType.FIRE_RESISTANCE){}
-			else if(pet == PotionEffectType.GLOWING){}
-			else if(pet == PotionEffectType.HARM){}
-			else if(pet == PotionEffectType.HEAL){}
-			else if(pet == PotionEffectType.HEALTH_BOOST){}
-			else if(pet == PotionEffectType.HERO_OF_THE_VILLAGE){}
-			else if(pet == PotionEffectType.HUNGER){}
-			else if(pet == PotionEffectType.INCREASE_DAMAGE){}
-			else if(pet == PotionEffectType.INVISIBILITY){}
-			else if(pet == PotionEffectType.JUMP){}
-			else if(pet == PotionEffectType.LEVITATION){}
-			else if(pet == PotionEffectType.LUCK){}
-			else if(pet == PotionEffectType.NIGHT_VISION){}
-			else if(pet == PotionEffectType.POISON){}
-			else if(pet == PotionEffectType.REGENERATION){}
-			else if(pet == PotionEffectType.SATURATION){}
-			else if(pet == PotionEffectType.SLOW){}
-			else if(pet == PotionEffectType.SLOW_DIGGING){}
-			else if(pet == PotionEffectType.SLOW_FALLING){}
-			else if(pet == PotionEffectType.SPEED){}
-			else if(pet == PotionEffectType.UNLUCK){}
-			else if(pet == PotionEffectType.WATER_BREATHING){}
-			else if(pet == PotionEffectType.WEAKNESS){}
-			else if(pet == PotionEffectType.WITHER){}
+			if(pet.getName().equals(PotionEffectType.ABSORPTION.getName())){ger = "Absorption"; eng = "Absorption";} 
+			else if(pet.getName().equals(PotionEffectType.BAD_OMEN.getName())){ger = "Böses Omen"; eng = "Bad Omen";}
+			else if(pet.getName().equals(PotionEffectType.BLINDNESS.getName())){ger = "Blindheit"; eng = "Blindness";}
+			else if(pet.getName().equals(PotionEffectType.CONDUIT_POWER.getName())){ger = "Meereskraft"; eng = "Conduit Power";}
+			else if(pet.getName().equals(PotionEffectType.CONFUSION.getName())){ger = "Verwirrung"; eng = "Confusion";}
+			else if(pet.getName().equals(PotionEffectType.DAMAGE_RESISTANCE.getName())){ger = "Resistenz"; eng = "Resistance";}
+			else if(pet.getName().equals(PotionEffectType.DARKNESS.getName())){ger = "Dunkelheit"; eng = "Darkness";}
+			else if(pet.getName().equals(PotionEffectType.DOLPHINS_GRACE.getName())){ger = "Gunst des Delphins"; eng = "Dolphins Grace";}
+			else if(pet.getName().equals(PotionEffectType.FAST_DIGGING.getName())){ger = "Eile"; eng = "Fast Digging";}
+			else if(pet.getName().equals(PotionEffectType.FIRE_RESISTANCE.getName())){ger = "Feuerresistenz"; eng = "Fireresistance";}
+			else if(pet.getName().equals(PotionEffectType.GLOWING.getName())){ger = "Leuchten"; eng = "Leuchten";}
+			else if(pet.getName().equals(PotionEffectType.HARM.getName())){ger = "Schaden"; eng = "Harm";}
+			else if(pet.getName().equals(PotionEffectType.HEAL.getName())){ger = "Heilung"; eng = "Heal";}
+			else if(pet.getName().equals(PotionEffectType.HEALTH_BOOST.getName())){ger = "Extra Energie"; eng = "Health Boost";}
+			else if(pet.getName().equals(PotionEffectType.HERO_OF_THE_VILLAGE.getName())){ger = "Held des Dorfes"; eng = "Hero of the Village";}
+			else if(pet.getName().equals(PotionEffectType.HUNGER.getName())){ger = "Hunger"; eng = "Hunger";}
+			else if(pet.getName().equals(PotionEffectType.INCREASE_DAMAGE.getName())){ger = "Stärke"; eng = "Strenght";}
+			else if(pet.getName().equals(PotionEffectType.INVISIBILITY.getName())){ger = "Unsichtbarkeit"; eng = "Invisibility";}
+			else if(pet.getName().equals(PotionEffectType.JUMP.getName())){ger = "Sprungkraft"; eng = "Jump";}
+			else if(pet.getName().equals(PotionEffectType.LEVITATION.getName())){ger = "Schwebekraft"; eng = "Levitation";}
+			else if(pet.getName().equals(PotionEffectType.LUCK.getName())){ger = "Glück"; eng = "Luck";}
+			else if(pet.getName().equals(PotionEffectType.NIGHT_VISION.getName())){ger = "Nachtsicht"; eng = "Night Vision";}
+			else if(pet.getName().equals(PotionEffectType.POISON.getName())){ger = "Vergiftung"; eng = "Poison";}
+			else if(pet.getName().equals(PotionEffectType.REGENERATION.getName())){ger = "Regeneration"; eng = "Regeneration";}
+			else if(pet.getName().equals(PotionEffectType.SATURATION.getName())){ger = "Sättigung"; eng = "Saturation";}
+			else if(pet.getName().equals(PotionEffectType.SLOW.getName())){ger = "Langsamkeit"; eng = "Slow";}
+			else if(pet.getName().equals(PotionEffectType.SLOW_DIGGING.getName())){ger = "Abbaulähmung"; eng = "Slow Digging";}
+			else if(pet.getName().equals(PotionEffectType.SLOW_FALLING.getName())){ger = "Sanfter Fall"; eng = "Slow Falling";}
+			else if(pet.getName().equals(PotionEffectType.SPEED.getName())){ger = "Schnelligkeit"; eng = "Speed";}
+			else if(pet.getName().equals(PotionEffectType.UNLUCK.getName())){ger = "Unglück"; eng = "Unluck";}
+			else if(pet.getName().equals(PotionEffectType.WATER_BREATHING.getName())){ger = "Wasseratmung"; eng = "Water Breathing";}
+			else if(pet.getName().equals(PotionEffectType.WEAKNESS.getName())){ger = "Schwäche"; eng = "Weakness";}
+			else if(pet.getName().equals(PotionEffectType.WITHER.getName())){ger = "Wither"; eng = "Wither";}
 			potioneffecttypelanguageKeys.put(pet.getName(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));

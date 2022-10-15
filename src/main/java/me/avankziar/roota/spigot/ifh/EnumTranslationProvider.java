@@ -193,7 +193,7 @@ public class EnumTranslationProvider implements EnumTranslation
 	public String getLocalization(PotionEffectType pet)
 	{
 		String s = potioneffecttypeLocalization.get(pet.getName());
-		return s != null ? s : pet.toString();
+		return s != null ? s : pet.getName();
 	}
 	
 	public String getLocalization(Axolotl.Variant axv)
