@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import main.java.me.avankziar.roota.general.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
+import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
 public class RootA extends JavaPlugin
@@ -75,6 +76,15 @@ public class RootA extends JavaPlugin
              		this,
              		ServicePriority.Normal);
             log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
+            
+            EnumTranslationProvider.init(plugin);
+            EnumTranslationProvider et = new EnumTranslationProvider();
+            plugin.getServer().getServicesManager().register(
+        			main.java.me.avankziar.ifh.spigot.interfaces.EnumTranslation.class,
+        			et,
+             		this,
+             		ServicePriority.Normal);
+            log.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");
         }
 	}
 	
