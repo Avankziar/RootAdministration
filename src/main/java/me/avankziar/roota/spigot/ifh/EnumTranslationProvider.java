@@ -38,7 +38,7 @@ public class EnumTranslationProvider implements EnumTranslation
 	private static HashMap<EntityType, String> entitytypeLocalization = new HashMap<>();
 	private static HashMap<Axolotl.Variant, String> axolotlvariantLocalization = new HashMap<>();
 	private static HashMap<BookMeta.Generation, String> bookmetagenerationLocalization = new HashMap<>();
-	private static HashMap<Color, String> colorLocalization = new HashMap<>();
+	private static HashMap<String, String> colorLocalization = new HashMap<>(); //Color as RGB as String
 	private static HashMap<DyeColor, String> dyecolorLocalization = new HashMap<>();
 	private static HashMap<String, String> tropicalfishbucketLocalization = new HashMap<>();//DyeColor_TropicalFish.Pattern_DyeColor
 	private static HashMap<Cat.Type, String> cattypeLocalization = new HashMap<>();
@@ -102,7 +102,7 @@ public class EnumTranslationProvider implements EnumTranslation
 				});
 		for(Color i : colors)
 		{
-			colorLocalization.put(i, plugin.getYamlHandler().getColorLang().getString(i.toString(), i.toString()));
+			colorLocalization.put(String.valueOf(i.asRGB()), plugin.getYamlHandler().getColorLang().getString(String.valueOf(i.asRGB()), i.toString()));
 		}
 		for(DyeColor i : DyeColor.values())
 		{
@@ -216,7 +216,7 @@ public class EnumTranslationProvider implements EnumTranslation
 	
 	public String getLocalization(Color c)
 	{
-		String s = colorLocalization.get(c);
+		String s = colorLocalization.get(String.valueOf(c.asRGB()));
 		return s != null ? s : c.toString();
 	}
 	

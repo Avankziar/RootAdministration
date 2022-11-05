@@ -757,7 +757,7 @@ public class YamlManager
 			case BROWN_TERRACOTTA: ger = "Braune Keramik"; eng = "BROWN_TERRACOTTA"; break;
 			case GREEN_TERRACOTTA: ger = "Grüne Keramik"; eng = "GREEN_TERRACOTTA"; break;
 			case RED_TERRACOTTA: ger = "Rote Keramik"; eng = "RED_TERRACOTTA"; break;
-			case BLACK_TERRACOTTA: ger = "Schwarze Keramik"; eng = "BLACK_TERRACOTTA"; break;
+			case BLACK_TERRACOTTA: ger = "Schwarze Keramik"; eng = "case TERRACOTTA"; break;
 			case BARRIER: ger = "Barriere"; eng = "BARRIER"; break;
 			case LIGHT: ger = "Lichtblock"; eng = "LIGHT"; break;
 			case HAY_BLOCK: ger = "Strohballen"; eng = "HAY_BLOCK"; break;
@@ -1138,7 +1138,7 @@ public class YamlManager
 			case WHEAT: ger = "Weizen"; eng = "WHEAT"; break;
 			case BREAD: ger = "Brot"; eng = "BREAD"; break;
 			case LEATHER_HELMET: ger = "Lederkappe"; eng = "LEATHER_HELMET"; break;
-			case LEATHER_CHESTPLATE: ger = "Lderjacke"; eng = "LEATHER_CHESTPLATE"; break;
+			case LEATHER_CHESTPLATE: ger = "Lederjacke"; eng = "LEATHER_CHESTPLATE"; break;
 			case LEATHER_LEGGINGS: ger = "Lederhose"; eng = "LEATHER_LEGGINGS"; break;
 			case LEATHER_BOOTS: ger = "Lederstiefel"; eng = "LEATHER_BOOTS"; break;
 			case CHAINMAIL_HELMET: ger = "Kettenhaube"; eng = "CHAINMAIL_HELMET"; break;
@@ -1227,7 +1227,7 @@ public class YamlManager
 			case BROWN_DYE: ger = "Brauner Farbstoff"; eng = "BROWN_DYE"; break;
 			case GREEN_DYE: ger = "Grüner Farbstoff"; eng = "GREEN_DYE"; break;
 			case RED_DYE: ger = "Roter Farbstoff"; eng = "RED_DYE"; break;
-			case BLACK_DYE: ger = "Schwarzer Farbstoff"; eng = "BLACK_DYE"; break;
+			case BLACK_DYE: ger = "Schwarzer Farbstoff"; eng = "case DYE"; break;
 			case BONE_MEAL: ger = "Knochenmehl"; eng = "BONE_MEAL"; break;
 			case BONE: ger = "Knochen"; eng = "BONE"; break;
 			case SUGAR: ger = "Zucker"; eng = "SUGAR"; break;
@@ -1411,10 +1411,10 @@ public class YamlManager
 			case BEETROOT_SEEDS: ger = "Rote-Bete-Samen"; eng = "BEETROOT_SEEDS"; break;
 			case BEETROOT_SOUP: ger = "Borschtsch"; eng = "BEETROOT_SOUP"; break;
 			case DRAGON_BREATH: ger = "Drachenatem"; eng = "DRAGON_BREATH"; break;
-			case SPLASH_POTION: ger = "Werfbare Wasserflasche"; eng = "SPLASH_POTION"; break;
+			case SPLASH_POTION: ger = "Werfbare Trank"; eng = "SPLASH_POTION"; break;
 			case SPECTRAL_ARROW: ger = "Spektralpfeil"; eng = "SPECTRAL_ARROW"; break;
-			case TIPPED_ARROW: ger = "Nicht herstellbarer getränkter Pfeil"; eng = "TIPPED_ARROW"; break;
-			case LINGERING_POTION: ger = "Verweilende Wasserflasche"; eng = "LINGERING_POTION"; break;
+			case TIPPED_ARROW: ger = "Getränkter Pfeil"; eng = "TIPPED_ARROW"; break;
+			case LINGERING_POTION: ger = "Verweilende Trank"; eng = "LINGERING_POTION"; break;
 			case SHIELD: ger = "Schild"; eng = "SHIELD"; break;
 			case TOTEM_OF_UNDYING: ger = "Totem der Unsterblichkeit"; eng = "TOTEM_OF_UNDYING"; break;
 			case SHULKER_SHELL: ger = "Shulker-Schale"; eng = "SHULKER_SHELL"; break;
@@ -1710,19 +1710,751 @@ public class YamlManager
 		{
 			for(PatternType p : PatternType.values())
 			{
-				//String eng = "";
-				String ger = "ger = \""+dc.toString()+"_"+p.toString()+"\"; eng = \""+dc.toString()+"_"+p.toString()+"\"; break;";
-				/*switch(dc)
+				String eng = "";
+				String ger = "";
+				switch(dc)
 				{
 				case BLACK:
 					switch(p)
 					{
-					case BASE:
+					case BASE: ger = "Schwarzes Banner"; eng = "BLACK_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Schwarzes rechtes Untereck"; eng = "BLACK_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Schwarzes linkes Untereck"; eng = "BLACK_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Schwarzes rechtes Obereck"; eng = "BLACK_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Schwarzes linkes Obereck"; eng = "BLACK_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Schwazer Bannerfuß"; eng = "BLACK_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Schwarzes Bannerhaupt"; eng = "BLACK_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Schwarze rechte Flanke"; eng = "BLACK_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Schwarze linke Flanke"; eng = "BLACK_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Schwazer Pfahl"; eng = "BLACK_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Schwazer Balken"; eng = "BLACK_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Schwazer Schrägbalken"; eng = "BLACK_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Schwazer Schräglinksbalken"; eng = "BLACK_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier schwarze Pfähle"; eng = "BLACK_STRIPE_SMALL"; break;
+					case CROSS: ger = "Schwarzes Andreaskreuz"; eng = "BLACK_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Schwarzes Kreuz"; eng = "BLACK_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Schwarze halbe Spitze"; eng = "case TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Schwarze gestürzte halbe Spitze"; eng = "case TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Schwazer gespickelter Bannerfuß"; eng = "case TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Schwarzes gespickeltes Bannerhaupt"; eng = "case TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Schwarz schräglinks geteilt"; eng = "case DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Schwarz schräglinks geteilt (Invertiert"; eng = "case DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Schwarz schrägrechts geteilt (Invertiert)"; eng = "case DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Schwarz schrägrechts geteilt"; eng = "case DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Schwarze Kugel"; eng = "BLACK_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Schwarze Raute"; eng = "BLACK_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts schwarz gespalten"; eng = "case HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben schwarz geteilt"; eng = "case HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links schwarz gespalten"; eng = "case HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten schwarz geteilt"; eng = "case HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Schwarzer Bord"; eng = "BLACK_BORDER"; break;
+					case CURLY_BORDER: ger = "Schwarzer Spickelbord"; eng = "BLACK_CURLY_BORDER"; break;
+					case CREEPER: ger = "Schwarzer Creeper"; eng = "BLACK_CREEPER"; break;
+					case GRADIENT: ger = "Schwarzer Farbverlauf"; eng = "BLACK_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Schwarzer Farbverlauf (Invertiert)"; eng = "BLACK_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld schwarz gemauert"; eng = "BLACK_BRICKS"; break;
+					case SKULL: ger = "Schwarzer Schädel"; eng = "BLACK_SKULL"; break;
+					case FLOWER: ger = "Schwarze Blume"; eng = "BLACK_FLOWER"; break;
+					case MOJANG: ger = "Schwarzes Mojang-Logo"; eng = "BLACK_MOJANG"; break;
+					case GLOBE: ger = "Schwarzer Globus"; eng = "BLACK_GLOBE"; break;
+					case PIGLIN: ger = "Schwarzer Schnauze"; eng = "BLACK_PIGLIN"; break;
 					}
-				}*/
+					break;
+				case BLUE:
+					switch(p)
+					{
+					case BASE: ger = "Blaues Banner"; eng = "BLUE_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Blaues rechtes Untereck"; eng = "BLUE_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Blaues linkes Untereck"; eng = "BLUE_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Blaues rechtes Obereck"; eng = "BLUE_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Blaues linkes Obereck"; eng = "BLUE_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Blauer Bannerfuß"; eng = "BLUE_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Blaues Bannerhaupt"; eng = "BLUE_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Blaue rechte Flanke"; eng = "BLUE_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Blaue linke Flanke"; eng = "BLUE_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Blauer Pfahl"; eng = "BLUE_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Blauer Balken"; eng = "BLUE_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Blauer Schrägbalken"; eng = "BLUE_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Blauer Schräglinksbalken"; eng = "BLUE_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier blaue Pfähle"; eng = "BLUE_STRIPE_SMALL"; break;
+					case CROSS: ger = "Blaues Andreaskreuz"; eng = "BLUE_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Blaues Kreuz"; eng = "BLUE_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Blaue halbe Spitze"; eng = "BLUE_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Blaue gestürzte halbe Spitze"; eng = "BLUE_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Blauer gespickelter Bannerfuß"; eng = "BLUE_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Blaues gespickeltes Bannerhaupt"; eng = "BLUE_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Blau schräglinks geteilt"; eng = "BLUE_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Blau schräglinks geteilt (Invertiert"; eng = "BLUE_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Blau schrägrechts geteilt (Invertiert)"; eng = "BLUE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Blau schrägrechts geteilt"; eng = "BLUE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Blaue Kugel"; eng = "BLUE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Blaue Raute"; eng = "BLUE_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts blau gespalten"; eng = "BLUE_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben blau geteilt"; eng = "BLUE_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links blau gespalten"; eng = "BLUE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten blau geteilt"; eng = "BLUE_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Blauer Bord"; eng = "BLUE_BORDER"; break;
+					case CURLY_BORDER: ger = "Blauer Spickelbord"; eng = "BLUE_CURLY_BORDER"; break;
+					case CREEPER: ger = "Blauer Creeper"; eng = "BLUE_CREEPER"; break;
+					case GRADIENT: ger = "Blauer Farbverlauf"; eng = "BLUE_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Blauer Farbverlauf (Invertiert)"; eng = "BLUE_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld blau gemauert"; eng = "BLUE_BRICKS"; break;
+					case SKULL: ger = "Blauer Schädel"; eng = "BLUE_SKULL"; break;
+					case FLOWER: ger = "Blaue Blume"; eng = "BLUE_FLOWER"; break;
+					case MOJANG: ger = "Blaues Mojang-Logo"; eng = "BLUE_MOJANG"; break;
+					case GLOBE: ger = "Blauer Globus"; eng = "BLUE_GLOBE"; break;
+					case PIGLIN: ger = "Blaue Schnauze"; eng = "BLUE_PIGLIN"; break;
+					}
+					break;
+				case BROWN:
+					switch(p)
+					{
+					case BASE: ger = "Braunes Banner"; eng = "BROWN_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Braunes rechtes Untereck"; eng = "BROWN_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Braunes linkes Untereck"; eng = "BROWN_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Braunes rechtes Obereck"; eng = "BROWN_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Braunes linkes Obereck"; eng = "BROWN_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Brauner Bannerfuß"; eng = "BROWN_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Braunes Bannerhaupt"; eng = "BROWN_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Braune rechte Flanke"; eng = "BROWN_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Braune linke Flanke"; eng = "BROWN_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Brauner Pfahl"; eng = "BROWN_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Brauner Balken"; eng = "BROWN_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Brauner Schrägbalken"; eng = "BROWN_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Brauner Schräglinksbalken"; eng = "BROWN_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier braune Pfähle"; eng = "BROWN_STRIPE_SMALL"; break;
+					case CROSS: ger = "Braunes Andreaskreuz"; eng = "BROWN_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Braunes Kreuz"; eng = "BROWN_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Braune halbe Spitze"; eng = "BROWN_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Braune gestürzte halbe Spitze"; eng = "BROWN_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Brauner gespickelter Bannerfuß"; eng = "BROWN_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Braunes gespickeltes Bannerhaupt"; eng = "BROWN_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Braun schräglinks geteilt"; eng = "BROWN_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Braun schräglinks geteilt (Invertiert"; eng = "BROWN_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Braun schrägrechts geteilt (Invertiert)"; eng = "BROWN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Braun schrägrechts geteilt"; eng = "BROWN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Braune Kugel"; eng = "BROWN_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Braune Raute"; eng = "BROWN_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts braun gespalten"; eng = "BROWN_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben braun geteilt"; eng = "BROWN_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links braun gespalten"; eng = "BROWN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten braun geteilt"; eng = "BROWN_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Brauner Bord"; eng = "BROWN_BORDER"; break;
+					case CURLY_BORDER: ger = "Brauner Spickelbord"; eng = "BROWN_CURLY_BORDER"; break;
+					case CREEPER: ger = "Brauner Creeper"; eng = "BROWN_CREEPER"; break;
+					case GRADIENT: ger = "Brauner Farbverlauf"; eng = "BROWN_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Brauner Farbverlauf (Invertiert)"; eng = "BROWN_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld braun gemauert"; eng = "BROWN_BRICKS"; break;
+					case SKULL: ger = "Brauner Schädel"; eng = "BROWN_SKULL"; break;
+					case FLOWER: ger = "Braune Blume"; eng = "BROWN_FLOWER"; break;
+					case MOJANG: ger = "Braunes Mojang-Logo"; eng = "BROWN_MOJANG"; break;
+					case GLOBE: ger = "Brauner Globus"; eng = "BROWN_GLOBE"; break;
+					case PIGLIN: ger = "Braune Schnauze"; eng = "BROWN_PIGLIN"; break;
+					}
+					break;
+				case CYAN:
+					switch(p)
+					{
+					case BASE: ger = "Türkises Banner"; eng = "CYAN_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Türkises rechtes Untereck"; eng = "CYAN_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Türkises linkes Untereck"; eng = "CYAN_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Türkises rechtes Obereck"; eng = "CYAN_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Türkises linkes Obereck"; eng = "CYAN_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Türkiser Bannerfuß"; eng = "CYAN_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Türkises Bannerhaupt"; eng = "CYAN_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Türkise rechte Flanke"; eng = "CYAN_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Türkise linke Flanke"; eng = "CYAN_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Türkiser Pfahl"; eng = "CYAN_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Türkiser Balken"; eng = "CYAN_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Türkiser Schrägbalken"; eng = "CYAN_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Türkiser Schräglinksbalken"; eng = "CYAN_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier türkise Pfähle"; eng = "CYAN_STRIPE_SMALL"; break;
+					case CROSS: ger = "Türkises Andreaskreuz"; eng = "CYAN_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Türkises Kreuz"; eng = "CYAN_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Türkise halbe Spitze"; eng = "CYAN_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Türkise gestürzte halbe Spitze"; eng = "CYAN_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Türkiser gespickelter Bannerfuß"; eng = "CYAN_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Türkises gespickeltes Bannerhaupt"; eng = "CYAN_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Türkis schräglinks geteilt"; eng = "CYAN_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Türkis schräglinks geteilt (Invertiert"; eng = "CYAN_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Türkis schrägrechts geteilt (Invertiert)"; eng = "CYAN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Türkis schrägrechts geteilt"; eng = "CYAN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Türkise Kugel"; eng = "CYAN_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Türkise Raute"; eng = "CYAN_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts türkis gespalten"; eng = "CYAN_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben türkis geteilt"; eng = "CYAN_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links türkis gespalten"; eng = "CYAN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten türkis geteilt"; eng = "CYAN_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Türkiser Bord"; eng = "CYAN_BORDER"; break;
+					case CURLY_BORDER: ger = "Türkiser Spickelbord"; eng = "CYAN_CURLY_BORDER"; break;
+					case CREEPER: ger = "Türkiser Creeper"; eng = "CYAN_CREEPER"; break;
+					case GRADIENT: ger = "Türkiser Farbverlauf"; eng = "CYAN_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Türkiser Farbverlauf (Invertiert)"; eng = "CYAN_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld türkis gemauert"; eng = "CYAN_BRICKS"; break;
+					case SKULL: ger = "Türkiser Schädel"; eng = "CYAN_SKULL"; break;
+					case FLOWER: ger = "Türkise Blume"; eng = "CYAN_FLOWER"; break;
+					case MOJANG: ger = "Türkises Mojang-Logo"; eng = "CYAN_MOJANG"; break;
+					case GLOBE: ger = "Türkiser Globus"; eng = "CYAN_GLOBE"; break;
+					case PIGLIN: ger = "Türkise Schnauze"; eng = "CYAN_PIGLIN"; break;
+					}
+					break;
+				case GRAY:
+					switch(p)
+					{
+					case BASE: ger = "Graues Banner"; eng = "GRAY_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Graues rechtes Untereck"; eng = "GRAY_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Graues linkes Untereck"; eng = "GRAY_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Graues rechtes Obereck"; eng = "GRAY_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Graues linkes Obereck"; eng = "GRAY_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Grauer Bannerfuß"; eng = "GRAY_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Graues Bannerhaupt"; eng = "GRAY_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Graue rechte Flanke"; eng = "GRAY_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Graue linke Flanke"; eng = "GRAY_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Grauer Pfahl"; eng = "GRAY_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Grauer Balken"; eng = "GRAY_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Grauer Schrägbalken"; eng = "GRAY_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Grauer Schräglinksbalken"; eng = "GRAY_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier graue Pfähle"; eng = "GRAY_STRIPE_SMALL"; break;
+					case CROSS: ger = "Graues Andreaskreuz"; eng = "GRAY_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Graues Kreuz"; eng = "GRAY_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Graue halbe Spitze"; eng = "GRAY_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Graue gestürzte halbe Spitze"; eng = "GRAY_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Grauer gespickelter Bannerfuß"; eng = "GRAY_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Graues gespickeltes Bannerhaupt"; eng = "GRAY_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Grau schräglinks geteilt"; eng = "GRAY_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Grau schräglinks geteilt (Invertiert"; eng = "GRAY_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Grau schrägrechts geteilt (Invertiert)"; eng = "GRAY_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Grau schrägrechts geteilt"; eng = "GRAY_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Graue Kugel"; eng = "GRAY_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Graue Raute"; eng = "GRAY_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts grau gespalten"; eng = "GRAY_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben grau geteilt"; eng = "GRAY_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links grau gespalten"; eng = "GRAY_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten grau geteilt"; eng = "GRAY_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Grauer Bord"; eng = "GRAY_BORDER"; break;
+					case CURLY_BORDER: ger = "Grauer Spickelbord"; eng = "GRAY_CURLY_BORDER"; break;
+					case CREEPER: ger = "Grauer Creeper"; eng = "GRAY_CREEPER"; break;
+					case GRADIENT: ger = "Grauer Farbverlauf"; eng = "GRAY_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Grauer Farbverlauf (Invertiert)"; eng = "GRAY_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld grau gemauert"; eng = "GRAY_BRICKS"; break;
+					case SKULL: ger = "Grauer Schädel"; eng = "GRAY_SKULL"; break;
+					case FLOWER: ger = "Graue Blume"; eng = "GRAY_FLOWER"; break;
+					case MOJANG: ger = "Graues Mojang-Logo"; eng = "GRAY_MOJANG"; break;
+					case GLOBE: ger = "Grauer Globus"; eng = "GRAY_GLOBE"; break;
+					case PIGLIN: ger = "Graue Schnauze"; eng = "GRAY_PIGLIN"; break;
+					}
+					break;
+				case GREEN:
+					switch(p)
+					{
+					case BASE: ger = "Grünes Banner"; eng = "GREEN_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Grünes rechtes Untereck"; eng = "GREEN_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Grünes linkes Untereck"; eng = "GREEN_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Grünes rechtes Obereck"; eng = "GREEN_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Grünes linkes Obereck"; eng = "GREEN_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Grüner Bannerfuß"; eng = "GREEN_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Grünes Bannerhaupt"; eng = "GREEN_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Grüne rechte Flanke"; eng = "GREEN_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Grüne linke Flanke"; eng = "GREEN_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Grüner Pfahl"; eng = "GREEN_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Grüner Balken"; eng = "GREEN_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Grüner Schrägbalken"; eng = "GREEN_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Grüner Schräglinksbalken"; eng = "GREEN_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier grüne Pfähle"; eng = "GREEN_STRIPE_SMALL"; break;
+					case CROSS: ger = "Grünes Andreaskreuz"; eng = "GREEN_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Grünes Kreuz"; eng = "GREEN_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Grüne halbe Spitze"; eng = "GREEN_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Grüne gestürzte halbe Spitze"; eng = "GREEN_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Grüner gespickelter Bannerfuß"; eng = "GREEN_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Grünes gespickeltes Bannerhaupt"; eng = "GREEN_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Grün schräglinks geteilt"; eng = "GREEN_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Grün schräglinks geteilt (Invertiert"; eng = "GREEN_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Grün schrägrechts geteilt (Invertiert)"; eng = "GREEN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Grün schrägrechts geteilt"; eng = "GREEN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Grüne Kugel"; eng = "case CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Grüne Raute"; eng = "GREEN_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts grün gespalten"; eng = "GREEN_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben grün geteilt"; eng = "GREEN_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links grün gespalten"; eng = "GREEN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten grün geteilt"; eng = "GREEN_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Grüner Bord"; eng = "GREEN_BORDER"; break;
+					case CURLY_BORDER: ger = "Grüner Spickelbord"; eng = "GREEN_CURLY_BORDER"; break;
+					case CREEPER: ger = "Grüner Creeper"; eng = "GREEN_CREEPER"; break;
+					case GRADIENT: ger = "Grüner Farbverlauf"; eng = "GREEN_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Grüner Farbverlauf (Invertiert)"; eng = "GREEN_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld grün gemauert"; eng = "GREEN_BRICKS"; break;
+					case SKULL: ger = "Grüner Schädel"; eng = "GREEN_SKULL"; break;
+					case FLOWER: ger = "Grüne Blume"; eng = "GREEN_FLOWER"; break;
+					case MOJANG: ger = "Grünes Mojang-Logo"; eng = "GREEN_MOJANG"; break;
+					case GLOBE: ger = "Grüner Globus"; eng = "GREEN_GLOBE"; break;
+					case PIGLIN: ger = "Grüne Schnauze"; eng = "GREEN_PIGLIN"; break;
+					}
+					break;
+				case LIGHT_BLUE:
+					switch(p)
+					{
+					case BASE: ger = "Hellblaues Banner"; eng = "LIGHT_BLUE_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Hellblaues rechtes Untereck"; eng = "LIGHT_BLUE_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Hellblaues linkes Untereck"; eng = "LIGHT_BLUE_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Hellblaues rechtes Obereck "; eng = "LIGHT_BLUE_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Hellblaues linkes Obereck"; eng = "LIGHT_BLUE_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Hellblauer Bannerfuß"; eng = "LIGHT_BLUE_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Hellblaues Bannerhaupt"; eng = "LIGHT_BLUE_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Hellblaue rechte Flanke"; eng = "LIGHT_BLUE_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Hellblaue linke Flanke"; eng = "LIGHT_BLUE_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Hellblauer Pfahl"; eng = "LIGHT_BLUE_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Hellblauer Balken"; eng = "LIGHT_BLUE_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Hellblauer Schrägbalken"; eng = "LIGHT_BLUE_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Hellblauer Schräglinksbalken"; eng = "LIGHT_BLUE_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier hellblaue Pfähle"; eng = "LIGHT_BLUE_STRIPE_SMALL"; break;
+					case CROSS: ger = "Hellblaues Andreaskreuz"; eng = "LIGHT_BLUE_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Hellblaues Kreuz"; eng = "LIGHT_BLUE_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Hellblaue halbe Spitze"; eng = "LIGHT_BLUE_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Hellblaue gestürzte halbe Spitze"; eng = "LIGHT_BLUE_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Hellblauer gespickelter Bannerfuß"; eng = "LIGHT_BLUE_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Hellblaues gespickeltes Bannerhaupt"; eng = "LIGHT_BLUE_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Hellblau schräglinks geteilt"; eng = "LIGHT_BLUE_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Hellblau schräglinks geteilt (Invertiert"; eng = "LIGHT_BLUE_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Hellblau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_BLUE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Hellblau schrägrechts geteilt"; eng = "LIGHT_BLUE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Hellblaue Kugel"; eng = "LIGHT_BLUE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Hellblaue Raute"; eng = "LIGHT_BLUE_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts hellblau gespalten"; eng = "LIGHT_BLUE_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben hellblau geteilt"; eng = "LIGHT_BLUE_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links hellblau gespalten"; eng = "LIGHT_BLUE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellblau geteilt"; eng = "LIGHT_BLUE_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Hellblauer Bord"; eng = "LIGHT_BLUE_BORDER"; break;
+					case CURLY_BORDER: ger = "Hellblauer Spickelbord"; eng = "LIGHT_BLUE_CURLY_BORDER"; break;
+					case CREEPER: ger = "Hellblauer Creeper"; eng = "LIGHT_BLUE_CREEPER"; break;
+					case GRADIENT: ger = "Hellblauer Farbverlauf"; eng = "LIGHT_BLUE_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Hellblauer Farbverlauf (Invertiert)"; eng = "LIGHT_BLUE_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld hellblau gemauert"; eng = "LIGHT_BLUE_BRICKS"; break;
+					case SKULL: ger = "Hellblauer Schädel"; eng = "LIGHT_BLUE_SKULL"; break;
+					case FLOWER: ger = "Hellblaue Blume"; eng = "LIGHT_BLUE_FLOWER"; break;
+					case MOJANG: ger = "Hellblaues Mojang-Logo"; eng = "LIGHT_BLUE_MOJANG"; break;
+					case GLOBE: ger = "Hellblauer Globus"; eng = "LIGHT_BLUE_GLOBE"; break;
+					case PIGLIN: ger = "Hellblaue Schnauze"; eng = "LIGHT_BLUE_PIGLIN"; break;
+					}
+					break;
+				case LIGHT_GRAY:
+					switch(p)
+					{
+					case BASE: ger = "Hellgraues Banner"; eng = "LIGHT_GRAY_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Hellgraues rechtes Untereck"; eng = "LIGHT_GRAY_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Hellgraues linkes Untereck"; eng = "LIGHT_GRAY_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Hellgraues rechtes Obereck"; eng = "LIGHT_GRAY_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Hellgraues linkes Obereck"; eng = "LIGHT_GRAY_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Hellgrauer Bannerfuß"; eng = "LIGHT_GRAY_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Hellgraues Bannerhaupt"; eng = "LIGHT_GRAY_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Hellgraue rechte Flanke"; eng = "LIGHT_GRAY_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Hellgraue linke Flanke"; eng = "LIGHT_GRAY_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Hellgrauer Pfahl"; eng = "LIGHT_GRAY_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Hellgrauer Balken"; eng = "LIGHT_GRAY_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Hellgrauer Schrägbalken"; eng = "LIGHT_GRAY_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Hellgrauer Schräglinksbalken"; eng = "LIGHT_GRAY_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier hellgraue Pfähle"; eng = "LIGHT_GRAY_STRIPE_SMALL"; break;
+					case CROSS: ger = "Hellgraues Andreaskreuz"; eng = "LIGHT_GRAY_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Hellgraues Kreuz"; eng = "LIGHT_GRAY_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Hellgraue halbe Spitze"; eng = "LIGHT_GRAY_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Hellgraue gestürzte halbe Spitze"; eng = "LIGHT_GRAY_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Hellgrauer gespickelter Bannerfuß"; eng = "LIGHT_GRAY_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Hellgraues gespickeltes Bannerhaupt"; eng = "LIGHT_GRAY_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Hellgrau schräglinks geteilt"; eng = "LIGHT_GRAY_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Hellgrau schräglinks geteilt (Invertiert"; eng = "LIGHT_GRAY_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Hellgrau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_GRAY_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Hellgrau schrägrechts geteilt"; eng = "LIGHT_GRAY_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Hellgraue Kugel"; eng = "LIGHT_GRAY_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Hellgraue Raute"; eng = "LIGHT_GRAY_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts hellgrau gespalten"; eng = "LIGHT_GRAY_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben hellgrau geteilt "; eng = "LIGHT_GRAY_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links hellgrau gespalten"; eng = "LIGHT_GRAY_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellgrau geteilt"; eng = "LIGHT_GRAY_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Hellgrauer Bord"; eng = "LIGHT_GRAY_BORDER"; break;
+					case CURLY_BORDER: ger = "Hellgrauer Spickelbord"; eng = "LIGHT_GRAY_CURLY_BORDER"; break;
+					case CREEPER: ger = "Hellgrauer Creeper"; eng = "LIGHT_GRAY_CREEPER"; break;
+					case GRADIENT: ger = "Hellgrauer Farbverlauf"; eng = "LIGHT_GRAY_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Hellgrauer Farbverlauf (Invertiert)"; eng = "LIGHT_GRAY_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld helgrau gemauert"; eng = "LIGHT_GRAY_BRICKS"; break;
+					case SKULL: ger = "Hellgrauer Schädel"; eng = "LIGHT_GRAY_SKULL"; break;
+					case FLOWER: ger = "Hellgraue Blume"; eng = "LIGHT_GRAY_FLOWER"; break;
+					case MOJANG: ger = "Hellgraues Mojang-Logo"; eng = "LIGHT_GRAY_MOJANG"; break;
+					case GLOBE: ger = "Hellgrauer Globus"; eng = "LIGHT_GRAY_GLOBE"; break;
+					case PIGLIN: ger = "Hellgraue Schnauze"; eng = "LIGHT_GRAY_PIGLIN"; break;
+					}
+					break;
+				case LIME:
+					switch(p)
+					{
+					case BASE: ger = "Hellgrünes Banner"; eng = "LIME_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Hellgrünes rechtes Untereck"; eng = "LIME_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Hellgrünes linkes Untereck"; eng = "LIME_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Hellgrünes rechtes Obereck"; eng = "LIME_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Hellgrünes linkes Obereck"; eng = "LIME_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Hellgrüner Bannerfuß"; eng = "LIME_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Hellgrünes Bannerhaupt"; eng = "LIME_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Hellgrüne rechte Flanke"; eng = "LIME_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Hellgrüne linke Flanke"; eng = "LIME_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Hellgrüner Pfahl"; eng = "LIME_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Hellgrüner Balken"; eng = "LIME_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Hellgrüner Schrägbalken"; eng = "LIME_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Hellgrüner Schräglinksbalken"; eng = "LIME_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier hellgrüne Pfähle"; eng = "LIME_STRIPE_SMALL"; break;
+					case CROSS: ger = "Hellgrünes Andreaskreuz"; eng = "LIME_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Hellgrünes Kreuz"; eng = "LIME_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Hellgrüne halbe Spitze"; eng = "LIME_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Hellgrüne gestürzte halbe Spitze"; eng = "LIME_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Hellgrüner gespickelter Bannerfuß"; eng = "LIME_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Hellgrünes gespickeltes Bannerhaupt"; eng = "LIME_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Hellgrün schräglinks geteilt"; eng = "LIME_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Hellgrün schräglinks geteilt (Invertiert"; eng = "LIME_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Hellgrün schrägrechts geteilt (Invertiert)"; eng = "LIME_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Hellgrün schrägrechts geteilt"; eng = "LIME_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Hellgrüne Kugel"; eng = "LIME_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Hellgrüne Raute"; eng = "LIME_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts hellgrün gespalten"; eng = "LIME_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben hellgrün geteilt"; eng = "LIME_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links hellgrün gespalten"; eng = "LIME_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellgrün geteilt"; eng = "LIME_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Hellgrüner Bord"; eng = "LIME_BORDER"; break;
+					case CURLY_BORDER: ger = "Hellgrüner Spickelbord"; eng = "LIME_CURLY_BORDER"; break;
+					case CREEPER: ger = "Hellgrüner Creeper"; eng = "LIME_CREEPER"; break;
+					case GRADIENT: ger = "Hellgrüner Farbverlauf"; eng = "LIME_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Hellgrüner Farbverlauf (Invertiert)"; eng = "LIME_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld hellgrün gemauert"; eng = "LIME_BRICKS"; break;
+					case SKULL: ger = "Hellgrüner Schädel"; eng = "LIME_SKULL"; break;
+					case FLOWER: ger = "Hellgrüne Blume"; eng = "LIME_FLOWER"; break;
+					case MOJANG: ger = "Hellgrünes Mojang-Logo"; eng = "LIME_MOJANG"; break;
+					case GLOBE: ger = "Hellgrüner Globus"; eng = "LIME_GLOBE"; break;
+					case PIGLIN: ger = "Hellgrüne Schnauze"; eng = "LIME_PIGLIN"; break;
+					}
+					break;
+				case MAGENTA:
+					switch(p)
+					{
+					case BASE: ger = "Magenta Banner"; eng = "MAGENTA_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Magenta rechtes Untereck"; eng = "MAGENTA_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Magenta linkes Untereck"; eng = "MAGENTA_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Magenta rechtes Obereck"; eng = "MAGENTA_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Magenta linkes Obereck"; eng = "MAGENTA_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Magenta Bannerfuß"; eng = "MAGENTA_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Magenta Bannerhaupt"; eng = "MAGENTA_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Magenta rechte Flanke"; eng = "MAGENTA_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Magenta linke Flanke"; eng = "MAGENTA_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Magenta Pfahl"; eng = "MAGENTA_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Magenta Balken"; eng = "MAGENTA_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Magenta Schrägbalken"; eng = "MAGENTA_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Magenta Schräglinksbalken"; eng = "MAGENTA_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier Magenta Pfähle"; eng = "MAGENTA_STRIPE_SMALL"; break;
+					case CROSS: ger = "Magenta Andreaskreuz"; eng = "MAGENTA_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Magenta Kreuz"; eng = "MAGENTA_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Magenta halbe Spitze"; eng = "MAGENTA_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Magenta gestürzte halbe Spitze"; eng = "MAGENTA_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Magenta gespickelter Bannerfuß"; eng = "MAGENTA_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Magenta gespickeltes Bannerhaupt"; eng = "MAGENTA_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Magenta schräglinks geteilt"; eng = "MAGENTA_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Magenta schräglinks geteilt (Invertiert"; eng = "MAGENTA_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Magenta schrägrechts geteilt (Invertiert)"; eng = "MAGENTA_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Magenta schrägrechts geteilt"; eng = "MAGENTA_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Magenta Kugel"; eng = "MAGENTA_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Magenta Raute"; eng = "MAGENTA_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts Magenta gespalten"; eng = "MAGENTA_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben Magenta geteilt"; eng = "MAGENTA_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links Magenta gespalten"; eng = "MAGENTA_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten Magenta geteilt"; eng = "MAGENTA_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Magenta Bord"; eng = "MAGENTA_BORDER"; break;
+					case CURLY_BORDER: ger = "Magenta Spickelbord"; eng = "MAGENTA_CURLY_BORDER"; break;
+					case CREEPER: ger = "Magenta Creeper"; eng = "MAGENTA_CREEPER"; break;
+					case GRADIENT: ger = "Magenta Farbverlauf"; eng = "MAGENTA_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Magenta Farbverlauf (Invertiert)"; eng = "MAGENTA_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld Magenta gemauert"; eng = "MAGENTA_BRICKS"; break;
+					case SKULL: ger = "Magenta Schädel"; eng = "MAGENTA_SKULL"; break;
+					case FLOWER: ger = "Magenta Blume"; eng = "MAGENTA_FLOWER"; break;
+					case MOJANG: ger = "Magenta Mojang-Logo"; eng = "MAGENTA_MOJANG"; break;
+					case GLOBE: ger = "Magenta Globus"; eng = "MAGENTA_GLOBE"; break;
+					case PIGLIN: ger = "Magenta Schnauze"; eng = "MAGENTA_PIGLIN"; break;
+					}
+					break;
+				case ORANGE:
+					switch(p)
+					{
+					case BASE: ger = "Oranges Banner"; eng = "ORANGE_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Oranges rechtes Untereck"; eng = "ORANGE_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Oranges linkes Untereck"; eng = "ORANGE_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Oranges rechtes Obereck"; eng = "ORANGE_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Oranges linkes Obereck"; eng = "ORANGE_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Oranger Bannerfuß"; eng = "ORANGE_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Oranges Bannerhaupt"; eng = "ORANGE_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Orange rechte Flanke"; eng = "ORANGE_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Orange linke Flanke"; eng = "ORANGE_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Oranger Pfahl"; eng = "ORANGE_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Oranger Balken"; eng = "ORANGE_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Oranger Schrägbalken"; eng = "ORANGE_STRIPE_DOWNRIGHT";  break;
+					case STRIPE_DOWNLEFT: ger = "Oranger Schräglinksbalken"; eng = "ORANGE_STRIPE_DOWNLEFT";  break;
+					case STRIPE_SMALL: ger = "Vier orange Pfähle"; eng = "ORANGE_STRIPE_SMALL"; break;
+					case CROSS: ger = "Oranges Andreaskreuz"; eng = "ORANGE_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Oranges Kreuz"; eng = "ORANGE_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Orange halbe Spitze"; eng = "ORANGE_TRIANGLE_BOTTOM";  break;
+					case TRIANGLE_TOP: ger = "Orange gestürzte halbe Spitze"; eng = "ORANGE_TRIANGLE_TOP";  break;
+					case TRIANGLES_BOTTOM: ger = "Oranger gespickelter Bannerfuß"; eng = "ORANGE_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Oranges gespickeltes Bannerhaupt"; eng = "ORANGE_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Orange schräglinks geteilt"; eng = "ORANGE_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Orange schräglinks geteilt (Invertiert"; eng = "ORANGE_DIAGONAL_RIGHT";  break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Orange schrägrechts geteilt (Invertiert)"; eng = "ORANGE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Orange schrägrechts geteilt"; eng = "ORANGE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Orange Kugel"; eng = "ORANGE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Orange Raute"; eng = "ORANGE_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts orange gespalten"; eng = "ORANGE_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben orange geteilt"; eng = "ORANGE_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links orange gespalten"; eng = "ORANGE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten orange geteilt"; eng = "ORANGE_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Oranger Bord"; eng = "ORANGE_BORDER"; break;
+					case CURLY_BORDER: ger = "Oranger Spickelbord"; eng = "ORANGE_CURLY_BORDER"; break;
+					case CREEPER: ger = "Oranger Creeper"; eng = "ORANGE_CREEPER"; break;
+					case GRADIENT: ger = "Oranger Farbverlauf"; eng = "ORANGE_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Oranger Farbverlauf (Invertiert)"; eng = "ORANGE_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld Orange gemauert"; eng = "ORANGE_BRICKS"; break;
+					case SKULL: ger = "Oranger Schädel"; eng = "ORANGE_SKULL"; break;
+					case FLOWER: ger = "Orange Blume"; eng = "ORANGE_FLOWER"; break;
+					case MOJANG: ger = "Oranges Mojang-Logo"; eng = "ORANGE_MOJANG"; break;
+					case GLOBE: ger = "Oranger Globus"; eng = "ORANGE_GLOBE"; break;
+					case PIGLIN: ger = "Orange Schnauze"; eng = "ORANGE_PIGLIN"; break;
+					}
+					break;
+				case PINK:
+					switch(p)
+					{
+					case BASE: ger = "Rosa Banner"; eng = "PINK_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Rosa rechtes Untereck"; eng = "PINK_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Rosa linkes Untereck"; eng = "PINK_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Rosa rechtes Obereck"; eng = "PINK_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Rosa linkes Obereck"; eng = "PINK_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Rosa Bannerfuß"; eng = "PINK_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Rosa Bannerhaupt"; eng = "PINK_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Rosa rechte Flanke"; eng = "PINK_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Rosa linke Flanke"; eng = "PINK_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Rosa Pfahl"; eng = "PINK_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Rosa Balken"; eng = "PINK_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Rosa Schrägbalken"; eng = "PINK_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Rosa Schräglinksbalken"; eng = "PINK_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier rosa Pfähle"; eng = "PINK_STRIPE_SMALL"; break;
+					case CROSS: ger = "Rosa Andreaskreuz"; eng = "PINK_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Rosa Kreuz"; eng = "PINK_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Rosa halbe Spitze"; eng = "PINK_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Rosa gestürzte halbe Spitze"; eng = "PINK_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Rosa gespickelter Bannerfuß"; eng = "PINK_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Rosa gespickeltes Bannerhaupt"; eng = "PINK_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Rosa schräglinks geteilt"; eng = "PINK_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Rosa schräglinks geteilt (Invertiert"; eng = "PINK_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Rosa schrägrechts geteilt (Invertiert)"; eng = "PINK_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Rosa schrägrechts geteilt"; eng = "PINK_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Rosa Kugel"; eng = "PINK_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Rosa Raute"; eng = "PINK_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts rosa gespalten"; eng = "PINK_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben rosa geteilt"; eng = "PINK_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links rosa gespalten"; eng = "PINK_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten rosa geteilt"; eng = "PINK_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Rosa Bord"; eng = "PINK_BORDER"; break;
+					case CURLY_BORDER: ger = "Rosa Spickelbord"; eng = "PINK_CURLY_BORDER"; break;
+					case CREEPER: ger = "Rosa Creeper"; eng = "PINK_CREEPER"; break;
+					case GRADIENT: ger = "Rosa Farbverlauf"; eng = "PINK_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Rosa Farbverlauf (Invertiert)"; eng = "PINK_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld rosa gemauert"; eng = "PINK_BRICKS"; break;
+					case SKULL: ger = "Rosa Schädel"; eng = "PINK_SKULL"; break;
+					case FLOWER: ger = "Rosa Blume"; eng = "PINK_FLOWER"; break;
+					case MOJANG: ger = "Rosanes Mojang-Logo"; eng = "PINK_MOJANG"; break;
+					case GLOBE: ger = "Rosa Globus"; eng = "PINK_GLOBE"; break;
+					case PIGLIN: ger = "Rosa Schnauze"; eng = "PINK_PIGLIN"; break;
+					}
+					break;
+				case PURPLE:
+					switch(p)
+					{
+					case BASE: ger = "Violettes Banner"; eng = "PURPLE_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Violettes rechtes Untereck"; eng = "PURPLE_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Violettes linkes Untereck"; eng = "PURPLE_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Violettes rechtes Obereck"; eng = "PURPLE_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Violettes linkes Obereck"; eng = "PURPLE_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Violetter Bannerfuß"; eng = "PURPLE_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Violettes Bannerhaupt"; eng = "PURPLE_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Violette rechte Flanke"; eng = "PURPLE_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Violette linke Flanke"; eng = "PURPLE_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Violetter Pfahl"; eng = "PURPLE_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Violetter Balken"; eng = "PURPLE_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Violetter Schrägbalken"; eng = "PURPLE_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Violetter Schräglinksbalken"; eng = "PURPLE_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier violette Pfähle"; eng = "PURPLE_STRIPE_SMALL"; break;
+					case CROSS: ger = "Violettes Andreaskreuz"; eng = "PURPLE_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Violettes Kreuz"; eng = "PURPLE_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Violette halbe Spitze"; eng = "PURPLE_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Violette gestürzte halbe Spitze"; eng = "PURPLE_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Violetter gespickelter Bannerfuß"; eng = "PURPLE_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Violettes gespickeltes Bannerhaupt"; eng = "PURPLE_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Violett schräglinks geteilt"; eng = "PURPLE_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Violett schräglinks geteilt (Invertiert"; eng = "PURPLE_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Violett schrägrechts geteilt (Invertiert)"; eng = "PURPLE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Violett schrägrechts geteilt"; eng = "PURPLE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Violette Kugel"; eng = "PURPLE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Violette Raute"; eng = "PURPLE_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts violett gespalten"; eng = "PURPLE_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben violett geteilt"; eng = "PURPLE_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links violett gespalten"; eng = "PURPLE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten violett geteilt"; eng = "PURPLE_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Violetter Bord"; eng = "PURPLE_BORDER"; break;
+					case CURLY_BORDER: ger = "Violetter Spickelbord"; eng = "PURPLE_CURLY_BORDER"; break;
+					case CREEPER: ger = "Violetter Creeper"; eng = "PURPLE_CREEPER"; break;
+					case GRADIENT: ger = "Violetter Farbverlauf"; eng = "PURPLE_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Violetter Farbverlauf (Invertiert)"; eng = "PURPLE_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld violett gemauert"; eng = "PURPLE_BRICKS"; break;
+					case SKULL: ger = "Violetter Schädel"; eng = "PURPLE_SKULL"; break;
+					case FLOWER: ger = "Violette Blume"; eng = "PURPLE_FLOWER"; break;
+					case MOJANG: ger = "Violettes Mojang-Logo"; eng = "PURPLE_MOJANG"; break;
+					case GLOBE: ger = "Violetter Globus"; eng = "PURPLE_GLOBE"; break;
+					case PIGLIN: ger = "Violette Schnauze"; eng = "PURPLE_PIGLIN"; break;
+					}
+					break;
+				case RED:
+					switch(p)
+					{
+					case BASE: ger = "Rotes Banner"; eng = "RED_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Rotes rechtes Untereck"; eng = "RED_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Rotes linkes Untereck"; eng = "RED_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Rotes rechtes Obereck"; eng = "RED_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Rotes linkes Obereck"; eng = "RED_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Roter Bannerfuß"; eng = "RED_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Rotes Bannerhaupt"; eng = "RED_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Rote rechte Flanke"; eng = "RED_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Rote linke Flanke"; eng = "RED_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Roter Pfahl"; eng = "RED_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Roter Balken"; eng = "RED_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Roter Schrägbalken"; eng = "RED_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Roter Schräglinksbalken"; eng = "RED_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier rote Pfähle"; eng = "RED_STRIPE_SMALL"; break;
+					case CROSS: ger = "Rotes Andreaskreuz"; eng = "RED_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Rotes Kreuz"; eng = "RED_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Rote halbe Spitze"; eng = "RED_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Rote gestürzte halbe Spitze"; eng = "RED_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Roter gespickelter Bannerfuß"; eng = "RED_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Rotes gespickeltes Bannerhaupt"; eng = "RED_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Rot schräglinks geteilt"; eng = "RED_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Rot schräglinks geteilt (Invertiert"; eng = "RED_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Rot schrägrechts geteilt (Invertiert)"; eng = "RED_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Rot schrägrechts geteilt"; eng = "RED_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Rote Kugel"; eng = "RED_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Rote Raute"; eng = "RED_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts rot gespalten"; eng = "RED_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben rot geteilt"; eng = "RED_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links rot gespalten"; eng = "RED_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten rot geteilt"; eng = "RED_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Roter Bord"; eng = "RED_BORDER"; break;
+					case CURLY_BORDER: ger = "Roter Spickelbord"; eng = "RED_CURLY_BORDER"; break;
+					case CREEPER: ger = "Roter Creeper"; eng = "RED_CREEPER"; break;
+					case GRADIENT: ger = "Roter Farbverlauf"; eng = "RED_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Roter Farbverlauf (Invertiert)"; eng = "case GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld rot gemauert"; eng = "RED_BRICKS"; break;
+					case SKULL: ger = "Roter Schädel"; eng = "RED_SKULL"; break;
+					case FLOWER: ger = "Rote Blume"; eng = "RED_FLOWER"; break;
+					case MOJANG: ger = "Rotes Mojang-Logo"; eng = "RED_MOJANG"; break;
+					case GLOBE: ger = "Roter Globus"; eng = "RED_GLOBE"; break;
+					case PIGLIN: ger = "Rote Schnauze"; eng = "RED_PIGLIN"; break;
+					}
+					break;
+				case WHITE:
+					switch(p)
+					{
+					case BASE: ger = "Weißes Banner"; eng = "WHITE_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Weißes rechtes Untereck"; eng = "WHITE_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Weißes linkes Untereck"; eng = "WHITE_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Weißes rechtes Obereck"; eng = "WHITE_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Weißes linkes Obereck"; eng = "WHITE_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Weißer Bannerfuß"; eng = "WHITE_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Weißes Bannerhaupt"; eng = "WHITE_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Weiße rechte Flanke"; eng = "WHITE_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Weiße linke Flanke"; eng = "WHITE_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Weißer Pfahl"; eng = "WHITE_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Weißer Balken"; eng = "WHITE_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Weißer Schrägbalken"; eng = "WHITE_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Weißer Schräglinksbalken"; eng = "WHITE_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier weiße Pfähle"; eng = "WHITE_STRIPE_SMALL"; break;
+					case CROSS: ger = "Weißes Andreaskreuz"; eng = "WHITE_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Weißes Kreuz"; eng = "WHITE_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Weiße halbe Spitze"; eng = "WHITE_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Weiße gestürzte halbe Spitze"; eng = "WHITE_TRIANGLE_TOP";  break;
+					case TRIANGLES_BOTTOM: ger = "Weißer gespickelter Bannerfuß"; eng = "WHITE_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Weißes gespickeltes Bannerhaupt"; eng = "WHITE_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Weiß schräglinks geteilt"; eng = "WHITE_DIAGONAL_LEFT";  break;
+					case DIAGONAL_RIGHT: ger = "Weiß schräglinks geteilt (Invertiert)"; eng = "WHITE_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Weiß schrägrechts geteilt (Invertiert)"; eng = "WHITE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Weiß schrägrechts geteilt"; eng = "WHITE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Weiße Kugel"; eng = "WHITE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Weiße Raute"; eng = "WHITE_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts weiß gespalten"; eng = "WHITE_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben weiß geteilt"; eng = "WHITE_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links weiß gespalten"; eng = "WHITE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten weiß geteilt"; eng = "WHITE_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Weißer Bord"; eng = "WHITE_BORDER"; break;
+					case CURLY_BORDER: ger = "Weißer Spickelbord"; eng = "WHITE_CURLY_BORDER"; break;
+					case CREEPER: ger = "Weißer Creeper"; eng = "WHITE_CREEPER"; break;
+					case GRADIENT: ger = "Weißer Farbverlauf"; eng = "WHITE_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Weißer Farbverlauf (Invertiert)"; eng = "WHITE_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld weiß gemauert"; eng = "WHITE_BRICKS"; break;
+					case SKULL: ger = "Weißer Schädel"; eng = "WHITE_SKULL"; break;
+					case FLOWER: ger = "Weiße Blume"; eng = "WHITE_FLOWER"; break;
+					case MOJANG: ger = "Weißes Mojang-Logo"; eng = "WHITE_MOJANG"; break;
+					case GLOBE: ger = "Weißer Globus"; eng = "WHITE_GLOBE"; break;
+					case PIGLIN: ger = "Weiße Schnauze"; eng = "WHITE_PIGLIN"; break;
+					}
+					break;
+				case YELLOW:
+					switch(p)
+					{
+					case BASE: ger = "Gelbes Banner"; eng = "YELLOW_BASE"; break;
+					case SQUARE_BOTTOM_LEFT: ger = "Gelbes rechtes Untereck"; eng = "YELLOW_SQUARE_BOTTOM_LEFT"; break;
+					case SQUARE_BOTTOM_RIGHT: ger = "Gelbes linkes Untereck"; eng = "YELLOW_SQUARE_BOTTOM_RIGHT"; break;
+					case SQUARE_TOP_LEFT: ger = "Gelbes rechtes Obereck"; eng = "YELLOW_SQUARE_TOP_LEFT"; break;
+					case SQUARE_TOP_RIGHT: ger = "Gelbes linkes Obereck"; eng = "YELLOW_SQUARE_TOP_RIGHT"; break;
+					case STRIPE_BOTTOM: ger = "Gelber Bannerfuß"; eng = "YELLOW_STRIPE_BOTTOM"; break;
+					case STRIPE_TOP: ger = "Gelbes Bannerhaupt"; eng = "YELLOW_STRIPE_TOP"; break;
+					case STRIPE_LEFT: ger = "Gelbe rechte Flanke"; eng = "YELLOW_STRIPE_LEFT"; break;
+					case STRIPE_RIGHT: ger = "Gelbe linke Flanke"; eng = "YELLOW_STRIPE_RIGHT"; break;
+					case STRIPE_CENTER: ger = "Gelber Pfahl"; eng = "YELLOW_STRIPE_CENTER"; break;
+					case STRIPE_MIDDLE: ger = "Gelber Balken"; eng = "YELLOW_STRIPE_MIDDLE"; break;
+					case STRIPE_DOWNRIGHT: ger = "Gelber Schrägbalken"; eng = "YELLOW_STRIPE_DOWNRIGHT"; break;
+					case STRIPE_DOWNLEFT: ger = "Gelber Schräglinksbalken"; eng = "YELLOW_STRIPE_DOWNLEFT"; break;
+					case STRIPE_SMALL: ger = "Vier gelbe Pfähle"; eng = "YELLOW_STRIPE_SMALL"; break;
+					case CROSS: ger = "Gelbes Andreaskreuz"; eng = "YELLOW_CROSS"; break;
+					case STRAIGHT_CROSS: ger = "Gelbes Kreuz"; eng = "YELLOW_STRAIGHT_CROSS"; break;
+					case TRIANGLE_BOTTOM: ger = "Gelbe halbe Spitze"; eng = "YELLOW_TRIANGLE_BOTTOM"; break;
+					case TRIANGLE_TOP: ger = "Gelbe gestürzte halbe Spitze"; eng = "YELLOW_TRIANGLE_TOP"; break;
+					case TRIANGLES_BOTTOM: ger = "Gelber gespickelter Bannerfuß"; eng = "YELLOW_TRIANGLES_BOTTOM"; break;
+					case TRIANGLES_TOP: ger = "Gelbes gespickeltes Bannerhaupt"; eng = "YELLOW_TRIANGLES_TOP"; break;
+					case DIAGONAL_LEFT: ger = "Gelb schräglinks geteilt"; eng = "YELLOW_DIAGONAL_LEFT"; break;
+					case DIAGONAL_RIGHT: ger = "Gelb schräglinks geteilt (Invertiert"; eng = "YELLOW_DIAGONAL_RIGHT"; break;
+					case DIAGONAL_LEFT_MIRROR: ger = "Gelb schrägrechts geteilt (Invertiert)"; eng = "YELLOW_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_RIGHT_MIRROR: ger = "Gelb schrägrechts geteilt"; eng = "YELLOW_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE_MIDDLE: ger = "Gelbe Kugel"; eng = "YELLOW_CIRCLE_MIDDLE"; break;
+					case RHOMBUS_MIDDLE: ger = "Gelbe Raute"; eng = "YELLOW_RHOMBUS_MIDDLE"; break;
+					case HALF_VERTICAL: ger = "Rechts gelb gespalten"; eng = "YELLOW_HALF_VERTICAL"; break;
+					case HALF_HORIZONTAL: ger = "Oben gelb geteilt"; eng = "YELLOW_HALF_HORIZONTAL"; break;
+					case HALF_VERTICAL_MIRROR: ger = "Links gelb gespalten"; eng = "YELLOW_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_MIRROR: ger = "Unten gelb geteilt"; eng = "YELLOW_HALF_HORIZONTAL_MIRROR"; break;
+					case BORDER: ger = "Gelber Bord"; eng = "YELLOW_BORDER"; break;
+					case CURLY_BORDER: ger = "Gelber Spickelbord"; eng = "YELLOW_CURLY_BORDER"; break;
+					case CREEPER: ger = "Gelber Creeper"; eng = "YELLOW_CREEPER"; break;
+					case GRADIENT: ger = "Gelber Farbverlauf"; eng = "YELLOW_GRADIENT"; break;
+					case GRADIENT_UP: ger = "Gelber Farbverlauf (Invertiert)"; eng = "YELLOW_GRADIENT_UP"; break;
+					case BRICKS: ger = "Feld gelb gemauert"; eng = "YELLOW_BRICKS"; break;
+					case SKULL: ger = "Gelber Schädel"; eng = "YELLOW_SKULL"; break;
+					case FLOWER: ger = "Gelbe Blume"; eng = "YELLOW_FLOWER"; break;
+					case MOJANG: ger = "Gelbes Mojang-Logo"; eng = "YELLOW_MOJANG"; break;
+					case GLOBE: ger = "Gelber Globus"; eng = "YELLOW_GLOBE"; break;
+					case PIGLIN: ger = "Gelbe Schnauze"; eng = "YELLOW_PIGLIN"; break;
+					}
+					break;
+				}
+								
 				bannerlanguageKeys.put(dc.toString()+"_"+p.toString(), 
-						new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-								ger}));
+						new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
+								ger, eng}));
 			}
 		}
 	}
@@ -1758,26 +2490,26 @@ public class YamlManager
 			switch(pt)
 			{
 			case AWKWARD: ger = "Seltsamer Trank"; eng = "Awkward Potion"; break;
-			case FIRE_RESISTANCE: ger = "Trank der Feuerresistenz"; eng = "Fire Resistance Potion"; break;
-			case INSTANT_DAMAGE: ger = "Trank des Schadens"; eng = "Instant Damage Potion"; break;
-			case INSTANT_HEAL: ger = "Trank der Direktheilung"; eng = "Instante Heal Potion"; break;
-			case INVISIBILITY: ger = "Trank der Unsichtbarkeit"; eng = "Invisbility Potion"; break;
-			case JUMP: ger = "Trank der Sprungkraft"; eng = "Jump Potion"; break;
-			case LUCK: ger = "Trank des Glücks"; eng = "Luck Potion"; break;
+			case FIRE_RESISTANCE: ger = "Feuerresistenz"; eng = "Fire Resistance"; break;
+			case INSTANT_DAMAGE: ger = "Schaden"; eng = "Instant Damage"; break;
+			case INSTANT_HEAL: ger = "Direktheilung"; eng = "Instante Heal"; break;
+			case INVISIBILITY: ger = "Unsichtbarkeit"; eng = "Invisbility"; break;
+			case JUMP: ger = "Sprungkraft"; eng = "Jump"; break;
+			case LUCK: ger = "Glück"; eng = "Luck"; break;
 			case MUNDANE: ger = "Gewöhnlicher Trank"; eng = "Mundane Potion"; break;
-			case NIGHT_VISION: ger = "Trank der Nachtsicht"; eng = "Night Vison Potion"; break;
-			case POISON: ger = "Trank der Vergiftung"; eng = "Poison Potion"; break;
-			case REGEN: ger = "Trank der Regeneration"; eng = "Regeneration Potion"; break;
-			case SLOW_FALLING: ger = "Trank des sanften Falls"; eng = "Slow Falling Potion"; break;
-			case SLOWNESS: ger = "Trank der Langsamkeit"; eng = "Slowness Potion"; break;
-			case SPEED: ger = "Trank der Schnelligkeit"; eng = "Speed Potion"; break;
-			case STRENGTH: ger = "Trank der Stärke"; eng = "Strength Potion"; break;
+			case NIGHT_VISION: ger = "Nachtsicht"; eng = "Night Vison"; break;
+			case POISON: ger = "Vergiftung"; eng = "Poison"; break;
+			case REGEN: ger = "Regeneration"; eng = "Regeneration"; break;
+			case SLOW_FALLING: ger = "sanfter Fall"; eng = "Slow Falling"; break;
+			case SLOWNESS: ger = "Langsamkeit"; eng = "Slowness"; break;
+			case SPEED: ger = "Schnelligkeit"; eng = "Speed"; break;
+			case STRENGTH: ger = "Stärke"; eng = "Strength"; break;
 			case THICK: ger = "Dickflüssiger Trank"; eng = "Thick Potion"; break;
-			case TURTLE_MASTER: ger = "Trank des Schildkrötenmeisters"; eng = "Turtle Master Potion"; break;
+			case TURTLE_MASTER: ger = "Schildkrötenmeister"; eng = "Turtle Master"; break;
 			case UNCRAFTABLE: ger = "Trank"; eng = "Potion"; break;
 			case WATER: ger = "Wasserflasche"; eng = "Waterbottle"; break;
-			case WATER_BREATHING: ger = "Trank der Unterwasseratmung"; eng = "Water Breathing Potion"; break;
-			case WEAKNESS: ger = "Trank der Schwäche"; eng = "Weakness Potion"; break;
+			case WATER_BREATHING: ger = "Unterwasseratmung"; eng = "Water Breathing"; break;
+			case WEAKNESS: ger = "Schwäche"; eng = "Weakness"; break;
 			}
 			potiontypelanguageKeys.put(pt.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -1835,12 +2567,131 @@ public class YamlManager
 		for(EntityType i : EntityType.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case ALLAY: ger = "Hilfgeist"; eng = "Allay"; break;
+			case AREA_EFFECT_CLOUD: ger = "Areal Effekt Wolke"; eng = "Area Effect Cloud"; break;
+			case ARMOR_STAND: ger = "Rüstungsständer"; eng = "Armor Stand"; break;
+			case ARROW: ger = "Pfeil"; eng = "Arrow"; break;
+			case AXOLOTL: ger = "Axolotl"; eng = "Axolotl"; break;
+			case BAT: ger = "Fledermaus"; eng = "Bat"; break;
+			case BEE: ger = "Biene"; eng = "Bee"; break;
+			case BLAZE: ger = "Lohe"; eng = "Blaze"; break;
+			case BOAT: ger = "Boot"; eng = "Boat"; break;
+			case CAT: ger = "Katze"; eng = "Cat"; break;
+			case CAVE_SPIDER: ger = "Höhlenspinne"; eng = "Cave Spider"; break;
+			case CHEST_BOAT: ger = "Kistenboot"; eng = "Chest Boat"; break;
+			case CHICKEN: ger = "Huhn"; eng = "Chicken"; break;
+			case COD: ger = "Kabeljau"; eng = "Cod"; break;
+			case COW: ger = "Kuh"; eng = "Cow"; break;
+			case CREEPER: ger = "Creeper"; eng = "Creeper"; break;
+			case DOLPHIN: ger = "Delphin"; eng = "Dolphin"; break;
+			case DONKEY: ger = "Esel"; eng = "Donkey"; break;
+			case DRAGON_FIREBALL: ger = "Drachenfeuerball"; eng = "Dragon Fireball"; break;
+			case DROPPED_ITEM: ger = "Fallengelassenes Item"; eng = "Dropped Item"; break;
+			case DROWNED: ger = "Ertrunkener"; eng = "Drowned"; break;
+			case EGG: ger = "Ei"; eng = "Egg"; break;
+			case ELDER_GUARDIAN: ger = "Großer Wächter"; eng = "Elder Guardian"; break;
+			case ENDER_CRYSTAL: ger = "Ender Kristall"; eng = "Ender Crystal"; break;
+			case ENDER_DRAGON: ger = "Enderdrache"; eng = "Ender Dragon"; break;
+			case ENDER_PEARL: ger = "Enderperle"; eng = "Ender Pearl"; break;
+			case ENDER_SIGNAL: ger = "Endsignal"; eng = "Ender Signal"; break;
+			case ENDERMAN: ger = "Endermaln"; eng = "Enderman"; break;
+			case ENDERMITE: ger = "Endermite"; eng = "Endermite"; break;
+			case EVOKER: ger = "Magier"; eng = "Evoker"; break;
+			case EVOKER_FANGS: ger = "Magierzähne"; eng = "Evoker Fangs"; break;
+			case EXPERIENCE_ORB: ger = "Erfahrungsorb"; eng = "Experience Orb"; break;
+			case FALLING_BLOCK: ger = "Fallender Block"; eng = "Falling Block"; break;
+			case FIREBALL: ger = "Feuerball"; eng = "Fireball"; break;
+			case FIREWORK: ger = "Feuerwerk"; eng = "Firework"; break;
+			case FISHING_HOOK: ger = "Angelhacken"; eng = "Fishing Hook"; break;
+			case FOX: ger = "Fuchs"; eng = "Fox"; break;
+			case FROG: ger = "Frosch"; eng = "Frog"; break;
+			case GHAST: ger = "Ghast"; eng = "Ghast"; break;
+			case GIANT: ger = "Riese"; eng = "Giant"; break;
+			case GLOW_ITEM_FRAME: ger = "Leuchtrahmen"; eng = "Glow Item Frame"; break;
+			case GLOW_SQUID: ger = "Leuchttintenfisch"; eng = "Glow Squid"; break;
+			case GOAT: ger = "Ziege"; eng = "Goat"; break;
+			case GUARDIAN: ger = "Wächter"; eng = "Guardian"; break;
+			case HOGLIN: ger = "Hoglin"; eng = "Hoglin"; break;
+			case HORSE: ger = "Pferd"; eng = "Horse"; break;
+			case HUSK: ger = "Wüstenzombie"; eng = "Husk"; break;
+			case ILLUSIONER: ger = "Illusionist"; eng = "Illusioner"; break;
+			case IRON_GOLEM: ger = "Eisengolem"; eng = "Irom Golem"; break;
+			case ITEM_FRAME: ger = "Rahmen"; eng = "Item Frame"; break;
+			case LEASH_HITCH: ger = "Leinenpfosten"; eng = "Leash Hitch"; break;
+			case LIGHTNING: ger = "Blitz"; eng = "Lightning"; break;
+			case LLAMA: ger = "Lama"; eng = "Llama"; break;
+			case LLAMA_SPIT: ger = "Lamaspucke"; eng = "Llama Spit"; break;
+			case MAGMA_CUBE: ger = "Magmawürfel"; eng = "Magma Cube"; break;
+			case MARKER: ger = "Marker"; eng = "Marker"; break;
+			case MINECART: ger = "Lore"; eng = "Minecart"; break;
+			case MINECART_CHEST: ger = "Kistenlore"; eng = "Minecart Chest"; break;
+			case MINECART_COMMAND: ger = "Befehlslore"; eng = "Minecart Command"; break;
+			case MINECART_FURNACE: ger = "Ofenlore"; eng = "Minecart Furnace"; break;
+			case MINECART_HOPPER: ger = "Trichterlore"; eng = "Minecart Hopper"; break;
+			case MINECART_MOB_SPAWNER: ger = "Spawnerlore"; eng = "Minecraft Mob Spawner"; break;
+			case MINECART_TNT: ger = "TNT Lore"; eng = "Minecart Lore"; break;
+			case MULE: ger = "Maultier"; eng = "Mule"; break;
+			case MUSHROOM_COW: ger = "Pilzkuh"; eng = "Mushroom Cow"; break;
+			case OCELOT: ger = "Ozelot"; eng = "Ocelot"; break;
+			case PAINTING: ger = "Gemälde"; eng = "Painting"; break;
+			case PANDA: ger = "Panda"; eng = "Panda"; break;
+			case PARROT: ger = "Papagei"; eng = "Parrot"; break;
+			case PHANTOM: ger = "Phantom"; eng = "Phantom"; break;
+			case PIG: ger = "Schwein"; eng = "Pig"; break;
+			case PIGLIN: ger = "Piglin"; eng = "Piglin"; break;
+			case PIGLIN_BRUTE: ger = "Piglin Barbar"; eng = "Piglin Brute"; break;
+			case PILLAGER: ger = "Plünderer"; eng = "Pillager"; break;
+			case PLAYER: ger = "Spieler"; eng = "Player"; break;
+			case POLAR_BEAR: ger = "Polarbär"; eng = "Polar Bear"; break;
+			case PRIMED_TNT: ger = "Gezündetes TNT"; eng = "Primed TNT"; break;
+			case PUFFERFISH: ger = "Kugelfisch"; eng = "Pufferfish"; break;
+			case RABBIT: ger = "Kaninschen"; eng = "Rabbit"; break;
+			case RAVAGER: ger = "Verwüster"; eng = "Ravager"; break;
+			case SALMON: ger = "Lachs"; eng = "Salmon"; break;
+			case SHEEP: ger = "Schaf"; eng = "Sheep"; break;
+			case SHULKER: ger = "Shulker"; eng = "Shulker"; break;
+			case SHULKER_BULLET: ger = "Shulkerkugel"; eng = "Shulker Bullet"; break;
+			case SILVERFISH: ger = "Silberfisch"; eng = "Silverfish"; break;
+			case SKELETON: ger = "Skelett"; eng = "Skeleton"; break;
+			case SKELETON_HORSE: ger = "Skelettpferd"; eng = "Skeleton Horse"; break;
+			case SLIME: ger = "Schleim"; eng = "Slime"; break;
+			case SMALL_FIREBALL: ger = "Kleiner Feuerball"; eng = "Small Fireball"; break;
+			case SNOWBALL: ger = "Schneeball"; eng = "Snowball"; break;
+			case SNOWMAN: ger = "Schneeman"; eng = "Snowman"; break;
+			case SPECTRAL_ARROW: ger = "Spektralpfeil"; eng = "Spectral Arrow"; break;
+			case SPIDER:  ger = "Spinne"; eng = "Spider"; break;
+			case SPLASH_POTION: ger = "Werfbarer Trank"; eng = "Splash Potion"; break;
+			case SQUID: ger = "Tintenfisch"; eng = "Squid"; break;
+			case STRAY: ger = "Eiswanderer"; eng = "Stray"; break;
+			case STRIDER: ger = "Schreiter"; eng = "Strider"; break;
+			case TADPOLE: ger = "Kaulquappe"; eng = "Tadpole"; break;
+			case THROWN_EXP_BOTTLE: ger = "Geworfene Expflasche"; eng = "Thrown Exp Bottle"; break;
+			case TRADER_LLAMA: ger = "Händlerlama"; eng = "Trader Llama"; break;
+			case TRIDENT: ger = "Dreizack"; eng = "Trident"; break;
+			case TROPICAL_FISH: ger = "Tropenfisch"; eng = "Tropical Fish"; break;
+			case TURTLE: ger = "Schildkröte"; eng = "Turtle"; break;
+			case UNKNOWN: ger = "Unbekannt"; eng = "Unknown"; break;
+			case VEX: ger = "Plagegeist"; eng = "Vex"; break;
+			case VILLAGER: ger = "Dorfbewohner"; eng = "Villager"; break;
+			case VINDICATOR: ger = "Diener"; eng = "Vindicator"; break;
+			case WANDERING_TRADER: ger = "Wandernder Händler"; eng = "Wandering Trader"; break;
+			case WARDEN: ger = "Wärter"; eng = "Warden"; break;
+			case WITCH: ger = "Hexe"; eng = "Witch"; break;
+			case WITHER: ger = "Wither"; eng = "Wither"; break;
+			case WITHER_SKELETON: ger = "Witherskelett"; eng = "Wither Skeleton"; break;
+			case WITHER_SKULL: ger = "Witherschädel"; eng = "Wither Skull"; break;
+			case WOLF: ger = "Wolf"; eng = "Wolf"; break;
+			case ZOGLIN: ger = "Zoglin"; eng = "Zoglin"; break;
+			case ZOMBIE: ger = "Zombie"; eng = "Zombie"; break;
+			case ZOMBIE_HORSE: ger = "Zombiepferd"; eng = "Zombie Horse"; break;
+			case ZOMBIE_VILLAGER: ger = "Zombiedorfbewohner"; eng = "Zombie Villager"; break;
+			case ZOMBIFIED_PIGLIN: ger = "Zombiefizierter Piglin"; eng = "Zombified Piglin"; break;
 			}
-			entitytypelanguageKeys.put("case_"+i.toString(), 
+			entitytypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1851,12 +2702,17 @@ public class YamlManager
 		for(Axolotl.Variant i : Axolotl.Variant.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case BLUE: ger = "Blau"; eng = "Blue"; break;
+			case CYAN: ger = "Cyan"; eng = "Cyan"; break;
+			case GOLD: ger = "Gold"; eng = "Gold"; break;
+			case LUCY: ger = "Lucy"; eng = "Lucy"; break;
+			case WILD: ger = "Wild"; eng = "Wild"; break;
 			}
-			axolotlvariantlanguageKeys.put("case_"+i.toString(), 
+			axolotlvariantlanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1867,12 +2723,16 @@ public class YamlManager
 		for(BookMeta.Generation i : BookMeta.Generation.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case COPY_OF_COPY: ger = "Kopie einer Kopie"; eng = "Copy of Copy"; break;
+			case COPY_OF_ORIGINAL: ger = "Kopie des Originals"; eng = "Copy of Original"; break;
+			case ORIGINAL: ger = "Original"; eng = "Original"; break;
+			case TATTERED: ger = "Zerfetzt"; eng = "Tatterd"; break;
 			}
-			bookmetagenerationlanguageKeys.put("case_"+i.toString(), 
+			bookmetagenerationlanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1889,9 +2749,26 @@ public class YamlManager
 		for(Color i : colors)
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()+"\"; eng = \""+i.toString()+"\";";
-			if(i == Color.AQUA){}
-			colorlanguageKeys.put("case_"+i.toString(), 
+			String ger = "";
+			if(i == Color.AQUA){ger = "Aqua"; eng = "Aqua";}
+			if(i == Color.BLACK){ger = "Schwarz"; eng = "Black";}
+			if(i == Color.BLUE){ger = "Blau"; eng = "Blue";}
+			if(i == Color.FUCHSIA){ger = "Fuchsie"; eng = "Fuchsia";}
+			if(i == Color.GRAY){ger = "Grau"; eng = "Gray";}
+			if(i == Color.GREEN){ger = "Grün"; eng = "Green";}
+			if(i == Color.LIME){ger = "Limettegrün"; eng = "Lime";}
+			if(i == Color.MAROON){ger = "Kastanienbraun"; eng = "Maroon";}
+			if(i == Color.NAVY){ger = "Navyblau"; eng = "Navy";}
+			if(i == Color.OLIVE){ger = "Olivengrün"; eng = "Olive";}
+			if(i == Color.ORANGE){ger = "Orange"; eng = "Orange";}
+			if(i == Color.PURPLE){ger = "Violett"; eng = "Purple";}
+			if(i == Color.RED){ger = "Rot"; eng = "Red";}
+			if(i == Color.SILVER){ger = "Silber"; eng = "Silver";}
+			if(i == Color.TEAL){ger = "Blaugrün"; eng = "Teal";}
+			if(i == Color.WHITE){ger = "Weiß"; eng = "White";}
+			if(i == Color.YELLOW){ger = "Gelb"; eng = "Yellow";}
+			
+			colorlanguageKeys.put(String.valueOf(i.asRGB()), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1902,12 +2779,28 @@ public class YamlManager
 		for(DyeColor i : DyeColor.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case BLACK: ger = "Schwarz"; eng = "Black"; break;
+			case BLUE: ger = "Blau"; eng = "Blue"; break;
+			case BROWN: ger = "Braun"; eng = "Brown"; break;
+			case CYAN: ger = "Cyan"; eng = "Cyan"; break;
+			case GRAY: ger = "Grau"; eng = "Gray"; break;
+			case GREEN: ger = "Grün"; eng = "Green"; break;
+			case LIGHT_BLUE: ger = "Hellblau"; eng = "Light Blue"; break;
+			case LIGHT_GRAY: ger = "Hellgrau"; eng = "Light Gray"; break;
+			case LIME: ger = "Limette"; eng = "Lime"; break;
+			case MAGENTA: ger = "Magenta"; eng = "Magenta"; break;
+			case ORANGE: ger = "Orange"; eng = "Orange"; break;
+			case PINK: ger = "Pink"; eng = "Pink"; break;
+			case PURPLE: ger = "Violett"; eng = "Purple"; break;
+			case RED: ger = "Rot"; eng = "Red"; break;
+			case WHITE: ger = "Weiß"; eng = "White"; break;
+			case YELLOW: ger = "Gelb"; eng = "Yellow"; break;
 			}
-			dyecolorlanguageKeys.put("case_"+i.toString(), 
+			dyecolorlanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1928,7 +2821,7 @@ public class YamlManager
 					{
 					default: break;
 					}
-					tropicalfishbucketlanguageKeys.put("case_"+i.toString()+"_"+j.toString()+"_"+h.toString(), 
+					tropicalfishbucketlanguageKeys.put(i.toString()+"_"+j.toString()+"_"+h.toString(), 
 							new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 									ger, eng}));
 				}
@@ -1942,13 +2835,23 @@ public class YamlManager
 		for(Cat.Type i : Cat.Type.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case ALL_BLACK: ger = "Ganz Schwarz"; eng = "All Black"; break;
+			case BLACK: ger = "Schwarz"; eng = "Black"; break;
+			case BRITISH_SHORTHAIR: ger = "Britisch Kurzhaar"; eng = "British Shorthair"; break;
+			case CALICO: ger = "Calico"; eng = "Calico"; break;
+			case JELLIE: ger = "Jellie"; eng = "Jellie"; break;
+			case PERSIAN: ger = "Perser"; eng = "Persian"; break;
+			case RAGDOLL: ger = "Ragdoll"; eng = "Ragdoll"; break;
+			case RED: ger = "Rot"; eng = "Red"; break;
+			case SIAMESE: ger = "Siamese"; eng = "Siamese"; break;
+			case TABBY: ger = "Getigert"; eng = "Tabby"; break;
+			case WHITE: ger = "Weiß"; eng = "White"; break;
 			}
-			cattypelanguageKeys.put("case_"+i.toString(), 
+			cattypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1959,13 +2862,14 @@ public class YamlManager
 		for(Fox.Type i : Fox.Type.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case RED: ger = "Rot"; eng = "Red"; break;
+			case SNOW: ger = "Schnee"; eng = "Snow"; break;
 			}
-			foxtypelanguageKeys.put("case_"+i.toString(), 
+			foxtypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1976,13 +2880,39 @@ public class YamlManager
 		for(MapCursor.Type i : MapCursor.Type.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case WHITE_POINTER: ger = "Weißer Zeiger"; eng = "WHITE_POINTER"; break;
+			case GREEN_POINTER: ger = "Grüner Zeiger"; eng = "GREEN_POINTER"; break;
+			case RED_POINTER: ger = "Roter Zeiger"; eng = "RED_POINTER"; break;
+			case BLUE_POINTER: ger = "Blauer Zeiger"; eng = "BLUE_POINTER"; break;
+			case WHITE_CROSS: ger = "Weißes Kreuz"; eng = "WHITE_CROSS"; break;
+			case RED_MARKER: ger = "Rote Markierung"; eng = "RED_MARKER"; break;
+			case WHITE_CIRCLE: ger = "Weißer Kreis"; eng = "WHITE_CIRCLE"; break;
+			case SMALL_WHITE_CIRCLE: ger = "Kleiner Weißer Kreis"; eng = "SMALL_WHITE_CIRCLE"; break;
+			case MANSION: ger = "Waldanwesen"; eng = "MANSION"; break;
+			case TEMPLE: ger = "TEMPLE"; eng = "TEMPLE"; break;
+			case BANNER_WHITE: ger = "Weißes Banner"; eng = "BANNER_WHITE"; break;
+			case BANNER_ORANGE: ger = "Oranges Banner"; eng = "BANNER_ORANGE"; break;
+			case BANNER_MAGENTA: ger = "Magenta Banner"; eng = "BANNER_MAGENTA"; break;
+			case BANNER_LIGHT_BLUE: ger = "Hellblaues Banner"; eng = "BANNER_LIGHT_BLUE"; break;
+			case BANNER_YELLOW: ger = "Gelbes Banner"; eng = "BANNER_YELLOW"; break;
+			case BANNER_LIME: ger = "Hellgrünes Banner"; eng = "BANNER_LIME"; break;
+			case BANNER_PINK: ger = "Rosa Banner"; eng = "BANNER_PINK"; break;
+			case BANNER_GRAY: ger = "Graues Banner"; eng = "BANNER_GRAY"; break;
+			case BANNER_LIGHT_GRAY: ger = "Hellgraues Banner"; eng = "BANNER_LIGHT_GRAY"; break;
+			case BANNER_CYAN: ger = "Türkises Banner"; eng = "BANNER_CYAN"; break;
+			case BANNER_PURPLE: ger = "Violettes Banner"; eng = "BANNER_PURPLE"; break;
+			case BANNER_BLUE: ger = "Blaues Banner"; eng = "BANNER_BLUE"; break;
+			case BANNER_BROWN: ger = "Braunes Banner"; eng = "BANNER_BROWN"; break;
+			case BANNER_GREEN: ger = "Grünes Banner"; eng = "BANNER_GREEN"; break;
+			case BANNER_RED: ger = "Rotes Banner"; eng = "BANNER_RED"; break;
+			case BANNER_BLACK: ger = "Schwarzes Banner"; eng = "BANNER_BLACK"; break;
+			case RED_X: ger = "Rotes X"; eng = "RED_X"; break;
 			}
-			mapcursortypelanguageKeys.put("case_"+i.toString(), 
+			mapcursortypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -1993,13 +2923,19 @@ public class YamlManager
 		for(Rabbit.Type i : Rabbit.Type.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case BLACK: ger = "Schwarz"; eng = "Black"; break;
+			case BLACK_AND_WHITE: ger = "Schwarzweiß"; eng = "Black and White"; break;
+			case BROWN: ger = "Braun"; eng = "Brown"; break;
+			case GOLD: ger = "Gold"; eng = "Gold"; break;
+			case SALT_AND_PEPPER: ger = "Salz und Pfeffer"; eng = "Salt and Pepper"; break;
+			case THE_KILLER_BUNNY: ger = "Killer Kaninchen"; eng = "The Killer Bunny"; break;
+			case WHITE: ger = "Weiß"; eng = "White"; break;
 			}
-			rabbittypelanguageKeys.put("case_"+i.toString(), 
+			rabbittypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -2010,13 +2946,19 @@ public class YamlManager
 		for(Villager.Type i : Villager.Type.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case DESERT: ger = "Wüste"; eng = "Desert"; break;
+			case JUNGLE: ger = "Dschungel"; eng = "Jungle"; break;
+			case PLAINS: ger = "Ebenen"; eng = "Plains"; break;
+			case SAVANNA: ger = "Savanne"; eng = "Savanna"; break;
+			case SNOW: ger = "Schnee"; eng = "Snow"; break;
+			case SWAMP: ger = "Sumpf"; eng = "Swamp"; break;
+			case TAIGA: ger = "Taiga"; eng = "Taiga"; break;
 			}
-			villagertypelanguageKeys.put("case_"+i.toString(), 
+			villagertypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -2027,13 +2969,27 @@ public class YamlManager
 		for(Villager.Profession i : Villager.Profession.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case ARMORER: ger = "Rüstungsschmied"; eng = "Armorer"; break;
+			case BUTCHER: ger = "Metzger"; eng = "Butcher"; break;
+			case CARTOGRAPHER: ger = "Kartenzeichner"; eng = "Cartographer"; break;
+			case CLERIC: ger = "Geistliche"; eng = "Cleric"; break;
+			case FARMER: ger = "Bauer"; eng = "Farmer"; break;
+			case FISHERMAN: ger = "Fischer"; eng = "Fisherman"; break;
+			case FLETCHER: ger = "Pfeilmacher"; eng = "Fletcher"; break;
+			case LEATHERWORKER: ger = "Gerber"; eng = "Leatherworker"; break;
+			case LIBRARIAN: ger = "Bibliothekar"; eng = "Librarian"; break;
+			case MASON: ger = "Steinmetz"; eng = "Mason"; break;
+			case NITWIT: ger = "Nichtnutz"; eng = "Niwit"; break;
+			case NONE: ger = "Arbeitsloser"; eng = "None"; break;
+			case SHEPHERD: ger = "Schäfer"; eng = "Shepherd"; break;
+			case TOOLSMITH: ger = "Werkzeugschmied"; eng = "Toolsmith"; break;
+			case WEAPONSMITH: ger = "Waffenschmied"; eng = "Weaponsmith"; break;
 			}
-			villagerprofessionlanguageKeys.put("case_"+i.toString(), 
+			villagerprofessionlanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -2044,13 +3000,34 @@ public class YamlManager
 		for(TreeType i : TreeType.values())
 		{
 			String eng = "";
-			String ger = eng = "ger = \""+i.toString()
-				+"\"; eng = \""+i.toString()+"\";";
+			String ger = "";
 			switch(i)
 			{
 			default: break;
+			case TREE: ger = "Baum"; eng = "TREE"; break;
+			case BIG_TREE: ger = "BIG_TREE"; eng = "BIG_TREE"; break;
+			case REDWOOD: ger = "Küsten-Sequoie"; eng = "REDWOOD"; break;
+			case TALL_REDWOOD: ger = "Große Küsten-Sequoie"; eng = "TALL_REDWOOD"; break;
+			case BIRCH: ger = "Birke"; eng = "BIRCH"; break;
+			case JUNGLE: ger = "Trope"; eng = "JUNGLE"; break;
+			case SMALL_JUNGLE: ger = "Kleiner Dschungel"; eng = "SMALL_JUNGLE"; break;
+			case COCOA_TREE: ger = "Kakaobaum"; eng = "COCOA_TREE"; break;
+			case JUNGLE_BUSH: ger = "Dschungel Busch"; eng = "JUNGLE_BUSH"; break;
+			case RED_MUSHROOM: ger = "Roter Pilz"; eng = "RED_MUSHROOM"; break;
+			case BROWN_MUSHROOM: ger = "Brauner Pilz"; eng = "BROWN_MUSHROOM"; break;
+			case SWAMP: ger = "Sumpf"; eng = "SWAMP"; break;
+			case ACACIA: ger = "Akazie"; eng = "ACACIA"; break;
+			case DARK_OAK: ger = "Schwarz Eiche"; eng = "DARK_OAK"; break;
+			case MEGA_REDWOOD: ger = "Mega Küsten-Sequoie"; eng = "MEGA_REDWOOD"; break;
+			case TALL_BIRCH: ger = "Große Birke"; eng = "TALL_BIRCH"; break;
+			case CHORUS_PLANT: ger = "Chorus Pflanze "; eng = "CHORUS_PLANT"; break;
+			case CRIMSON_FUNGUS: ger = "Karmesinpilz"; eng = "CRIMSON_FUNGUS"; break;
+			case WARPED_FUNGUS: ger = "Wirrpilz"; eng = "WARPED_FUNGUS"; break;
+			case AZALEA: ger = "Azalee"; eng = "AZALEA"; break;
+			case MANGROVE: ger = "Mangrove"; eng = "MANGROVE"; break;
+			case TALL_MANGROVE: ger = "Hohe Mangrove"; eng = "TALL_MANGROVE"; break;
 			}
-			treetypelanguageKeys.put("case_"+i.toString(), 
+			treetypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
