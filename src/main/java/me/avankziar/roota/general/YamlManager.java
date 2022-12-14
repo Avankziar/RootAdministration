@@ -1133,7 +1133,7 @@ public class YamlManager
 			case MUSHROOM_STEW: ger = "Pilzsuppe"; eng = "MUSHROOM_STEW"; break;
 			case STRING: ger = "Faden"; eng = "STRING"; break;
 			case FEATHER: ger = "Feder"; eng = "FEATHER"; break;
-			case GUNPOWDER: ger = "Scharzpulver"; eng = "GUNPOWDER"; break;
+			case GUNPOWDER: ger = "Schwarzpulver"; eng = "GUNPOWDER"; break;
 			case WHEAT_SEEDS: ger = "Weizenkörner"; eng = "WHEAT_SEEDS"; break;
 			case WHEAT: ger = "Weizen"; eng = "WHEAT"; break;
 			case BREAD: ger = "Brot"; eng = "BREAD"; break;
