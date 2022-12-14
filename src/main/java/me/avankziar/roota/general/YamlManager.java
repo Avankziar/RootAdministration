@@ -412,7 +412,7 @@ public class YamlManager
 			case DEEPSLATE_IRON_ORE: ger = "Tiefenschiefer-Eisenerz"; eng = "DEEPSLATE_IRON_ORE"; break;
 			case COPPER_ORE: ger = "Kupfererz"; eng = "COPPER_ORE"; break;
 			case DEEPSLATE_COPPER_ORE: ger = "Tiefenschiefer-Kupfererz"; eng = "DEEPSLATE_COPPER_ORE"; break;
-			case GOLD_ORE: ger = "GOLD_ORE"; eng = "Golderz"; break;
+			case GOLD_ORE: ger = "Golderz"; eng = "Goldore"; break;
 			case DEEPSLATE_GOLD_ORE: ger = "Tiefenschiefer-Golderz"; eng = "DEEPSLATE_GOLD_ORE"; break;
 			case REDSTONE_ORE: ger = "REDSTONE_ORE"; eng = "Redstone-Erz"; break;
 			case DEEPSLATE_REDSTONE_ORE: ger = "Tiefenschiefer-Redstone-Erz"; eng = "DEEPSLATE_REDSTONE_ORE"; break;
