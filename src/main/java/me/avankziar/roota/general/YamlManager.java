@@ -323,7 +323,7 @@ public class YamlManager
 		configKeys.put("Mysql.default.Password"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"not_0123456789"}));
-		configKeys.put("Mysql.default.IsActive"
+		configKeys.put("Mysql.one.IsActive"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				false}));
 		configKeys.put("Mysql.one.Host"
