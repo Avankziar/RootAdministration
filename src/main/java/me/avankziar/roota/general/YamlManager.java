@@ -292,9 +292,12 @@ public class YamlManager
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"aep>>>default", 
 				"ash>>>one",
-				"afkr>>default",
+				"afkr>>>default",
+				"bmc>>>default",
 				"btm>>>default",
+				"ccs>>>default",
 				"mhr>>>default",
+				"sale>>>default",
 				"scc>>>default"}));
 		configKeys.put("Mysql.default.IsActive"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
