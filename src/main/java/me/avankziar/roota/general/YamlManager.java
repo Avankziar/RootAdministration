@@ -360,7 +360,7 @@ public class YamlManager
 		for(Material m : Material.values())
 		{
 			String ger = "";
-			String eng = "";
+			String eng = m.toString();
 			switch(m)
 			{
 			default:
@@ -1647,6 +1647,128 @@ public class YamlManager
 			case BIG_DRIPLEAF_STEM: ger = "Großes Tropfsteinblatt-Stamm"; eng = "BIG_DRIPLEAF_STEM"; break;
 			case POTTED_AZALEA_BUSH: ger = "Eingetopftes Azalenlaub"; eng = "POTTED_AZALEA_BUSH"; break;
 			case POTTED_FLOWERING_AZALEA_BUSH: ger = "Eingetopftes blühendes Azalenlaub"; eng = "POTTED_FLOWERING_AZALEA_BUSH"; break;
+			case CHERRY_PLANKS: ger = "Kirschholzbretter"; break;
+			case BAMBOO_PLANKS: ger = "Bambusbretter"; break;
+			case BAMBOO_MOSAIC: ger = "Bambusmosaik"; break;
+			case CHERRY_SAPLING: ger = "Kirschsetzling"; break;
+			case SUSPICIOUS_SAND: ger = "Seltsamer Sand"; break;
+			case SUSPICIOUS_GRAVEL: ger = "Seltsamer Kies"; break;
+			case CHERRY_LOG: ger = "Kirschstamm"; break;
+			case BAMBOO_BLOCK: ger = "Bambusblock"; break;
+			case STRIPPED_CHERRY_LOG: ger = "Entrindeter Kirschstamm"; break;
+			case STRIPPED_CHERRY_WOOD: ger = "Entrindetes Kirschholz"; break;
+			case STRIPPED_BAMBOO_BLOCK: ger = "Geschälter Bambusblock"; break;
+			case CHERRY_WOOD: ger = "Kirschholz"; break;
+			case CHERRY_LEAVES: ger = "Kirschlaub"; break;
+			case TORCHFLOWER: ger = "Fackellilie"; break;
+			case PITCHER_PLANT: ger = "Kannenpflanze"; break;
+			case PINK_PETALS: ger = "Rosa Blütenblätter"; break;
+			case CHERRY_SLAB: ger = "Kirschholzstufe"; break;
+			case BAMBOO_SLAB: ger = "Bambusstufe"; break;
+			case BAMBOO_MOSAIC_SLAB: ger = "Bambusmosaikstufe"; break;
+			case CHISELED_BOOKSHELF: ger = "Gearbeitetes Bücherregal"; break;
+			case DECORATED_POT: ger = "Verzierter Krug"; break;
+			case CHERRY_FENCE: ger = "Kirschholzzaun"; break;
+			case BAMBOO_FENCE: ger = "Bambuszaun"; break;
+			case CHERRY_STAIRS: ger = "Kirschholztreppe"; break;
+			case BAMBOO_STAIRS: ger = "Bambustreppe"; break;
+			case BAMBOO_MOSAIC_STAIRS: ger = "Bambusmosaiktreppe"; break;
+			case SNIFFER_EGG: ger = "Schnüffler-Ei"; break;
+			case CALIBRATED_SCULK_SENSOR: ger = "Kalibrierter Sculk-Sensor"; break;
+			case CHERRY_BUTTON: ger = "Kirschholzknopf"; break;
+			case BAMBOO_BUTTON: ger = "Bambusknopf"; break;
+			case CHERRY_PRESSURE_PLATE: ger = "Kirschholzdruckplatte"; break;
+			case BAMBOO_PRESSURE_PLATE: ger = "Bambusdruckplatte"; break;
+			case CHERRY_DOOR: ger = "Kirschholztür"; break;
+			case BAMBOO_DOOR: ger = "Bambustür"; break;
+			case CHERRY_TRAPDOOR: ger = "Kirschholzfalltür"; break;
+			case BAMBOO_TRAPDOOR: ger = "Bambusfalltür"; break;
+			case CHERRY_FENCE_GATE: ger = "Kirschholzzauntor"; break;
+			case BAMBOO_FENCE_GATE: ger = "Bambuszauntor"; break;
+			case CHERRY_BOAT: ger = "Kirschholzboot"; break;
+			case CHERRY_CHEST_BOAT: ger = "Kirschholztruhenboot"; break;
+			case BAMBOO_RAFT: ger = "Bambusfloß"; break;
+			case BAMBOO_CHEST_RAFT: ger = "Bambus-Truhenfloß"; break;
+			case CHERRY_SIGN: ger = "Kirschholzschild"; break;
+			case BAMBOO_SIGN: ger = "Bambusschild"; break;
+			case OAK_HANGING_SIGN: ger = "Eichenholzhängeschild"; break;
+			case SPRUCE_HANGING_SIGN: ger = "Fichtenholzhängeschild"; break;
+			case BIRCH_HANGING_SIGN: ger = "Birkenholzhängeschild"; break;
+			case JUNGLE_HANGING_SIGN: ger = "Tropenholzhängeschild"; break;
+			case ACACIA_HANGING_SIGN: ger = "Akazienholzhängeschild"; break;
+			case CHERRY_HANGING_SIGN: ger = "Kirschholzhängeschild"; break;
+			case DARK_OAK_HANGING_SIGN: ger = "Schwarzeichenholzhängeschild"; break;
+			case MANGROVE_HANGING_SIGN: ger = "Mangrovenholzhängeschild"; break;
+			case BAMBOO_HANGING_SIGN: ger = "Bambushängeschild"; break;
+			case CRIMSON_HANGING_SIGN: ger = "Karmesinhängeschild"; break;
+			case WARPED_HANGING_SIGN: ger = "Wirrhängeschild"; break;
+			case CAMEL_SPAWN_EGG: ger = "Dromedar-Spawn-Ei"; break;
+			case ENDER_DRAGON_SPAWN_EGG: ger = "Drachen-Spawn-Ei"; break;
+			case IRON_GOLEM_SPAWN_EGG: ger = "Eisengolem-Spawn-Ei"; break;
+			case SNIFFER_SPAWN_EGG: ger = "Schnüffler-Spawn-Ei"; break;
+			case SNOW_GOLEM_SPAWN_EGG: ger = "Schneegolem-Spawn-Ei"; break;
+			case WITHER_SPAWN_EGG: ger = "Whiter-Spawn-Ei"; break;
+			case PIGLIN_HEAD: ger = "Piglingkopf"; break;
+			case TORCHFLOWER_SEEDS: ger = "Fackelliliensamen"; break;
+			case PITCHER_POD: ger = "Kannenpflanzenkapsel"; break;
+			case MUSIC_DISC_RELIC: ger = "Schallplatte Aaron Cherof - Relic"; break;
+			case BRUSH: ger = "Pinsel"; break;
+			case NETHERITE_UPGRADE_SMITHING_TEMPLATE: ger = "Schmiedevorlage Netheritaufwertung"; break;
+			case SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Wachen-Rüstungsbesatz"; break;
+			case DUNE_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Dünen-Rüstungsbesatz"; break;
+			case COAST_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Küsten-Rüstungsbesatz"; break;
+			case WILD_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Wildnis-Rüstungsbesatz"; break;
+			case WARD_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Warthof-Rüstungsbesatz"; break;
+			case EYE_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Augen-Rüstungsbesatz"; break;
+			case VEX_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Plagegeister-Rüstungsbesatz"; break;
+			case TIDE_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Gezeiten-Rüstungsbesatz"; break;
+			case SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Schnauzen-Rüstungsbesatz"; break;
+			case RIB_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Rippen-Rüstungsbesatz"; break;
+			case SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Turmspitzen-Rüstungsbesatz"; break;
+			case WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Wegfinder-Rüstungsbesatz"; break;
+			case SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Gestalter-Rüstungsbesatz"; break;
+			case SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Stille-Rüstungsbesatz"; break;
+			case RAISER_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Aufzieher-Rüstungsbesatz"; break;
+			case HOST_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Gastwirts-Rüstungsbesatz"; break;
+			case ANGLER_POTTERY_SHERD: ger = "Angler-Töpferscherbe"; break;
+			case ARCHER_POTTERY_SHERD: ger = "Schützen-Töpferscherbe"; break;
+			case ARMS_UP_POTTERY_SHERD: ger = "Gebärden-Töpferscherbe"; break;
+			case BLADE_POTTERY_SHERD: ger = "Klingen-Töpferscherbe"; break;
+			case BREWER_POTTERY_SHERD: ger = "Brauer-Töpferscherbe"; break;
+			case BURN_POTTERY_SHERD: ger = "Flammen-Töpferscherbe"; break;
+			case DANGER_POTTERY_SHERD: ger = "Gefahren-Töpferscherbe"; break;
+			case EXPLORER_POTTERY_SHERD: ger = "Entdecker-Töpferscherbe"; break;
+			case FRIEND_POTTERY_SHERD: ger = "Freundes-Töpferscherbe"; break;
+			case HEART_POTTERY_SHERD: ger = "Herz-Töpferscherbe"; break;
+			case HEARTBREAK_POTTERY_SHERD: ger = "Herzschmerz-Töpferscherbe"; break;
+			case HOWL_POTTERY_SHERD: ger = "Geheul-Töpferscherbe"; break;
+			case MINER_POTTERY_SHERD: ger = "Bergarbeiter-Töpferscherbe"; break;
+			case MOURNER_POTTERY_SHERD: ger = "Wimmerer-Töpferscherbe"; break;
+			case PLENTY_POTTERY_SHERD: ger = "Reichtums-Töpferscherbe"; break;
+			case PRIZE_POTTERY_SHERD: ger = "Juwelen-Töpferscherbe"; break;
+			case SHEAF_POTTERY_SHERD: ger = "Garben-Töpferscherbe"; break;
+			case SHELTER_POTTERY_SHERD: ger = "Zufluchts-Töpferscherbe"; break;
+			case SKULL_POTTERY_SHERD: ger = "Totenkopf-Töpferscherbe"; break;
+			case SNORT_POTTERY_SHERD: ger = "Schnaub-Töpferscherbe"; break;
+			case CHERRY_WALL_SIGN: ger = "Kirschholz Wandschild"; break;
+			case BAMBOO_WALL_SIGN: ger = "Bambus Wandschild"; break;
+			case OAK_WALL_HANGING_SIGN: ger = "Eichenholz Wandhängeschild"; break;
+			case SPRUCE_WALL_HANGING_SIGN: ger = "Fichtenholz Wandhängeschild"; break;
+			case BIRCH_WALL_HANGING_SIGN: ger = "Birkenholz Wandhängeschild"; break;
+			case ACACIA_WALL_HANGING_SIGN: ger = "Akazienholz Wandhängeschild"; break;
+			case CHERRY_WALL_HANGING_SIGN: ger = "Kirschholz Wandhängeschild"; break;
+			case JUNGLE_WALL_HANGING_SIGN: ger = "Tropenholz Wandhängeschild"; break;
+			case DARK_OAK_WALL_HANGING_SIGN: ger = "Schwarzeichen Wandhängeschild"; break;
+			case MANGROVE_WALL_HANGING_SIGN: ger = "Mangrovenholz Wandhängeschild"; break;
+			case CRIMSON_WALL_HANGING_SIGN: ger = "Karmesin Wandhängeschild"; break;
+			case WARPED_WALL_HANGING_SIGN: ger = "Wirr Wandhängeschild"; break;
+			case BAMBOO_WALL_HANGING_SIGN: ger = "Bambus Wandhängeschild"; break;
+			case POTTED_TORCHFLOWER: ger = "Fackelblume im Blumentopf"; break;
+			case POTTED_CHERRY_SAPLING: ger = "Kirschsetling im Blumentopf"; break;
+			case PIGLIN_WALL_HEAD: ger = "Piglinkopf"; break;
+			case TORCHFLOWER_CROP: ger = "Fackelblumenernte"; break;
+			case PITCHER_CROP: ger = "Kannenpflanzenernte"; break;
+
 			}
 			matlanguageKeys.put(m.toString(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -2470,6 +2592,7 @@ public class YamlManager
 			String eng = "";
 			switch(i)
 			{
+			case HIDE_ARMOR_TRIM: ger = "Versteckte Rüstungsdekoration"; eng = "Hide Armor Trim"; break;
 			case HIDE_ATTRIBUTES: ger = "Verstecke Attribute"; eng = "Hide Attributes"; break;
 			case HIDE_DESTROYS: ger = "Verstecke Abbausmöglichkeit"; eng = "Hide Destroys"; break;
 			case HIDE_DYE: ger = "Verstecke Einfärbung"; eng = "Hide Dye"; break;
