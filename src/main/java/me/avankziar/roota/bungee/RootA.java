@@ -27,7 +27,7 @@ public class RootA extends Plugin
 		//https://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=SCC
 		log.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | Version: "+plugin.getDescription().getVersion());
 		log.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthor());
-		log.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: ");
+		log.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: https://www.spigotmc.org/resources/rootadministration.104833/");
 		log.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepends().toString());
 		log.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepends().toString());
 		log.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | Have Fun^^");

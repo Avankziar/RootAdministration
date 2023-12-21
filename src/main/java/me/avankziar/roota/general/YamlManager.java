@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.TreeType;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
@@ -526,7 +528,7 @@ public class YamlManager
 			case CHISELED_SANDSTONE: ger = "Gemeißelter Sandstein"; eng = "CHISELED_SANDSTONE"; break;
 			case CUT_SANDSTONE: ger = "Geschnittener Sandstein"; eng = "CUT_SANDSTONE"; break;
 			case COBWEB: ger = "Spinnennetz"; eng = "COBWEB"; break;
-			case GRASS: ger = "Gras"; eng = "GRASS"; break;
+			case SHORT_GRASS: ger = "Gras"; eng = "GRASS"; break;
 			case FERN: ger = "Farn"; eng = "FERN"; break;
 			case AZALEA: ger = "Azalee"; eng = "AZALEA"; break;
 			case FLOWERING_AZALEA: ger = "Blühende Azalee"; eng = "FLOWERING_AZALEA"; break;
@@ -1768,7 +1770,64 @@ public class YamlManager
 			case PIGLIN_WALL_HEAD: ger = "Piglinkopf"; break;
 			case TORCHFLOWER_CROP: ger = "Fackelblumenernte"; break;
 			case PITCHER_CROP: ger = "Kannenpflanzenernte"; break;
-
+			//Below 1.20.4
+			case BREEZE_SPAWN_EGG: ger = "Breezespawnei"; break;
+			case CHISELED_COPPER: ger = "Bearbeiteter Kupferblock"; break;
+			case CHISELED_TUFF: ger = "Bearbeiteter Tuffstein"; break;
+			case CHISELED_TUFF_BRICKS: ger = "Bearbeiteter Tuffziegel"; break;
+			case COPPER_BULB: ger = "Kupferbirne"; break;
+			case COPPER_DOOR: ger = "Kupfertür"; break;
+			case COPPER_GRATE: ger = "Kupferrost"; break;
+			case COPPER_TRAPDOOR: ger = "Kupferfalltür"; break;
+			case CRAFTER: ger = "Crafter"; break;
+			case EXPOSED_CHISELED_COPPER: ger = "Angelaufener bearbeiteter Kupferblock"; break;
+			case EXPOSED_COPPER_BULB: ger = "Angelaufene Kupferbirne"; break;
+			case EXPOSED_COPPER_DOOR: ger = "Angelaufener bearbeitete Kupfertüre"; break;
+			case EXPOSED_COPPER_GRATE: ger = "Angelaufener bearbeiteter Kupferrost"; break;
+			case EXPOSED_COPPER_TRAPDOOR: ger = "Angelaufener bearbeiteter "; break;
+			case OXIDIZED_CHISELED_COPPER: ger = "Oxidierter bearbeiteter Kupferblock"; break;
+			case OXIDIZED_COPPER_BULB: ger = "Oxidierte Kupferbirne"; break;
+			case OXIDIZED_COPPER_DOOR: ger = "Oxidierte Kupfertüre"; break;
+			case OXIDIZED_COPPER_GRATE: ger = "Oxidierte Kupferrost"; break;
+			case OXIDIZED_COPPER_TRAPDOOR: ger = "Oxidierte Kupferfalltüre"; break;
+			case POLISHED_TUFF: ger = "Polierter Tuffstein"; break;
+			case POLISHED_TUFF_SLAB: ger = "Polierte Tuffsteinstufe"; break;
+			case POLISHED_TUFF_STAIRS: ger = "Polierte Tuffsteintreppe"; break;
+			case POLISHED_TUFF_WALL: ger = "Polierte Tuffsteinmauer"; break;
+			case TRIAL_KEY: ger = "Trialschlüssel"; break;
+			case TRIAL_SPAWNER: ger = "Trialspawner"; break;
+			case TUFF_BRICK_SLAB: ger = "Tuffziegelstufe"; break;
+			case TUFF_BRICK_STAIRS: ger = "Tuffziegeltreppe"; break;
+			case TUFF_BRICK_WALL: ger = "Tuffziegelmauer"; break;
+			case TUFF_BRICKS: ger = "Tuffziegel"; break;
+			case TUFF_SLAB: ger = "Tuffsteinstufe"; break;
+			case TUFF_STAIRS: ger = "Tuffsteintreppe"; break;
+			case TUFF_WALL: ger = "Tuffsteinmauer"; break;
+			case WAXED_CHISELED_COPPER: ger = "Gewachster bearbeiteter Kupferblock"; break;
+			case WAXED_COPPER_BULB: ger = "Gewachste Kupferbirne"; break;
+			case WAXED_COPPER_DOOR: ger = "Gewachste Kupfertür"; break;
+			case WAXED_COPPER_GRATE: ger = "Gewachster Kupferrost"; break;
+			case WAXED_COPPER_TRAPDOOR: ger = "Gewachste Kupferfalltüre"; break;
+			case WAXED_EXPOSED_CHISELED_COPPER: ger = "Gewachster angelaufener bearbeiteter Kupferblock"; break;
+			case WAXED_EXPOSED_COPPER_BULB: ger = "Gewachste angelaufene Kupferbirne"; break;
+			case WAXED_EXPOSED_COPPER_DOOR: ger = "Gewachste angelaufene Kupfertür"; break;
+			case WAXED_EXPOSED_COPPER_GRATE: ger = "Gewachste angelaufene Kupferrost"; break;
+			case WAXED_EXPOSED_COPPER_TRAPDOOR: ger = "Gewachste angelaufene Kupferfalltüre"; break;
+			case WAXED_OXIDIZED_CHISELED_COPPER: ger = "Gewachster oxidierter bearbeiteter Kupferblock"; break;
+			case WAXED_OXIDIZED_COPPER_BULB: ger = "Gewachste oxidierte Kupferbirne"; break;
+			case WAXED_OXIDIZED_COPPER_DOOR: ger = "Gewachste oxidierte Kupfertüre"; break;
+			case WAXED_OXIDIZED_COPPER_GRATE: ger = "Gewachste oxidierte Kupferrost"; break;
+			case WAXED_OXIDIZED_COPPER_TRAPDOOR: ger = "Gewachste oxidierte Kupferfalltüre"; break;
+			case WAXED_WEATHERED_CHISELED_COPPER: ger = "Gewachster verwitterter bearbeiteter Kupferblock"; break;
+			case WAXED_WEATHERED_COPPER_BULB: ger = "Gewachste verwitterte Kupferbirne"; break;
+			case WAXED_WEATHERED_COPPER_DOOR: ger = "Gewachste verwitterte Kupfertüre"; break;
+			case WAXED_WEATHERED_COPPER_GRATE: ger = "Gewachste verwitterter Kupferrost"; break;
+			case WAXED_WEATHERED_COPPER_TRAPDOOR: ger = "Gewachste verwitterte Kupferfalltüre"; break;
+			case WEATHERED_CHISELED_COPPER: ger = "Verwitterter bearbeiteter Kupferblock"; break;
+			case WEATHERED_COPPER_BULB: ger = "Verwitterte Kupferbirne"; break;
+			case WEATHERED_COPPER_DOOR: ger = "Verwitterte Kupfertüre"; break;
+			case WEATHERED_COPPER_GRATE: ger = "Verwitterter Kupferrost"; break;
+			case WEATHERED_COPPER_TRAPDOOR: ger = "Verwitterte Kupferfalltüre"; break;
 			}
 			matlanguageKeys.put(m.toString(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -1780,49 +1839,53 @@ public class YamlManager
 	@SuppressWarnings("deprecation")
 	public void initEnchantmentLanguage() //INFO:EnchantmentLanguages
 	{		
-		for(Enchantment e : Enchantment.values())
+		for(Enchantment e : Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
 		{
-			String ger = "";
-			String eng = e.getName();
-			if(e.equals(Enchantment.ARROW_DAMAGE)){ger = "Stärke";}
-			if(e.equals(Enchantment.ARROW_FIRE)){ger = "Flamme";}
-			if(e.equals(Enchantment.ARROW_INFINITE)){ger = "Unendlich";}
-			if(e.equals(Enchantment.ARROW_KNOCKBACK)){ger = "Schlag";}
-			if(e.equals(Enchantment.BINDING_CURSE)){ger = "Fluch der Bindung";}
-			if(e.equals(Enchantment.CHANNELING)){ger = "Entladung";}
-			if(e.equals(Enchantment.DAMAGE_ALL)){ger = "Schärfe";}
-			if(e.equals(Enchantment.DAMAGE_ARTHROPODS)){ger = "Nemesis der Gliederfüßer";}
-			if(e.equals(Enchantment.DAMAGE_UNDEAD)){ger = "Bann";}
-			if(e.equals(Enchantment.DEPTH_STRIDER)){ger = "Wasserläufer";}
-			if(e.equals(Enchantment.DIG_SPEED)){ger = "Effizienz";}
-			if(e.equals(Enchantment.DURABILITY)){ger = "Haltbarkeit";}
-			if(e.equals(Enchantment.FIRE_ASPECT)){ger = "Verbrennung";}
-			if(e.equals(Enchantment.FROST_WALKER)){ger = "Eisläufer";}
-			if(e.equals(Enchantment.IMPALING)){ger = "Harpune";}
-			if(e.equals(Enchantment.KNOCKBACK)){ger = "Rückstoß";}
-			if(e.equals(Enchantment.LOOT_BONUS_BLOCKS)){ger = "Glück";}
-			if(e.equals(Enchantment.LOOT_BONUS_MOBS)){ger = "Plünderung";}
-			if(e.equals(Enchantment.LOYALTY)){ger = "Treue";}
-			if(e.equals(Enchantment.LUCK)){ger = "Glück des Meeres";}
-			if(e.equals(Enchantment.LURE)){ger = "Köder";}
-			if(e.equals(Enchantment.MENDING)){ger = "Reparatur";}
-			if(e.equals(Enchantment.MULTISHOT)){ger = "Mehrfachschuss";}
-			if(e.equals(Enchantment.OXYGEN)){ger = "Atmung";}
-			if(e.equals(Enchantment.PIERCING)){ger = "Durchschuss";}
-			if(e.equals(Enchantment.PROTECTION_ENVIRONMENTAL)){ger = "Schutz";}
-			if(e.equals(Enchantment.PROTECTION_EXPLOSIONS)){ger = "Explosionschutz";}
-			if(e.equals(Enchantment.PROTECTION_FALL)){ger = "Federfall";}
-			if(e.equals(Enchantment.PROTECTION_FIRE)){ger = "Feuerschutz";}
-			if(e.equals(Enchantment.PROTECTION_PROJECTILE)){ger = "Schusssicher";}
-			if(e.equals(Enchantment.QUICK_CHARGE)){ger = "Schnellladen";}
-			if(e.equals(Enchantment.RIPTIDE)){ger = "Sog";}
-			if(e.equals(Enchantment.SILK_TOUCH)){ger = "Behutsamkeit";}
-			if(e.equals(Enchantment.SOUL_SPEED)){ger = "Seelenläufer";}
-			if(e.equals(Enchantment.SWEEPING_EDGE)){ger = "Schwungkraft";}
-			if(e.equals(Enchantment.SWIFT_SNEAK)){ger = "Huschen";}
-			if(e.equals(Enchantment.THORNS)){ger = "Dornen";}
-			if(e.equals(Enchantment.VANISHING_CURSE)){ger = "Fluch des Verschwindens";}
-			if(e.equals(Enchantment.WATER_WORKER)){ger = "Wasseraffinität";}
+			String ger = e.getKey().getKey();
+			String eng = e.getKey().getKey();
+			switch(e.getKey().getKey())
+			{
+			case "respiration": ger = "Atmung"; break;
+			case "smite": ger = "Bann"; break;
+			case "silk_touch": ger = "Behutsamkeit"; break;
+			case "piercing": ger = "Durchschuss"; break;
+			case "thorns": ger = "Dornen"; break;
+			case "efficiency": ger = "Effizienz"; break;
+			case "frost_walker": ger = "Eisläufer"; break;
+			case "channeling": ger = "Entladung"; break;
+			case "blast_protection": ger = "Explosionsschutz"; break;
+			case "feather_falling": ger = "Federfall"; break;
+			case "fire_protection": ger = "Feuerschutz"; break;
+			case "flame": ger = "Flame"; break;
+			case "binding_curse": ger = "Fluch der Bindung"; break;
+			case "vanishing_curse": ger = "Fluch des Verschwindens"; break;
+			case "fortune": ger = "Glück"; break;
+			case "luck_of_the_sea": ger = "Glück des Meeres"; break;
+			case "unbreaking": ger = "Haltbarkeit"; break;
+			case "impaling": ger = "Harpune"; break;
+			case "swift_sneak": ger = "Huschen"; break;
+			case "lure": ger = "Köder"; break;
+			case "multishot": ger = "Mehrfachschuss"; break;
+			case "bane_of_arthropods": ger = "Nemesis der Gliederfüßer"; break;
+			case "looting": ger = "Plünderung"; break;
+			case "mending": ger = "Reparatur"; break;
+			case "knockback": ger = "Rückstoß"; break;
+			case "sharpness": ger = "Schärfe"; break;
+			case "punch": ger = "Schlag"; break;
+			case "quick_charge": ger = "Schnellladen"; break;
+			case "projectile_protection": ger = "Schusssicher"; break;
+			case "protection": ger = "Schutz"; break;
+			case "sweeping": ger = "Schwungkraft"; break;
+			case "soul_speed": ger = "Seelenläufer"; break;
+			case "riptide": ger = "Sog"; break;
+			case "cleaving": ger = "Spaltung"; break;
+			case "power": ger = "Stärke"; break;
+			case "loyalty": ger = "Treue"; break;
+			case "infinity": ger = "Unendlichkeit"; break;
+			case "fire_aspect": ger = "Verbrennung"; break;
+			case "aqua_affinity": ger = "Wasseraffinität"; break;
+			case "depth_strider": ger = "Wafferläufer"; break;
+			}
 			enchlanguageKeys.put(e.getName(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
@@ -2609,6 +2672,7 @@ public class YamlManager
 	
 	public void initPotionTypeLanguage() //INFO:PotionTypeLanguages
 	{
+		
 		for(PotionType pt : PotionType.values())
 		{
 			String ger = "";
@@ -2617,25 +2681,47 @@ public class YamlManager
 			{
 			case AWKWARD: ger = "Seltsamer Trank"; eng = "Awkward Potion"; break;
 			case FIRE_RESISTANCE: ger = "Feuerresistenz"; eng = "Fire Resistance"; break;
+			case LONG_FIRE_RESISTANCE: ger = "Feuerresistenz (verlängert)"; eng = "Fire Resistance (extended)"; break;
+			case STRONG_HARMING: ger = "Schaden (verstärkt)"; eng = "Harm (amplified)"; break;
 			case INSTANT_DAMAGE: ger = "Schaden"; eng = "Instant Damage"; break;
 			case INSTANT_HEAL: ger = "Direktheilung"; eng = "Instante Heal"; break;
+			case STRONG_HEALING: ger = "Heilung (verstärkt)"; eng = "Heal (amplified)"; break;
 			case INVISIBILITY: ger = "Unsichtbarkeit"; eng = "Invisbility"; break;
+			case LONG_INVISIBILITY: ger = "Unsichtbarkeit (verlängert)"; eng = "Invisbility (extended)"; break;
 			case JUMP: ger = "Sprungkraft"; eng = "Jump"; break;
 			case LUCK: ger = "Glück"; eng = "Luck"; break;
+			case LONG_LEAPING: ger = "Sprungkraft (verlängert)"; eng = "Jump (extended)"; break;
+			case STRONG_LEAPING: ger = "Sprungkraft (verstärkt)"; eng = "Jump (amplified)"; break;
 			case MUNDANE: ger = "Gewöhnlicher Trank"; eng = "Mundane Potion"; break;
 			case NIGHT_VISION: ger = "Nachtsicht"; eng = "Night Vison"; break;
+			case LONG_NIGHT_VISION: ger = "Nachtsicht (verlängert)"; eng = "Night Vison (extended)"; break;
 			case POISON: ger = "Vergiftung"; eng = "Poison"; break;
+			case LONG_POISON: ger = "Vergiftung (verlängert)"; eng = "Poison (extended)"; break;
+			case STRONG_POISON: ger = "Vergiftung (verstärkt)"; eng = "Poison (amplified)"; break;
 			case REGEN: ger = "Regeneration"; eng = "Regeneration"; break;
+			case LONG_REGENERATION: ger = "Regeneration (verlängert)"; eng = "Regeneration (extended)"; break;
+			case STRONG_REGENERATION: ger = "Regeneration (verstärkt)"; eng = "Regeneration (amplified)"; break;
 			case SLOW_FALLING: ger = "sanfter Fall"; eng = "Slow Falling"; break;
+			case LONG_SLOW_FALLING: ger = "sanfter Fall (verlängert)"; eng = "Slow Falling (extended)"; break;
 			case SLOWNESS: ger = "Langsamkeit"; eng = "Slowness"; break;
+			case LONG_SLOWNESS: ger = "Langsamkeit (verlängert)"; eng = "Slowness (extended)"; break;
+			case STRONG_SLOWNESS: ger = "Langsamkeit (verstärkt)"; eng = "Slowness (amplified)"; break;
 			case SPEED: ger = "Schnelligkeit"; eng = "Speed"; break;
 			case STRENGTH: ger = "Stärke"; eng = "Strength"; break;
+			case LONG_STRENGTH: ger = "Stärke (verlängert)"; eng = "Strength (extended)"; break;
+			case STRONG_STRENGTH: ger = "Stärke (verstärkt)"; eng = "Strength (amplified)"; break;
+			case LONG_SWIFTNESS: ger = "Schnelligkeit (verlängert)"; eng = "Speed (extended)"; break;
+			case STRONG_SWIFTNESS: ger = "Schnelligkeit (verstärkt)"; eng = "Speed (amplified)"; break;
 			case THICK: ger = "Dickflüssiger Trank"; eng = "Thick Potion"; break;
 			case TURTLE_MASTER: ger = "Schildkrötenmeister"; eng = "Turtle Master"; break;
+			case LONG_TURTLE_MASTER: ger = "Schildkrötenmeister (verlängert)"; eng = "Turtle Master (extended)"; break;
+			case STRONG_TURTLE_MASTER: ger = "Schildkrötenmeister (verstärkt)"; eng = "Turtle Master (amplified)"; break;
 			case UNCRAFTABLE: ger = "Trank"; eng = "Potion"; break;
 			case WATER: ger = "Wasserflasche"; eng = "Waterbottle"; break;
 			case WATER_BREATHING: ger = "Unterwasseratmung"; eng = "Water Breathing"; break;
+			case LONG_WATER_BREATHING: ger = "Unterwasseratmung (verlängert)"; eng = "Water Breathing (extended)"; break;
 			case WEAKNESS: ger = "Schwäche"; eng = "Weakness"; break;
+			case LONG_WEAKNESS: ger = "Schwäche (verlängert)"; eng = "Weakness (extended)"; break;
 			}
 			potiontypelanguageKeys.put(pt.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -2643,6 +2729,7 @@ public class YamlManager
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void initPotionEffectTypeLanguage() //INFO:PotionEffectTypeLanguages
 	{
 		for(PotionEffectType pet : PotionEffectType.values())
@@ -2688,15 +2775,14 @@ public class YamlManager
 		}
 	}
 	
-	public void initEntityType()
+	public void initEntityType() //INFO:EntityType
 	{
 		for(EntityType i : EntityType.values())
 		{
-			String eng = "";
-			String ger = "";
+			String eng = i.getKey().getKey();
+			String ger = i.getKey().getKey();
 			switch(i)
 			{
-			default: break;
 			case ALLAY: ger = "Hilfgeist"; eng = "Allay"; break;
 			case AREA_EFFECT_CLOUD: ger = "Areal Effekt Wolke"; eng = "Area Effect Cloud"; break;
 			case ARMOR_STAND: ger = "Rüstungsständer"; eng = "Armor Stand"; break;
@@ -2816,6 +2902,15 @@ public class YamlManager
 			case ZOMBIE_HORSE: ger = "Zombiepferd"; eng = "Zombie Horse"; break;
 			case ZOMBIE_VILLAGER: ger = "Zombiedorfbewohner"; eng = "Zombie Villager"; break;
 			case ZOMBIFIED_PIGLIN: ger = "Zombiefizierter Piglin"; eng = "Zombified Piglin"; break;
+			//1.20.4
+			case BLOCK_DISPLAY: ger = "Blockdisplay"; eng = "Blockdisplay"; break;
+			case BREEZE: ger = "Breeze"; eng = "Breeze"; break;
+			case CAMEL: ger = "Kamel"; eng = "Camel"; break;
+			case INTERACTION: ger = "Interaktionsobjekt"; eng = "Interaction"; break;
+			case ITEM_DISPLAY: ger = "Itemdisplay"; eng = "Itemdisplay"; break;
+			case SNIFFER: ger = "Sniffer"; eng = "Sniffer"; break;
+			case TEXT_DISPLAY: ger = "Textdisplay"; eng = "Textdisplay"; break;
+			case WIND_CHARGE: ger = "Windcharge"; eng = "Windcharge"; break;
 			}
 			entitytypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -2823,7 +2918,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initAxolotlVariant()
+	public void initAxolotlVariant() //INFO:AxolotlVariant
 	{
 		for(Axolotl.Variant i : Axolotl.Variant.values())
 		{
@@ -2831,7 +2926,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case BLUE: ger = "Blau"; eng = "Blue"; break;
 			case CYAN: ger = "Cyan"; eng = "Cyan"; break;
 			case GOLD: ger = "Gold"; eng = "Gold"; break;
@@ -2844,7 +2938,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initBookMetaGeneration()
+	public void initBookMetaGeneration() //INFO:BookMetaGeneration
 	{
 		for(BookMeta.Generation i : BookMeta.Generation.values())
 		{
@@ -2852,7 +2946,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case COPY_OF_COPY: ger = "Kopie einer Kopie"; eng = "Copy of Copy"; break;
 			case COPY_OF_ORIGINAL: ger = "Kopie des Originals"; eng = "Copy of Original"; break;
 			case ORIGINAL: ger = "Original"; eng = "Original"; break;
@@ -2864,7 +2957,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initColor()
+	public void initColor() //INFO:Color
 	{
 		List<Color> colors = Arrays.asList(new Color[]
 				{
@@ -2900,7 +2993,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initDyeColor()
+	public void initDyeColor() //INFO:DyeColor
 	{
 		for(DyeColor i : DyeColor.values())
 		{
@@ -2908,7 +3001,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case BLACK: ger = "Schwarz"; eng = "Black"; break;
 			case BLUE: ger = "Blau"; eng = "Blue"; break;
 			case BROWN: ger = "Braun"; eng = "Brown"; break;
@@ -2932,21 +3024,70 @@ public class YamlManager
 		}
 	}
 	
-	public void initTropicalFish()
+	public void initTropicalFish() //INFO:TropicalFish
 	{
 		for(DyeColor i : DyeColor.values())
 		{
-			for(TropicalFish.Pattern j : TropicalFish.Pattern.values())
+			String ger = "";
+			String eng = "";
+			switch(i)
 			{
-				for(DyeColor h : DyeColor.values())
+			case BLACK: ger += "Schwarzer "; break;
+			case BLUE: ger += "Blauer "; break;
+			case BROWN: ger += "Brauner "; break;
+			case CYAN: ger += "Cyaner "; break;
+			case GRAY: ger += "Grauer "; break;
+			case GREEN: ger += "Grüner "; break;
+			case LIGHT_BLUE: ger += "Hellblauer "; break;
+			case LIGHT_GRAY: ger += "Hellgrauer "; break;
+			case LIME: ger += "Limoner "; break;
+			case MAGENTA: ger += "Magenta "; break;
+			case ORANGE: ger += "Oranger "; break;
+			case PINK: ger += "Pinker "; break;
+			case PURPLE: ger += "Lilaner "; break;
+			case RED: ger += "Roter "; break;
+			case WHITE: ger += "Weißer "; break;
+			case YELLOW: ger += "Gelber "; break;
+			}
+			for(DyeColor h : DyeColor.values())
+			{
+				switch(i)
 				{
-					String eng = "";
-					String ger = eng = "ger = \""+i.toString()+"_"+j.toString()+"_"+h.toString()
-						+"\"; eng = \""+i.toString()+"_"+j.toString()+"_"+h.toString()+"\";";
-					switch(i)
+				case BLACK: ger += "Schwarz"; break;
+				case BLUE: ger += "Blau"; break;
+				case BROWN: ger += "Braun"; break;
+				case CYAN: ger += "Cyan"; break;
+				case GRAY: ger += "Grau"; break;
+				case GREEN: ger += "Grün"; break;
+				case LIGHT_BLUE: ger += "Hellblau"; break;
+				case LIGHT_GRAY: ger += "Hellgrau"; break;
+				case LIME: ger += "Limon"; break;
+				case MAGENTA: ger += "Magenta"; break;
+				case ORANGE: ger += "Orange"; break;
+				case PINK: ger += "Pink"; break;
+				case PURPLE: ger += "Lila"; break;
+				case RED: ger += "Rot"; break;
+				case WHITE: ger += "Weiß"; break;
+				case YELLOW: ger += "Gelb"; break;
+				}
+				for(TropicalFish.Pattern j : TropicalFish.Pattern.values())
+				{
+					switch(j)
 					{
-					default: break;
+					case BETTY: ger += "trommlerfisch"; break;
+					case BLOCKFISH: ger += "blockfisch"; break;
+					case BRINELY: ger += "salzfisch"; break;
+					case CLAYFISH: ger += "lehmfisch"; break;
+					case DASHER: ger += "flitzer"; break;
+					case FLOPPER: ger += "zappler"; break;
+					case GLITTER: ger += "glitzerfisch"; break;
+					case KOB: ger += "peitschenfisch"; break;
+					case SNOOPER: ger += "schnüffler"; break;
+					case SPOTTY: ger += "fleckenlippfisch"; break;
+					case STRIPEY: ger += "streifler"; break;
+					case SUNSTREAK: ger += "sonnenstreifenfisch"; break;
 					}
+					eng = i.toString()+"_"+j.toString()+"_"+h.toString();
 					tropicalfishbucketlanguageKeys.put(i.toString()+"_"+j.toString()+"_"+h.toString(), 
 							new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 									ger, eng}));
@@ -2956,7 +3097,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initCatType()
+	public void initCatType() //INFO:CatType
 	{
 		for(Cat.Type i : Cat.Type.values())
 		{
@@ -2983,7 +3124,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initFoxType()
+	public void initFoxType() //INFO:FoxType
 	{
 		for(Fox.Type i : Fox.Type.values())
 		{
@@ -2991,7 +3132,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case RED: ger = "Rot"; eng = "Red"; break;
 			case SNOW: ger = "Schnee"; eng = "Snow"; break;
 			}
@@ -3001,7 +3141,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initMapCursorType()
+	public void initMapCursorType() //INFO:MapCursorType
 	{
 		for(MapCursor.Type i : MapCursor.Type.values())
 		{
@@ -3009,7 +3149,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case WHITE_POINTER: ger = "Weißer Zeiger"; eng = "WHITE_POINTER"; break;
 			case GREEN_POINTER: ger = "Grüner Zeiger"; eng = "GREEN_POINTER"; break;
 			case RED_POINTER: ger = "Roter Zeiger"; eng = "RED_POINTER"; break;
@@ -3037,6 +3176,13 @@ public class YamlManager
 			case BANNER_RED: ger = "Rotes Banner"; eng = "BANNER_RED"; break;
 			case BANNER_BLACK: ger = "Schwarzes Banner"; eng = "BANNER_BLACK"; break;
 			case RED_X: ger = "Rotes X"; eng = "RED_X"; break;
+			case DESERT_VILLAGE: ger = "Wüstendorf"; eng = "DESERT_VILLAGE"; break;
+			case JUNGLE_TEMPLE: ger = "Dschungeltempel"; eng = "JUNGLE_TEMPLE"; break;
+			case PLAINS_VILLAGE: ger = "Ebenendorf"; eng = "PLAINS_VILLAGE"; break;
+			case SAVANNA_VILLAGE: ger = "Savannadorf"; eng = "SAVANNA_VILLAGE"; break;
+			case SNOWY_VILLAGE: ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
+			case SWAMP_HUT: ger = "Moorhütte"; eng = "SWAMP_HUT"; break;
+			case TAIGA_VILLAGE: ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
 			}
 			mapcursortypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3044,7 +3190,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initRabbitType()
+	public void initRabbitType() //INFO:RabbitType
 	{
 		for(Rabbit.Type i : Rabbit.Type.values())
 		{
@@ -3052,7 +3198,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case BLACK: ger = "Schwarz"; eng = "Black"; break;
 			case BLACK_AND_WHITE: ger = "Schwarzweiß"; eng = "Black and White"; break;
 			case BROWN: ger = "Braun"; eng = "Brown"; break;
@@ -3067,7 +3212,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initVillagerType()
+	public void initVillagerType() //INFO:VillagerType
 	{
 		for(Villager.Type i : Villager.Type.values())
 		{
@@ -3075,7 +3220,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case DESERT: ger = "Wüste"; eng = "Desert"; break;
 			case JUNGLE: ger = "Dschungel"; eng = "Jungle"; break;
 			case PLAINS: ger = "Ebenen"; eng = "Plains"; break;
@@ -3090,7 +3234,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initVillagerProfession()
+	public void initVillagerProfession() //INFO:VillagerProfession
 	{
 		for(Villager.Profession i : Villager.Profession.values())
 		{
@@ -3098,7 +3242,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case ARMORER: ger = "Rüstungsschmied"; eng = "Armorer"; break;
 			case BUTCHER: ger = "Metzger"; eng = "Butcher"; break;
 			case CARTOGRAPHER: ger = "Kartenzeichner"; eng = "Cartographer"; break;
@@ -3121,7 +3264,7 @@ public class YamlManager
 		}
 	}
 	
-	public void initTreeType()
+	public void initTreeType() //INFO:TreeType
 	{
 		for(TreeType i : TreeType.values())
 		{
@@ -3129,7 +3272,6 @@ public class YamlManager
 			String ger = "";
 			switch(i)
 			{
-			default: break;
 			case TREE: ger = "Baum"; eng = "TREE"; break;
 			case BIG_TREE: ger = "BIG_TREE"; eng = "BIG_TREE"; break;
 			case REDWOOD: ger = "Küsten-Sequoie"; eng = "REDWOOD"; break;
@@ -3152,6 +3294,7 @@ public class YamlManager
 			case AZALEA: ger = "Azalee"; eng = "AZALEA"; break;
 			case MANGROVE: ger = "Mangrove"; eng = "MANGROVE"; break;
 			case TALL_MANGROVE: ger = "Hohe Mangrove"; eng = "TALL_MANGROVE"; break;
+			case CHERRY: ger = "Kirschbaum"; eng = "CHERRY"; break;
 			}
 			treetypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
