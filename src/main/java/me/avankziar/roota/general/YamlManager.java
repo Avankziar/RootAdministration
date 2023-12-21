@@ -1836,7 +1836,6 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initEnchantmentLanguage() //INFO:EnchantmentLanguages
 	{		
 		for(Enchantment e : Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
@@ -1886,7 +1885,7 @@ public class YamlManager
 			case "aqua_affinity": ger = "Wasseraffinität"; break;
 			case "depth_strider": ger = "Wafferläufer"; break;
 			}
-			enchlanguageKeys.put(e.getName(),
+			enchlanguageKeys.put(e.getKey().getKey(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
