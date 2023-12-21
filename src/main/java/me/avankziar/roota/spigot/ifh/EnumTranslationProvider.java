@@ -3,10 +3,12 @@ package main.java.me.avankziar.roota.spigot.ifh;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.TreeType;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
@@ -60,9 +62,9 @@ public class EnumTranslationProvider implements EnumTranslation
 						plugin.getYamlHandler().getBannerLang().getString(dc.toString()+"_"+p.toString(), dc.toString()+"_"+p.toString()));		
 			}
 		}
-		for(Enchantment e : Enchantment.values())
+		for(Enchantment e : Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
 		{
-			enchantmentLocalization.put(e.getName(), plugin.getYamlHandler().getEnchLang().getString(e.getName(), e.getName()));		
+			enchantmentLocalization.put(e.getKey().getKey(), plugin.getYamlHandler().getEnchLang().getString(e.getKey().getKey(), e.getKey().getKey()));		
 		}
 		for(Material m : Material.values())
 		{
@@ -160,11 +162,10 @@ public class EnumTranslationProvider implements EnumTranslation
 		return s != null ? s : dyeColor.toString()+"_"+patternType.toString();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String getLocalization(Enchantment ench)
 	{
-		String s = enchantmentLocalization.get(ench.getName());
-		return s != null ? s : ench.getName();
+		String s = enchantmentLocalization.get(ench.getKey().getKey());
+		return s != null ? s : ench.getKey().getKey();
 	}
 	
 	public String getLocalization(ItemFlag i)
@@ -190,6 +191,7 @@ public class EnumTranslationProvider implements EnumTranslation
 		return s != null ? s : pt.toString();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public String getLocalization(PotionEffectType pet)
 	{
 		String s = potioneffecttypeLocalization.get(pet.getName());
