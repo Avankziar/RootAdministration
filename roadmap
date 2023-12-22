@@ -1,7 +1,9 @@
 Future Build
 
 Build 1-4-0
-- Spigot 1.20.4 support
+- Spigot 1.20.4 support 
+  (Anmerkung: Wegen den eingreifenden Änderungen in MC bezüglich EntityType, Enchantment etc. Wird die API-Version auf 1.20 angehoben.
+  Höchstwahrscheinlich lässt sich die neuste Version von ROOTA nur auf 1.20.4+ Server einspielen.
 - IFH Administration nun auch korrekt über Bungeecord eingebaut. (Gab einige Fehler)
 - Methoden zur Handhabung von Verzauberungen, Trankeffekten etc angepasst.
 - Tropenfischübersetztung hinzugefügt.

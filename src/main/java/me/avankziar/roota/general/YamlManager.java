@@ -2778,8 +2778,8 @@ public class YamlManager
 	{
 		for(EntityType i : EntityType.values())
 		{
-			String eng = i.getKey().getKey();
-			String ger = i.getKey().getKey();
+			String eng = "";
+			String ger = "";
 			switch(i)
 			{
 			case ALLAY: ger = "Hilfgeist"; eng = "Allay"; break;
