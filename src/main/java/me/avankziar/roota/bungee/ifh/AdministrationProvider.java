@@ -38,26 +38,16 @@ public class AdministrationProvider implements Administration
 		return s != null ? s : pathName;
 	}
 	
-	private String get(String pathName)
-	{
-		return plugin.getYamlHandler().getConfig().getString("Mysql."+getPath(pathName), null);
-	}
-	
-	private boolean getb(String pathName)
-	{
-		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName), false);
-	}
-	
 	@Override
 	public boolean isMysqlPathActive(String pathName)
 	{
-		return getb(pathName+".IsActive");
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName)+".IsActive", false);
 	}
 	
 	@Override
 	public String getHost(String pathName)
 	{
-		return get(pathName+".Host");
+		return plugin.getYamlHandler().getConfig().getString("Mysql."+getPath(pathName)+".Host", null);
 	}
 	
 	@Override
@@ -69,42 +59,42 @@ public class AdministrationProvider implements Administration
 	@Override
 	public String getDatabase(String pathName)
 	{
-		return get(pathName+".DatabaseName");
+		return plugin.getYamlHandler().getConfig().getString("Mysql."+getPath(pathName)+".DatabaseName", null);
 	}
 	
 	@Override
 	public String getUsername(String pathName)
 	{
-		return get(pathName+".User");
+		return plugin.getYamlHandler().getConfig().getString("Mysql."+getPath(pathName)+".User", null);
 	}
 	
 	@Override
 	public String getPassword(String pathName)
 	{
-		return get(pathName+".Password");
+		return plugin.getYamlHandler().getConfig().getString("Mysql."+getPath(pathName)+".Password", null);
 	}
 	
 	@Override
 	public boolean isAutoReconnect(String pathName)
 	{
-		return getb(pathName+".AutoReconnect");
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName)+".AutoReconnect", false);
 	}
 	
 	@Override
 	public boolean isVerifyServerCertificate(String pathName)
 	{
-		return getb(pathName+".VerifyServerCertificate");
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName)+".VerifyServerCertificate", false);
 	}
 	
 	@Override
 	public boolean useSSL(String pathName)
 	{
-		return getb(pathName+".SSLEnabled");
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName)+".SSLEnabled", false);
 	}
 	
 	@Override
 	public boolean isRequireSSL(String pathName)
 	{
-		return getb(pathName+".SSLEnabled");
+		return plugin.getYamlHandler().getConfig().getBoolean("Mysql."+getPath(pathName)+".SSLEnabled", false);
 	}
 }

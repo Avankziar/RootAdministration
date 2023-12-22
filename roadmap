@@ -2,6 +2,7 @@ Future Build
 
 Build 1-4-0
 - Spigot 1.20.4 support
+- IFH Administration nun auch korrekt über Bungeecord eingebaut. (Gab einige Fehler)
 - Methoden zur Handhabung von Verzauberungen, Trankeffekten etc angepasst.
 - Tropenfischübersetztung hinzugefügt.
 
