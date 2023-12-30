@@ -419,7 +419,7 @@ public class YamlManager
 			case DEEPSLATE_COPPER_ORE: ger = "Tiefenschiefer-Kupfererz"; eng = "DEEPSLATE_COPPER_ORE"; break;
 			case GOLD_ORE: ger = "Golderz"; eng = "Goldore"; break;
 			case DEEPSLATE_GOLD_ORE: ger = "Tiefenschiefer-Golderz"; eng = "DEEPSLATE_GOLD_ORE"; break;
-			case REDSTONE_ORE: ger = "REDSTONE_ORE"; eng = "Redstone-Erz"; break;
+			case REDSTONE_ORE: ger = "Redstone-Erz"; eng = "REDSTONE_ORE"; break;
 			case DEEPSLATE_REDSTONE_ORE: ger = "Tiefenschiefer-Redstone-Erz"; eng = "DEEPSLATE_REDSTONE_ORE"; break;
 			case EMERALD_ORE: ger = "Smaragderz"; eng = "EMERALD_ORE"; break;
 			case DEEPSLATE_EMERALD_ORE: ger = "Tiefenschiefer-Smaragderz"; eng = "DEEPSLATE_EMERALD_ORE"; break;
@@ -623,7 +623,7 @@ public class YamlManager
 			case PURPUR_BLOCK: ger = "Purpurblock"; eng = "PURPUR_BLOCK"; break;
 			case PURPUR_PILLAR: ger = "Purpursäule"; eng = "PURPUR_PILLAR"; break;
 			case PURPUR_STAIRS: ger = "Purpurtreppe"; eng = "PURPUR_STAIRS"; break;
-			case SPAWNER: ger = "SPAWNER"; eng = "SPAWNER"; break;
+			case SPAWNER: ger = "Spawner"; eng = "SPAWNER"; break;
 			case CHEST: ger = "Truhe"; eng = "CHEST"; break;
 			case CRAFTING_TABLE: ger = "Werkbank"; eng = "CRAFTING_TABLE"; break;
 			case FARMLAND: ger = "Ackerboden"; eng = "FARMLAND"; break;
@@ -633,7 +633,7 @@ public class YamlManager
 			case SNOW: ger = "Schnee"; eng = "SNOW"; break;
 			case ICE: ger = "Eis"; eng = "ICE"; break;
 			case SNOW_BLOCK: ger = "Schneeblock"; eng = "SNOW_BLOCK"; break;
-			case CACTUS: ger = "kaktus"; eng = "CACTUS"; break;
+			case CACTUS: ger = "Kaktus"; eng = "CACTUS"; break;
 			case CLAY: ger = "Ton"; eng = "CLAY"; break;
 			case JUKEBOX: ger = "Plattenspieler"; eng = "JUKEBOX"; break;
 			case OAK_FENCE: ger = "Eichenholzzaun"; eng = "OAK_FENCE"; break;
@@ -981,7 +981,7 @@ public class YamlManager
 			case REDSTONE_BLOCK: ger = "Redstone-Block"; eng = "REDSTONE_BLOCK"; break;
 			case REPEATER: ger = "Redstone-Verstärker"; eng = "REPEATER"; break;
 			case COMPARATOR: ger = "Redstone-Komparator"; eng = "COMPARATOR"; break;
-			case PISTON: ger = "PISTON"; eng = "Kolben"; break;
+			case PISTON: ger = "Kolben"; eng = "PISTON"; break;
 			case STICKY_PISTON: ger = "Klebriger Kolben"; eng = "STICKY_PISTON"; break;
 			case SLIME_BLOCK: ger = "Schleimblock"; eng = "SLIME_BLOCK"; break;
 			case HONEY_BLOCK: ger = "Honigblock"; eng = "HONEY_BLOCK"; break;
@@ -1167,7 +1167,7 @@ public class YamlManager
 			case NETHERITE_LEGGINGS: ger = "Netheritbeinschutz"; eng = "NETHERITE_LEGGINGS"; break;
 			case NETHERITE_BOOTS: ger = "Netheritstiefel"; eng = "NETHERITE_BOOTS"; break;
 			case FLINT: ger = "Feuerstein"; eng = "FLINT"; break;
-			case PORKCHOP: ger = "PORKCHOP"; eng = "PORKCHOP"; break;
+			case PORKCHOP: ger = "Schweinefleisch"; eng = "PORKCHOP"; break;
 			case COOKED_PORKCHOP: ger = "Gebratenes Schweinefleisch"; eng = "COOKED_PORKCHOP"; break;
 			case PAINTING: ger = "Gemälde"; eng = "PAINTING"; break;
 			case GOLDEN_APPLE: ger = "Goldener Apfel"; eng = "GOLDEN_APPLE"; break;
@@ -1359,7 +1359,7 @@ public class YamlManager
 			case GLOW_ITEM_FRAME: ger = "Leuchtrahmen"; eng = "GLOW_ITEM_FRAME"; break;
 			case FLOWER_POT: ger = "Blumentopf"; eng = "FLOWER_POT"; break;
 			case CARROT: ger = "Karotte"; eng = "CARROT"; break;
-			case POTATO: ger = "POTATO"; eng = "POTATO"; break;
+			case POTATO: ger = "Kartoffel"; eng = "POTATO"; break;
 			case BAKED_POTATO: ger = "Ofenkartoffel"; eng = "BAKED_POTATO"; break;
 			case POISONOUS_POTATO: ger = "Giftige Kartoffel"; eng = "POISONOUS_POTATO"; break;
 			case MAP: ger = "Leere Karte"; eng = "MAP"; break;
@@ -1377,7 +1377,7 @@ public class YamlManager
 			case ENCHANTED_BOOK: ger = "Verzaubertes Buch"; eng = "ENCHANTED_BOOK"; break;
 			case NETHER_BRICK: ger = "Netherziegel"; eng = "NETHER_BRICK"; break;
 			case PRISMARINE_SHARD: ger = "Prismarinscherbe"; eng = "PRISMARINE_SHARD"; break;
-			case PRISMARINE_CRYSTALS: ger = "Prismarinekristalle"; eng = "PRISMARINE_CRYSTALS"; break;
+			case PRISMARINE_CRYSTALS: ger = "Prismarinkristalle"; eng = "PRISMARINE_CRYSTALS"; break;
 			case RABBIT: ger = "Rohes Kaninchen"; eng = "RABBIT"; break;
 			case COOKED_RABBIT: ger = "Gebratenes Kaninchen"; eng = "COOKED_RABBIT"; break;
 			case RABBIT_STEW: ger = "Kaninchenragout"; eng = "RABBIT_STEW"; break;
