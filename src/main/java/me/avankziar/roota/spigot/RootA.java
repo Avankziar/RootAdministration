@@ -7,10 +7,12 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
 import main.java.me.avankziar.roota.general.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
 import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
+import main.java.me.avankziar.roota.spigot.ifh.ItemStackComparisonProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
 public class RootA extends JavaPlugin
@@ -85,6 +87,14 @@ public class RootA extends JavaPlugin
              		this,
              		ServicePriority.Normal);
             log.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");
+            
+            ItemStackComparison itemStackComparisonProvider = new ItemStackComparisonProvider();
+        	plugin.getServer().getServicesManager().register(
+        			main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison.class,
+        			itemStackComparisonProvider,
+            this,
+            ServicePriority.Normal);
+        	log.info(pluginName + " detected InterfaceHub >>> ItemStackComparison.class is provided!");
         }
 	}
 	
