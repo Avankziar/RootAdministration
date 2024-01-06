@@ -1,5 +1,8 @@
 Future Build
 
+Build 1-4-1
+- ItemComparison Interface Logic fix
+
 Build 1-4-0
 - Spigot 1.20.4 support 
   (Anmerkung: Wegen den eingreifenden Änderungen in MC bezüglich EntityType, Enchantment etc. Wird die API-Version auf 1.20 angehoben.

@@ -49,7 +49,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 	{
 		if (item == null || filter == null) 
         {
-            return true;
+            return false;
         }
         final ItemStack i = item.clone();
         final ItemStack f = filter.clone();
@@ -138,7 +138,6 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 						}
 					}
 				}
-				return true; //Short exist only shulker
 			}
         	if(checkArmorMeta)
         	{
@@ -274,6 +273,12 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         			return false;
         		}
         	}
+        } else if(i.hasItemMeta() && !f.hasItemMeta())
+        {
+        	return false;
+        } else if(!i.hasItemMeta() && f.hasItemMeta())
+        {
+        	return false;
         }
         return true;
 	}
@@ -333,6 +338,9 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     		{
     			return false;
     		}
+    	} else if(fm.hasDisplayName())
+    	{
+    		return false;
     	}
 		return true;
 	}
@@ -356,6 +364,12 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     				return false;
     			}
     		}
+    	} else if(im.getItemFlags().isEmpty() && !fm.getItemFlags().isEmpty())
+    	{
+    		return false;
+    	} else if(!im.getItemFlags().isEmpty() && fm.getItemFlags().isEmpty())
+    	{
+    		return false;
     	}
 		return true;
 	}
@@ -378,6 +392,12 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     				return false;
     			}
     		}
+    	} else if(!im.hasLore() && fm.hasLore())
+    	{
+    		return false;
+    	} else if(im.hasLore() && !fm.hasLore())
+    	{
+    		return false;
     	}
 		return true;
 	}
