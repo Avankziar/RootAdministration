@@ -731,10 +731,20 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     		SkullMeta afm = (SkullMeta) fm;
     		if(aim.hasOwner() && afm.hasOwner())
     		{
-    			if(!aim.getOwningPlayer().getName().equals(afm.getOwningPlayer().getName()))
-        		{
-        			return false;
-        		}
+    			if(aim.getOwnerProfile() != null && afm.getOwnerProfile() != null)
+    			{
+    				if(!aim.getOwningPlayer().getName().equals(afm.getOwningPlayer().getName()))
+            		{
+            			return false;
+            		}
+    			} else if((aim.getOwnerProfile() != null && afm.getOwnerProfile() == null)
+    					|| (aim.getOwnerProfile() == null && afm.getOwnerProfile() != null))
+    			{
+    				return false;
+    			}
+    		} else if((aim.hasOwner() && !afm.hasOwner()) || (!aim.hasOwner() && afm.hasOwner()))
+    		{
+    			return false;
     		}
     	} else if(fm instanceof SkullMeta)
     	{

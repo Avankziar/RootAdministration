@@ -1,5 +1,13 @@
 Future Build
 
+Build 1-5-0
+- ItemStackComparison.matchSkull NPE fix
+- MysqlAnbindung (SoftDepend) für RootA hinzugefügt.
+- IFH Interface spigot.interfaces.BungeeOnlinePlayers hinzufügt.
+  Um dieses Interface richtig nutzen zu können, muss RootA auch auf dem Bungee installiert worden sein.
+  Dazu muss im PluginForwarding in der config.yml nun auch "roota" hinzugefügt werden.
+- IFH Interface spigot.interactionblocker.InteractionBlocker
+
 Build 1-4-1
 - ItemComparison Interface Logic fix
 

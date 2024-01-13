@@ -1,5 +1,6 @@
 package main.java.me.avankziar.roota.spigot;
 
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -8,10 +9,15 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
+import main.java.me.avankziar.ifh.spigot.interfaces.BungeeOnlinePlayers;
 import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
+import main.java.me.avankziar.roota.spigot.database.MysqlSetup;
 import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
+import main.java.me.avankziar.roota.spigot.ifh.BungeeOnlinePlayersProvider;
 import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
+import main.java.me.avankziar.roota.spigot.ifh.InteractionBlockerProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ItemStackComparisonProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
@@ -22,6 +28,10 @@ public class RootA extends JavaPlugin
 	public String pluginName = "RootAdministration";
 	private YamlHandler yamlHandler;
 	private YamlManager yamlManager;
+	private MysqlHandler mysqlHandler;
+	private MysqlSetup mysqlSetup;
+	
+	private AdministrationProvider administrationProvider;
 	
 	public void onEnable()
 	{
@@ -37,6 +47,17 @@ public class RootA extends JavaPlugin
 		log.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | LoadBefore: "+plugin.getDescription().getLoadBefore().toString());
 		
 		yamlHandler = new YamlHandler(this);
+		
+		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");
+		boolean adm = plugin.getAdministration() != null 
+				&& plugin.getYamlHandler().getConfig().getBoolean("useIFHAdministration")
+				&& plugin.getAdministration().isMysqlPathActive(path);
+		if(adm || yamlHandler.getConfig().getBoolean("Mysql.Status", false) == true)
+		{
+			mysqlHandler = new MysqlHandler(plugin);
+			mysqlSetup = new MysqlSetup(plugin, adm, path);
+		}
+		
 		setupIFHProviding();
 		setupBstats();
 	}
@@ -67,14 +88,25 @@ public class RootA extends JavaPlugin
 	{
 		this.yamlManager = yamlManager;
 	}
+	
+	public MysqlHandler getMysqlHandler()
+	{
+		return mysqlHandler;
+	}
+	
+	public MysqlSetup getMysqlSetup()
+	{
+		return mysqlSetup;
+	}
+	
 	private void setupIFHProviding()
 	{      
         if (plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
 		{
-        	AdministrationProvider a = new AdministrationProvider(plugin);
+        	administrationProvider = new AdministrationProvider(plugin);
         	plugin.getServer().getServicesManager().register(
         			main.java.me.avankziar.ifh.spigot.administration.Administration.class,
-             		a,
+        			administrationProvider,
              		this,
              		ServicePriority.Normal);
             log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
@@ -95,7 +127,37 @@ public class RootA extends JavaPlugin
             this,
             ServicePriority.Normal);
         	log.info(pluginName + " detected InterfaceHub >>> ItemStackComparison.class is provided!");
+        	
+        	InteractionBlockerProvider ib = new InteractionBlockerProvider();
+            plugin.getServer().getServicesManager().register(
+        			main.java.me.avankziar.ifh.spigot.interactionblocker.InteractionBlocker.class,
+        			ib,
+             		this,
+             		ServicePriority.Normal);
+            log.info(pluginName + " detected InterfaceHub >>> InteractionBlocker.class is provided!");
+            
+        	try
+			{
+				if(mysqlSetup != null && mysqlSetup.getConnection() != null)
+				{
+					BungeeOnlinePlayers bungeeOnlinePlayers = new BungeeOnlinePlayersProvider();
+		        	plugin.getServer().getServicesManager().register(
+		        			main.java.me.avankziar.ifh.spigot.interfaces.BungeeOnlinePlayers.class,
+		        			bungeeOnlinePlayers,
+		            this,
+		            ServicePriority.Normal);
+		        	log.info(pluginName + " detected InterfaceHub >>> BungeeOnlinePlayers.class is provided!");
+				}
+			} catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
         }
+	}
+	
+	public AdministrationProvider getAdministration()
+	{
+		return administrationProvider;
 	}
 	
 	public void setupBstats()

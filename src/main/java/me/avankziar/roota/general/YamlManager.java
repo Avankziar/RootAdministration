@@ -281,6 +281,9 @@ public class YamlManager
 	}
 	public void initConfig(boolean spigot) //INFO:Config
 	{
+		configKeys.put("IFHAdministrationPath"
+				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+				"roota"}));
 		configKeys.put("Language"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				"ENG"}));
@@ -295,12 +298,13 @@ public class YamlManager
 				"aep>>>default", 
 				"ash>>>one",
 				"afkr>>>default",
-				"bmc>>>default",
 				"btm>>>default",
-				"ccs>>>default",
+				"mavec>>>default",
 				"mhr>>>default",
+				"roota>>>default",
 				"sale>>>default",
-				"scc>>>default"}));
+				"scc>>>default",
+				"tt>>>default"}));
 		configKeys.put("Mysql.default.IsActive"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				false}));
