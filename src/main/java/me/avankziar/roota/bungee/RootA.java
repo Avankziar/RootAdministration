@@ -49,7 +49,6 @@ public class RootA extends Plugin
 			mysqlHandler = new MysqlHandler(plugin);
 			mysqlSetup = new MysqlSetup(plugin, adm, path);
 		}
-		
 		setupBstats();
 		ListenerSetup();
 		setupIFHProvider();

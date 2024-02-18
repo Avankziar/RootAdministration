@@ -205,6 +205,11 @@ public class YamlManager
 		{
 			return;
 		}
+		if(key.startsWith("#"))
+		{
+			//Comments cannot funktion on bungee
+			return;
+		}
 		if(yml.get(key) != null)
 		{
 			return;
@@ -246,6 +251,45 @@ public class YamlManager
 		{
 			return;
 		}
+		if(key.startsWith("#"))
+		{
+			//Comments
+			String k = key.replace("#", "");
+			if(yml.get(k) == null)
+			{
+				//return because no aktual key are present
+				return;
+			}
+			if(yml.getComments(k) != null && !yml.getComments(k).isEmpty())
+			{
+				//Return, because the comments are already present, and there could be modified. F.e. could be comments from a admin.
+				return;
+			}
+			if(keyMap.get(key).languageValues.get(languageType).length == 1)
+			{
+				if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
+				{
+					String s = ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", "");
+					yml.setComments(k, Arrays.asList(s));
+				}
+			} else
+			{
+				List<Object> list = Arrays.asList(keyMap.get(key).languageValues.get(languageType));
+				ArrayList<String> stringList = new ArrayList<>();
+				if(list instanceof List<?>)
+				{
+					for(Object o : list)
+					{
+						if(o instanceof String)
+						{
+							stringList.add(((String) o).replace("\r\n", ""));
+						}
+					}
+				}
+				yml.setComments(k, (List<String>) stringList);
+			}
+			return;
+		}
 		if(yml.get(key) != null)
 		{
 			return;
@@ -279,22 +323,53 @@ public class YamlManager
 			yml.set(key, (List<String>) stringList);
 		}
 	}
+	
+	private void addConfig(String path, Object[] c, Object[] o)
+	{
+		configKeys.put(path, new Language(new ISO639_2B[] {ISO639_2B.GER}, c));
+		addConfigComments("#"+path, o);
+	}
+	
+	private void addConfigComments(String path, Object[] o)
+	{
+		configKeys.put(path, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, o));
+	}
+	
 	public void initConfig(boolean spigot) //INFO:Config
 	{
-		configKeys.put("IFHAdministrationPath"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"roota"}));
-		configKeys.put("Language"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"ENG"}));
+		addConfig("IFHAdministrationPath", 
+				new Object[] {
+				"roota"},
+				new Object[] {
+				"Diese Funktion sorgt dafür, dass Roota selbstständig auf seine eigene Funktion des PluginForwarding, siehe unten zugreifen kann.",
+				"This function ensures that Roota can independently access its own PluginForwarding function, see below."});
+		addConfig("Language",
+				new Object[] {
+				"ENG"},
+				new Object[] {
+				"",
+				"Die eingestellte Sprache. Von Haus aus sind 'ENG=Englisch' und 'GER=Deutsch' mit dabei.",
+				"Falls andere Sprachen gewünsch sind, kann man unter den folgenden Links nachschauen, welchs Kürzel für welche Sprache gedacht ist.",
+				"Siehe hier nach, sowie den Link, welche dort auch für Wikipedia steht.",
+				"https://github.com/Avankziar/RootAdministration/blob/main/src/main/java/me/avankziar/roota/general/Language.java",
+				"",
+				"The set language. By default, ENG=English and GER=German are included.",
+				"If other languages are required, you can check the following links to see which abbreviation is intended for which language.",
+				"See here, as well as the link, which is also there for Wikipedia.",
+				"https://github.com/Avankziar/RootAdministration/blob/main/src/main/java/me/avankziar/roota/general/Language.java"});
 		if(spigot)
 		{
-			configKeys.put("Server"
-					, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-					"hub"}));
+			addConfig("Server",
+					new Object[] {
+					"hub"},
+					new Object[] {
+					"",
+					"Der Server steht für den Namen des Spigotservers, wie er in BungeeCord/Waterfall config.yml unter dem Pfad 'servers' angegeben ist.",
+					"",
+					"The server stands for the name of the spigot server as specified in BungeeCord/Waterfall config.yml under the path 'servers'."});
 		}
-		configKeys.put("PluginForwarding"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
+		addConfig("PluginForwarding",
+				new Object[] {
 				"aep>>>default", 
 				"ash>>>one",
 				"afkr>>>default",
@@ -304,34 +379,111 @@ public class YamlManager
 				"roota>>>default",
 				"sale>>>default",
 				"scc>>>default",
-				"tt>>>default"}));
-		configKeys.put("Mysql.default.IsActive"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				false}));
-		configKeys.put("Mysql.default.Host"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"127.0.0.1"}));
-		configKeys.put("Mysql.default.Port"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				3306}));
-		configKeys.put("Mysql.default.DatabaseName"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"mydatabase"}));
-		configKeys.put("Mysql.default.SSLEnabled"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				false}));
-		configKeys.put("Mysql.default.AutoReconnect"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				true}));
-		configKeys.put("Mysql.default.VerifyServerCertificate"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				false}));
-		configKeys.put("Mysql.default.User"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"admin"}));
-		configKeys.put("Mysql.default.Password"
-				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
-				"not_0123456789"}));
+				"tt>>>default"},
+				new Object[] {
+				"",
+				"Die PluginForwarding Mechanik ist die Hauptmethodik in der IFH Administration. Sie sorgt dafür das über IFH externe Plugins,",
+				"an Roota mit einem Schlüsselbegriff herantreten können, damit Roota dann den exteren Plugins den Pfad zu den Mysqldaten übermitteln kann.",
+				"Bspw. wenn Roota selber über IFH an seine eigene Methodik heran geht, übermittelt Roota den Schlüsselbegriff 'roota' an IFH, welcher",
+				"wiederum an Roota zurückgeht. Als Standart ab dem Build 1-5-0 kommt dann 'default' zurück.",
+				"Deshalb wird in der List es auch als 'roota>>>default' deklariert. Die drei > sind nur eine Trenner bzw. eine Verbildlichung.",
+				"",
+				"The plugin forwarding mechanism is the main method in IFH administration. It ensures that external plugins can approach Roota with a key term via IFH,",
+				"so that Roota can then transmit the path to the mysql data to the external plugins.",
+				"For example, if Roota itself approaches its own methodology via IFH, Roota transmits the key term 'roota' to IFH, which in turn returns to Roota.",
+				"As standard from build 1-5-0 'default' is then returned.",
+				"This is why it is also declared as 'roota>>>default' in the list. The three > are only a separator and/or a visualization."});
+		addConfig("Mysql.default.IsActive",
+				new Object[] {
+				false},
+				new Object[] {
+				"",
+				"isActive ist eine simple Sicherheitsfunktion für das Plugin. Sie stellt sicher, dass man aktiv bestätigen muss, dass alle Werte eingetragen worden sind.",
+				"Diesen Wert somit auf true stellen, wenn alle Daten korrekt eingegeben wurden. Sollte etwas falsch oder unvollständig eingetragen worden sein,",
+				"so wird man eine Fehlermeldung in der Konsole nachlesen könne.",
+				"",
+				"isActive is a simple security function for the plugin. It ensures that you must actively confirm that all values have been entered.",
+				"Set this value to true if all data has been entered correctly.",
+				"If something has been entered incorrectly or incompletely, you will see an error message in the console."});
+		addConfigComments("#Mysql", 
+				new Object[] {
+				"","Hier im 'default' Pfad ist einer der Möglichen Mysqldaten hinterlegt. Es können unbegrenzt weitere Pfade angegeben werden,",
+				"um verschiedenste Verbindungsdaten zuhinterlegen.",
+				"",
+				"One of the possible mysql data is stored here in the 'default' path.",
+				"An unlimited number of other paths can be specified in order to store a wide variety of connection data."});
+		addConfig("Mysql.default.Host",
+				new Object[] {
+				"127.0.0.1"},
+				new Object[] {
+				"",
+				"Der Host, oder auch die IP. Sie kann aus einer Zahlenkombination oder aus einer Adresse bestehen.",
+				"Für den Lokalhost, ist es möglich entweder 127.0.0.1 oder 'localhost' einzugeben. Bedenke, manchmal kann es vorkommen,",
+				"das bei gehosteten Server die ServerIp oder Lokalhost möglich ist.",
+				"",
+				"The host, or IP. It can consist of a number combination or an address.",
+				"For the local host, it is possible to enter either 127.0.0.1 or 'localhost'.",
+				"Please note that sometimes the serverIp or localhost is possible for hosted servers."});
+		addConfig("Mysql.default.Port",
+				new Object[] {
+				3306},
+				new Object[] {
+				"",
+				"Ein Port oder eine Portnummer ist in Rechnernetzen eine Netzwerkadresse,",
+				"mit der das Betriebssystem die Datenpakete eines Transportprotokolls zu einem Prozess zuordnet.",
+				"Ein Port für Mysql ist standart gemäß 3306.",
+				"",
+				"In computer networks, a port or port number ",
+				"is a network address with which the operating system assigns the data packets of a transport protocol to a process.",
+				"A port for Mysql is standard according to 3306."});
+		addConfig("Mysql.default.DatabaseName",
+				new Object[] {
+				"mydatabase"},
+				new Object[] {
+				"",
+				"Name der Datenbank in Mysql.",
+				"",
+				"Name of the database in Mysql."});
+		addConfig("Mysql.default.SSLEnabled",
+				new Object[] {
+				false},
+				new Object[] {
+				"",
+				"SSL ist einer der drei Möglichkeiten, welcher, solang man nicht weiß, was es ist, es so lassen sollte wie es ist.",
+				"",
+				"SSL is one of the three options which, as long as you don't know what it is, you should leave it as it is."});
+		addConfig("Mysql.default.AutoReconnect",
+				new Object[] {
+				true},
+				new Object[] {
+				"",
+				"AutoReconnect ist einer der drei Möglichkeiten, welcher, solang man nicht weiß, was es ist, es so lassen sollte wie es ist.",
+				"",
+				"AutoReconnect is one of the three options which, as long as you don't know what it is, you should leave it as it is."});
+		addConfig("Mysql.default.VerifyServerCertificate",
+				new Object[] {
+				false},
+				new Object[] {
+				"",
+				"VerifyServerCertificate ist einer der drei Möglichkeiten, welcher, solang man nicht weiß, was es ist, es so lassen sollte wie es ist.",
+				"",
+				"VerifyServerCertificate is one of the three options which, as long as you don't know what it is, you should leave it as it is."});
+		addConfig("Mysql.default.User",
+				new Object[] {
+				"admin"},
+				new Object[] {
+				"",
+				"Der User, welcher auf die Mysql zugreifen soll.",
+				"",
+				"The user who should access the Mysql."});
+		addConfig("Mysql.default.Password",
+				new Object[] {
+				"not_0123456789"},
+				new Object[] {
+				"",
+				"Das Passwort des Users, womit er Zugang zu Mysql bekommt.",
+				"",
+				"The user's password, with which he gets access to Mysql."});
 		configKeys.put("Mysql.one.IsActive"
 				, new Language(new ISO639_2B[] {ISO639_2B.GER}, new Object[] {
 				false}));

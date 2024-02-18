@@ -25,6 +25,10 @@ public class PlayerObserverListener implements Listener
 	@EventHandler
 	public void onPostLogin(PostLoginEvent event)
 	{
+		if(plugin.getMysqlHandler() == null)
+		{
+			return;
+		}
 		ProxiedPlayer pp = event.getPlayer();
 		plugin.getMysqlHandler().create(Type.PLAYERLOCATION, new PlayerLocation(pp.getName(), pp.getUniqueId(), pp.getServer().getInfo().getName()));
 	}
@@ -32,6 +36,10 @@ public class PlayerObserverListener implements Listener
 	@EventHandler
 	public void onPlayerDisconnect(PlayerDisconnectEvent event)
 	{
+		if(plugin.getMysqlHandler() == null)
+		{
+			return;
+		}
 		final UUID uuid = event.getPlayer().getUniqueId();
 		plugin.getMysqlHandler().deleteData(Type.PLAYERLOCATION, "player_uuid = ?", uuid.toString());
 	}
@@ -39,6 +47,10 @@ public class PlayerObserverListener implements Listener
 	@EventHandler (priority = EventPriority.HIGHEST)
 	public void onServerSwitch(ServerSwitchEvent event)
 	{
+		if(plugin.getMysqlHandler() == null)
+		{
+			return;
+		}
 		PlayerLocation pl = (PlayerLocation) plugin.getMysqlHandler().getData(Type.PLAYERLOCATION, "player_uuid = ?", event.getPlayer().getUniqueId().toString());
 		pl.setServer(event.getFrom().getName());
 		plugin.getMysqlHandler().updateData(Type.PLAYERLOCATION, pl, "player_uuid = ?", event.getPlayer().getUniqueId().toString());

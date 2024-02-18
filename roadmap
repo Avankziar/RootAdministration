@@ -1,6 +1,7 @@
 Future Build
 
 Build 1-5-0
+- Config Kommentare in ENG und GER hinzugefügt.
 - ItemStackComparison.matchSkull NPE fix
 - MysqlAnbindung (SoftDepend) für RootA hinzugefügt.
 - IFH Interface spigot.interfaces.BungeeOnlinePlayers hinzufügt.

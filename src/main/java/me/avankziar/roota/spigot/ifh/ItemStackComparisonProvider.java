@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.block.ShulkerBox;
@@ -31,9 +32,20 @@ import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.bukkit.potion.PotionEffect;
 
 import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
+import main.java.me.avankziar.roota.spigot.RootA;
 
 public class ItemStackComparisonProvider implements ItemStackComparison
 {
+	private static boolean b = false;
+	public static void debug(String s)
+	{
+		if(b)
+		{
+			RootA.log.info(s);
+			Bukkit.broadcastMessage(s);
+		}
+	}
+	
 	public boolean isSimilar(ItemStack item, ItemStack filter)
 	{
 		return isSimilar(item, filter, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
@@ -47,12 +59,18 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 			boolean checkDamageable, boolean checkFireworkEffectMeta, boolean checkLeatherArmorMeta, boolean checkMapMeta,
 			boolean checkPotionMeta, boolean checkRepairable, boolean checkSkullMeta, boolean checkSpawnEggMeta, boolean checkTropicalFishBucketMeta)
 	{
+		if(item == null && filter == null)
+		{
+			return true;
+		}
 		if (item == null || filter == null) 
         {
+			debug("item == null || filter == null");
             return false;
         }
         final ItemStack i = item.clone();
         final ItemStack f = filter.clone();
+        debug("i: "+i.getType().toString()+" | f: "+f.getType().toString());
         if(!checkAmount)
         {
         	i.setAmount(1);
@@ -60,6 +78,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         }
         if(i.getType() != f.getType())
         {
+        	debug("i.getType() != f.getType()");
         	return false;
         }
         if(i.hasItemMeta() == true && f.hasItemMeta() == true)
@@ -70,6 +89,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchCustomModelData(i, f))
         		{
+        			debug("!matchCustomModelData");
         			return false;
         		}
         	}
@@ -77,6 +97,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchDisplayname(i, f))
         		{
+        			debug("!matchDisplayname");
         			return false;
         		}
         	}
@@ -84,6 +105,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchItemFlags(i, f))
             	{
+        			debug("!matchItemFlags");
         			return false;
             	}
         	}
@@ -91,6 +113,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchLore(i, f))
             	{
+        			debug("!matchLore");
             		return false;
             	}
         	}
@@ -100,10 +123,12 @@ public class ItemStackComparisonProvider implements ItemStackComparison
             	{
         			if(!fm.hasEnchants() || f.getType() == Material.ENCHANTED_BOOK)
             		{
+        				debug("!fm.hasEnchants() || f.getType() == Material.ENCHANTED_BOOK");
             			return false;
             		}
             		if(!compareEnchantments(im, fm))
             		{
+            			debug("!compareEnchantments");
             			return false;
             		}
             	}
@@ -112,6 +137,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 			{
         		if(!(fm instanceof BlockStateMeta))
         		{
+        			debug("!(fm instanceof BlockStateMeta)");
         			return false;
         		}
 				BlockStateMeta ibsm = (BlockStateMeta) im;
@@ -120,12 +146,14 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 				{
 					if(!(fbsm.getBlockState() instanceof ShulkerBox))
 					{
+						debug("!(fbsm.getBlockState() instanceof ShulkerBox)");
 						return false;
 					}
 					ShulkerBox ish = (ShulkerBox) ibsm.getBlockState();
 					ShulkerBox fsh = (ShulkerBox) fbsm.getBlockState();
 					if(ish.getColor() != fsh.getColor())
 					{
+						debug("ish.getColor() != fsh.getColor()");
 						return false;
 					}
 					for(int j = 0; j < ish.getSnapshotInventory().getStorageContents().length; j++)
@@ -134,6 +162,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 						ItemStack fts = fsh.getSnapshotInventory().getStorageContents()[j];
 						if(!isSimilar(its, fts))
 						{
+							debug("Chulker !isSimilar");
 							return false;
 						}
 					}
@@ -143,6 +172,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchArmorMeta(i, f))
         		{
+        			debug("!matchArmorMeta");
         			return false;
         		}
         	}
@@ -150,6 +180,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchAxolotlBucketMeta(i, f))
         		{
+        			debug("!matchAxolotlBucketMeta");
         			return false;
         		}
         	}
@@ -157,6 +188,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 			{
         		if(!matchBannerMeta(i, f))
         		{
+        			debug("matchBannerMeta");
         			return false;
         		}
 			}
@@ -164,6 +196,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchBookMeta(i, f))
         		{
+        			debug("!matchBookMeta");
         			return false;
         		}
         	}
@@ -171,6 +204,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchBundleMeta(i, f))
         		{
+        			debug("!matchBundleMeta");
         			return false;
         		}
         	}
@@ -178,6 +212,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchDamageable(i, f))
         		{
+        			debug("!matchDamageable");
         			return false;
         		}
         	}
@@ -185,12 +220,14 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!(fm instanceof EnchantmentStorageMeta))
         		{
+        			debug("!(fm instanceof EnchantmentStorageMeta)");
         			return false;
         		}
         		EnchantmentStorageMeta iesm = (EnchantmentStorageMeta) im;
         		EnchantmentStorageMeta fesm = (EnchantmentStorageMeta) fm;
             	if(!compareStoredEnchantments(iesm, fesm))
             	{
+            		debug("!compareStoredEnchantments");
             		return false;
             	}
         	}
@@ -198,22 +235,42 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!(fm instanceof FireworkEffectMeta))
         		{
+        			debug("!(fm instanceof FireworkEffectMeta)");
         			return false;
         		}
         		FireworkEffectMeta aim = (FireworkEffectMeta) im;
         		FireworkEffectMeta afm = (FireworkEffectMeta) fm;
         		if(aim.hasEffect() && afm.hasEffect())
         		{
-        			if(!aim.getEffect().serialize().equals(afm.getEffect().serialize()))
+        			if(aim.getEffect().getType() != afm.getEffect().getType())
         			{
         				return false;
         			}
+        			if(!aim.getEffect().getColors().containsAll(afm.getEffect().getColors())
+        					|| !afm.getEffect().getColors().containsAll(aim.getEffect().getColors()))
+        			{
+        				return false;
+        			}
+        			if(!aim.getEffect().getFadeColors().containsAll(afm.getEffect().getFadeColors())
+        					|| !afm.getEffect().getFadeColors().containsAll(aim.getEffect().getFadeColors()))
+        			{
+        				return false;
+        			}
+        		} else if(aim.hasEffect() && !afm.hasEffect())
+        		{
+        			debug("aim.hasEffect() && !afm.hasEffect()");
+        			return false;
+        		} else if(!aim.hasEffect() && afm.hasEffect())
+        		{
+        			debug("!aim.hasEffect() && afm.hasEffect()");
+        			return false;
         		}
         	}
         	if(checkFireworkEffectMeta)
         	{
         		if(!matchFireworkMeta(i, f))
         		{
+        			debug("!matchFireworkMeta");
         			return false;
         		}
         	}
@@ -221,6 +278,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchLeatherArmorMeta(i, f))
         		{
+        			debug("!matchLeatherArmorMeta");
         			return false;
         		}
         	}
@@ -228,12 +286,14 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!(fm instanceof MapMeta))
         		{
+        			debug("!(fm instanceof MapMeta)");
         			return false;
         		}
         		MapMeta aim = (MapMeta) im;
         		MapMeta afm = (MapMeta) fm;
         		if(aim.getColor().asRGB() != afm.getColor().asRGB())
         		{
+        			debug("aim.getColor().asRGB() != afm.getColor().asRGB()");
         			return false;
         		}
         		//API is extremly poorly
@@ -242,6 +302,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 			{
         		if(!matchPotionMeta(i, f))
         		{
+        			debug("!matchPotionMeta");
         			return false;
         		}
 			}
@@ -249,6 +310,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchRepairable(i, f))
         		{
+        			debug("!matchRepairable");
         			return false;
         		}
         	}
@@ -256,6 +318,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchSkullMeta(i, f))
         		{
+        			debug("!matchSkullMeta");
         			return false;
         		}
         	}
@@ -263,6 +326,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchSpawnEggMeta(i, f))
         		{
+        			debug("!matchSpawnEggMeta");
         			return false;
         		}
         	}
@@ -270,14 +334,17 @@ public class ItemStackComparisonProvider implements ItemStackComparison
         	{
         		if(!matchTropicalFishBucketMeta(i, f))
         		{
+        			debug("!matchTropicalFishBucketMeta");
         			return false;
         		}
         	}
         } else if(i.hasItemMeta() && !f.hasItemMeta())
         {
+        	debug("i.hasItemMeta() && !f.hasItemMeta()");
         	return false;
         } else if(!i.hasItemMeta() && f.hasItemMeta())
         {
+        	debug("!i.hasItemMeta() && f.hasItemMeta()");
         	return false;
         }
         return true;
@@ -287,6 +354,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 	{
 		if(i == null || f == null)
 		{
+			debug("i == null || f == null");
 			return true;
 		}
 		return false;
@@ -313,10 +381,12 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     	{
     		if(!fm.hasCustomModelData())
     		{
+    			debug("!fm.hasCustomModelData()");
     			return false;
     		}
     		if(im.getCustomModelData() != fm.getCustomModelData())
     		{
+    			debug("im.getCustomModelData() != fm.getCustomModelData()");
     			return false;
     		}
     	}
@@ -332,14 +402,17 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     	{
     		if(!fm.hasDisplayName())
     		{
+    			debug("im.hasDisplayName() && !fm.hasDisplayName()");
     			return false;
     		}
     		if(!im.getDisplayName().equals(fm.getDisplayName()))
     		{
+    			debug("!im.getDisplayName().equals(fm.getDisplayName())");
     			return false;
     		}
     	} else if(fm.hasDisplayName())
     	{
+    		debug("!im.hasDisplayName() && fm.hasDisplayName()");
     		return false;
     	}
 		return true;
@@ -355,20 +428,24 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     		if(fm.getItemFlags().isEmpty()
     				|| im.getItemFlags().size() != fm.getItemFlags().size())
     		{
+    			debug("fm.getItemFlags().isEmpty() || im.getItemFlags().size() != fm.getItemFlags().size()");
     			return false;
     		}
     		for(ItemFlag iifs : im.getItemFlags())
     		{
     			if(!fm.hasItemFlag(iifs))
     			{
+    				debug("!fm.hasItemFlag(iifs)");
     				return false;
     			}
     		}
     	} else if(im.getItemFlags().isEmpty() && !fm.getItemFlags().isEmpty())
     	{
+    		debug("im.getItemFlags().isEmpty() && !fm.getItemFlags().isEmpty()");
     		return false;
     	} else if(!im.getItemFlags().isEmpty() && fm.getItemFlags().isEmpty())
     	{
+    		debug("!im.getItemFlags().isEmpty() && fm.getItemFlags().isEmpty()");
     		return false;
     	}
 		return true;
@@ -385,18 +462,22 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     		{
     			if(j >= fm.getLore().size())
     			{
+    				debug("j >= fm.getLore().size()");
     				return false;
     			}
     			if(!im.getLore().get(j).equals(fm.getLore().get(j)))
     			{
+    				debug("!im.getLore().get(j).equals(fm.getLore().get(j))");
     				return false;
     			}
     		}
     	} else if(!im.hasLore() && fm.hasLore())
     	{
+    		debug("!im.hasLore() && fm.hasLore()");
     		return false;
     	} else if(im.hasLore() && !fm.hasLore())
     	{
+    		debug("im.hasLore() && !fm.hasLore()");
     		return false;
     	}
 		return true;
@@ -610,11 +691,21 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     				boolean boo = false;
     				for(FireworkEffect ee : afm.getEffects())
     				{
-    					if(e.serialize().equals(ee.serialize()))
-    					{
-    						boo = true;
-    						break;
-    					}
+    					if(e.getType() == ee.getType())
+	        			{
+    						if(e.getColors().containsAll(ee.getColors())
+    	        					|| ee.getColors().containsAll(e.getColors()))
+    	        			{
+    							if(e.getFadeColors().containsAll(ee.getFadeColors())
+        	        					|| ee.getFadeColors().containsAll(ee.getFadeColors()))
+        	        			{
+        	        				boo = true;
+        	        				break;
+        	        			}
+    	        			}
+    	        			
+	        			}
+	        			
     				}
     				if(!boo)
     				{
@@ -733,10 +824,19 @@ public class ItemStackComparisonProvider implements ItemStackComparison
     		{
     			if(aim.getOwnerProfile() != null && afm.getOwnerProfile() != null)
     			{
-    				if(!aim.getOwningPlayer().getName().equals(afm.getOwningPlayer().getName()))
-            		{
-            			return false;
-            		}
+    				if(aim.getOwnerProfile().getUniqueId() == null && afm.getOwnerProfile().getUniqueId() == null)
+    				{
+    					return true;
+    				} else if(aim.getOwnerProfile().getUniqueId() != null && afm.getOwnerProfile().getUniqueId() != null)
+    				{
+    					return aim.getOwnerProfile().getUniqueId().toString().equals(afm.getOwnerProfile().getUniqueId().toString());
+    				} else if(aim.getOwnerProfile().getUniqueId() != null && afm.getOwnerProfile().getUniqueId() == null)
+    				{
+    					return false;
+    				} else if(aim.getOwnerProfile().getUniqueId() == null && afm.getOwnerProfile().getUniqueId() != null)
+    				{
+    					return false;
+    				}
     			} else if((aim.getOwnerProfile() != null && afm.getOwnerProfile() == null)
     					|| (aim.getOwnerProfile() == null && afm.getOwnerProfile() != null))
     			{
