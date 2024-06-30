@@ -9,21 +9,21 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
-import main.java.me.avankziar.ifh.spigot.interfaces.BungeeOnlinePlayers;
-import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
+import main.java.me.avankziar.roota.general.database.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
 import main.java.me.avankziar.roota.spigot.database.MysqlSetup;
 import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
-import main.java.me.avankziar.roota.spigot.ifh.BungeeOnlinePlayersProvider;
 import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
 import main.java.me.avankziar.roota.spigot.ifh.InteractionBlockerProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ItemStackComparisonProvider;
+import main.java.me.avankziar.roota.spigot.ifh.ProxyOnlinePlayersProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
 
 public class RootA extends JavaPlugin
 {
-	public static Logger log;
+	public static Logger logger;
 	private static RootA plugin;
 	public String pluginName = "RootAdministration";
 	private YamlHandler yamlHandler;
@@ -36,26 +36,27 @@ public class RootA extends JavaPlugin
 	public void onEnable()
 	{
 		plugin = this;
-		log = getLogger();
+		logger = getLogger();
 		
 		//https://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=RootA
-		log.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | API-Version: "+plugin.getDescription().getAPIVersion());
-		log.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthors().toString());
-		log.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: "+plugin.getDescription().getWebsite());
-		log.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepend().toString());
-		log.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepend().toString());
-		log.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | LoadBefore: "+plugin.getDescription().getLoadBefore().toString());
+		logger.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | API-Version: "+plugin.getDescription().getAPIVersion());
+		logger.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthors().toString());
+		logger.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: "+plugin.getDescription().getWebsite());
+		logger.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepend().toString());
+		logger.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepend().toString());
+		logger.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | LoadBefore: "+plugin.getDescription().getLoadBefore().toString());
 		
 		yamlHandler = new YamlHandler(this);
 		
+		setupIFHAdministration();
 		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");
 		boolean adm = plugin.getAdministration() != null 
 				&& plugin.getYamlHandler().getConfig().getBoolean("useIFHAdministration")
 				&& plugin.getAdministration().isMysqlPathActive(path);
 		if(adm || yamlHandler.getConfig().getBoolean("Mysql.Status", false) == true)
 		{
-			mysqlHandler = new MysqlHandler(plugin);
 			mysqlSetup = new MysqlSetup(plugin, adm, path);
+			mysqlHandler = new MysqlHandler(plugin);
 		}
 		
 		setupIFHProviding();
@@ -66,7 +67,7 @@ public class RootA extends JavaPlugin
 	{
 		Bukkit.getScheduler().cancelTasks(this);
 		HandlerList.unregisterAll(this);
-		log.info(pluginName + " is disabled!");
+		logger.info(pluginName + " is disabled!");
 	}
 
 	public static RootA getPlugin()
@@ -99,9 +100,9 @@ public class RootA extends JavaPlugin
 		return mysqlSetup;
 	}
 	
-	private void setupIFHProviding()
-	{      
-        if (plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
+	private void setupIFHAdministration()
+	{
+		if (plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
 		{
         	administrationProvider = new AdministrationProvider(plugin);
         	plugin.getServer().getServicesManager().register(
@@ -109,8 +110,14 @@ public class RootA extends JavaPlugin
         			administrationProvider,
              		this,
              		ServicePriority.Normal);
-            log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
-            
+            logger.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
+		}
+	}
+	
+	private void setupIFHProviding()
+	{      
+        if (plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
+		{            
             EnumTranslationProvider.init(plugin);
             EnumTranslationProvider et = new EnumTranslationProvider();
             plugin.getServer().getServicesManager().register(
@@ -118,7 +125,7 @@ public class RootA extends JavaPlugin
         			et,
              		this,
              		ServicePriority.Normal);
-            log.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");
+            logger.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");
             
             ItemStackComparison itemStackComparisonProvider = new ItemStackComparisonProvider();
         	plugin.getServer().getServicesManager().register(
@@ -126,7 +133,7 @@ public class RootA extends JavaPlugin
         			itemStackComparisonProvider,
             this,
             ServicePriority.Normal);
-        	log.info(pluginName + " detected InterfaceHub >>> ItemStackComparison.class is provided!");
+        	logger.info(pluginName + " detected InterfaceHub >>> ItemStackComparison.class is provided!");
         	
         	InteractionBlockerProvider ib = new InteractionBlockerProvider();
             plugin.getServer().getServicesManager().register(
@@ -134,19 +141,19 @@ public class RootA extends JavaPlugin
         			ib,
              		this,
              		ServicePriority.Normal);
-            log.info(pluginName + " detected InterfaceHub >>> InteractionBlocker.class is provided!");
+            logger.info(pluginName + " detected InterfaceHub >>> InteractionBlocker.class is provided!");
             
         	try
 			{
 				if(mysqlSetup != null && mysqlSetup.getConnection() != null)
 				{
-					BungeeOnlinePlayers bungeeOnlinePlayers = new BungeeOnlinePlayersProvider();
+					ProxyOnlinePlayers bungeeOnlinePlayers = new ProxyOnlinePlayersProvider();
 		        	plugin.getServer().getServicesManager().register(
-		        			main.java.me.avankziar.ifh.spigot.interfaces.BungeeOnlinePlayers.class,
+		        			main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers.class,
 		        			bungeeOnlinePlayers,
 		            this,
 		            ServicePriority.Normal);
-		        	log.info(pluginName + " detected InterfaceHub >>> BungeeOnlinePlayers.class is provided!");
+		        	logger.info(pluginName + " detected InterfaceHub >>> ProxyOnlinePlayers.class is provided!");
 				}
 			} catch (SQLException e)
 			{

@@ -41,7 +41,7 @@ public class ItemStackComparisonProvider implements ItemStackComparison
 	{
 		if(b)
 		{
-			RootA.log.info(s);
+			RootA.logger.info(s);
 			Bukkit.broadcastMessage(s);
 		}
 	}

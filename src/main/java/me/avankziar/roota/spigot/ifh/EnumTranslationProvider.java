@@ -184,7 +184,7 @@ public class EnumTranslationProvider implements EnumTranslation
 	{
 		if(pm.hasCustomEffects())
 		{
-			String s = potiontypeLocalization.get(PotionType.UNCRAFTABLE);
+			String s = potiontypeLocalization.get(PotionType.AWKWARD);//TODO PotionType.UNCRAFTABLE);
 			return s != null ? s : pt.toString();
 		}
 		String s = potiontypeLocalization.get(pt);

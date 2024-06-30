@@ -1,4 +1,4 @@
-package main.java.me.avankziar.roota.general;
+package main.java.me.avankziar.roota.general.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,30 +6,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.bukkit.Color;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.Registry;
-import org.bukkit.TreeType;
-import org.bukkit.block.banner.PatternType;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Axolotl;
-import org.bukkit.entity.Cat;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fox;
-import org.bukkit.entity.Rabbit;
-import org.bukkit.entity.TropicalFish;
-import org.bukkit.entity.Villager;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.map.MapCursor;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
-
-import main.java.me.avankziar.roota.general.Language.ISO639_2B;
+import main.java.me.avankziar.roota.general.database.Language.ISO639_2B;
 
 public class YamlManager
 {
+	public enum Type
+	{
+		BUNGEE, SPIGOT, VELO;
+	}
+	
 	private ISO639_2B languageType = ISO639_2B.GER;
 	//The default language of your plugin. Mine is german.
 	private ISO639_2B defaultLanguageType = ISO639_2B.GER;
@@ -56,11 +41,11 @@ public class YamlManager
 	private static LinkedHashMap<String, Language> villagerprofessionlanguageKeys = new LinkedHashMap<>();
 	private static LinkedHashMap<String, Language> treetypelanguageKeys = new LinkedHashMap<>();
 	
-	public YamlManager(boolean spigot)
+	public YamlManager(Type type)
 	{
-		initConfig(spigot);
-		if(spigot)
+		if(type == Type.SPIGOT)
 		{
+			initConfig(type);
 			initMaterialLanguage();
 			initEnchantmentLanguage();
 			initBannerLanguage();
@@ -81,6 +66,15 @@ public class YamlManager
 			initVillagerProfession();
 			initTreeType();
 		}
+		if(type == Type.BUNGEE)
+		{
+			initConfig(type);
+		}
+		if(type == Type.VELO)
+		{
+			initConfig(type);
+		}
+		
 	}
 	
 	public ISO639_2B getLanguageType()
@@ -198,52 +192,6 @@ public class YamlManager
 		return treetypelanguageKeys;
 	}
 	
-	public void setFileInputBungee(net.md_5.bungee.config.Configuration yml,
-			LinkedHashMap<String, Language> keyMap, String key, ISO639_2B languageType)
-	{
-		if(!keyMap.containsKey(key))
-		{
-			return;
-		}
-		if(key.startsWith("#"))
-		{
-			//Comments cannot funktion on bungee
-			return;
-		}
-		if(yml.get(key) != null)
-		{
-			return;
-		}
-		if(keyMap.get(key).languageValues.get(languageType).length == 1)
-		{
-			if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
-			{
-				yml.set(key, ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", ""));
-			} else
-			{
-				yml.set(key, keyMap.get(key).languageValues.get(languageType)[0]);
-			}
-		} else
-		{
-			List<Object> list = Arrays.asList(keyMap.get(key).languageValues.get(languageType));
-			ArrayList<String> stringList = new ArrayList<>();
-			if(list instanceof List<?>)
-			{
-				for(Object o : list)
-				{
-					if(o instanceof String)
-					{
-						stringList.add(((String) o).replace("\r\n", ""));
-					} else
-					{
-						stringList.add(o.toString().replace("\r\n", ""));
-					}
-				}
-			}
-			yml.set(key, (List<String>) stringList);
-		}
-	}
-	
 	public void setFileInputBukkit(org.bukkit.configuration.file.YamlConfiguration yml,
 			LinkedHashMap<String, Language> keyMap, String key, ISO639_2B languageType)
 	{
@@ -324,18 +272,148 @@ public class YamlManager
 		}
 	}
 	
+	public void setFileInputBungee(net.md_5.bungee.config.Configuration yml,
+			LinkedHashMap<String, Language> keyMap, String key, ISO639_2B languageType)
+	{
+		if(!keyMap.containsKey(key))
+		{
+			return;
+		}
+		if(key.startsWith("#"))
+		{
+			//Comments cannot funktion on bungee
+			return;
+		}
+		if(yml.get(key) != null)
+		{
+			return;
+		}
+		if(keyMap.get(key).languageValues.get(languageType).length == 1)
+		{
+			if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
+			{
+				yml.set(key, ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", ""));
+			} else
+			{
+				yml.set(key, keyMap.get(key).languageValues.get(languageType)[0]);
+			}
+		} else
+		{
+			List<Object> list = Arrays.asList(keyMap.get(key).languageValues.get(languageType));
+			ArrayList<String> stringList = new ArrayList<>();
+			if(list instanceof List<?>)
+			{
+				for(Object o : list)
+				{
+					if(o instanceof String)
+					{
+						stringList.add(((String) o).replace("\r\n", ""));
+					} else
+					{
+						stringList.add(o.toString().replace("\r\n", ""));
+					}
+				}
+			}
+			yml.set(key, (List<String>) stringList);
+		}
+	}
+	
+	public void setFileInputVelocity(dev.dejvokep.boostedyaml.YamlDocument yml,
+			LinkedHashMap<String, Language> keyMap, String key, ISO639_2B languageType) throws org.spongepowered.configurate.serialize.SerializationException
+	{
+		if(!keyMap.containsKey(key))
+		{
+			return;
+		}
+		if(yml.get(key) != null)
+		{
+			return;
+		}
+		if(key.startsWith("#"))
+		{
+			//Comments
+			String k = key.replace("#", "");
+			if(yml.get(k) == null)
+			{
+				//return because no actual key are present
+				return;
+			}
+			if(yml.getBlock(k) == null)
+			{
+				return;
+			}
+			if(yml.getBlock(k).getComments() != null && !yml.getBlock(k).getComments().isEmpty())
+			{
+				//Return, because the comments are already present, and there could be modified. F.e. could be comments from a admin.
+				return;
+			}
+			if(keyMap.get(key).languageValues.get(languageType).length == 1)
+			{
+				if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
+				{
+					String s = ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", "");
+					yml.getBlock(k).setComments(Arrays.asList(s));
+				}
+			} else
+			{
+				List<Object> list = Arrays.asList(keyMap.get(key).languageValues.get(languageType));
+				ArrayList<String> stringList = new ArrayList<>();
+				if(list instanceof List<?>)
+				{
+					for(Object o : list)
+					{
+						if(o instanceof String)
+						{
+							stringList.add(((String) o).replace("\r\n", ""));
+						}
+					}
+				}
+				yml.getBlock(k).setComments((List<String>) stringList);
+			}
+			return;
+		}
+		if(keyMap.get(key).languageValues.get(languageType).length == 1)
+		{
+			if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
+			{
+				yml.set(key, ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", ""));
+			} else
+			{
+				yml.set(key, keyMap.get(key).languageValues.get(languageType)[0]);
+			}
+		} else
+		{
+			List<Object> list = Arrays.asList(keyMap.get(key).languageValues.get(languageType));
+			ArrayList<String> stringList = new ArrayList<>();
+			if(list instanceof List<?>)
+			{
+				for(Object o : list)
+				{
+					if(o instanceof String)
+					{
+						stringList.add(((String) o).replace("\r\n", ""));
+					} else
+					{
+						stringList.add(o.toString().replace("\r\n", ""));
+					}
+				}
+			}
+			yml.set(key, (List<String>) stringList);
+		}
+	}
+	
+	private void addComments(LinkedHashMap<String, Language> mapKeys, String path, Object[] o)
+	{
+		mapKeys.put(path, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, o));
+	}
+	
 	private void addConfig(String path, Object[] c, Object[] o)
 	{
 		configKeys.put(path, new Language(new ISO639_2B[] {ISO639_2B.GER}, c));
-		addConfigComments("#"+path, o);
+		addComments(configKeys, "#"+path, o);
 	}
 	
-	private void addConfigComments(String path, Object[] o)
-	{
-		configKeys.put(path, new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, o));
-	}
-	
-	public void initConfig(boolean spigot) //INFO:Config
+	public void initConfig(Type type) //INFO:Config
 	{
 		addConfig("IFHAdministrationPath", 
 				new Object[] {
@@ -357,7 +435,7 @@ public class YamlManager
 				"If other languages are required, you can check the following links to see which abbreviation is intended for which language.",
 				"See here, as well as the link, which is also there for Wikipedia.",
 				"https://github.com/Avankziar/RootAdministration/blob/main/src/main/java/me/avankziar/roota/general/Language.java"});
-		if(spigot)
+		if(type == Type.SPIGOT)
 		{
 			addConfig("Server",
 					new Object[] {
@@ -405,7 +483,7 @@ public class YamlManager
 				"isActive is a simple security function for the plugin. It ensures that you must actively confirm that all values have been entered.",
 				"Set this value to true if all data has been entered correctly.",
 				"If something has been entered incorrectly or incompletely, you will see an error message in the console."});
-		addConfigComments("#Mysql", 
+		addComments(configKeys, "#Mysql", 
 				new Object[] {
 				"","Hier im 'default' Pfad ist einer der Möglichen Mysqldaten hinterlegt. Es können unbegrenzt weitere Pfade angegeben werden,",
 				"um verschiedenste Verbindungsdaten zuhinterlegen.",
@@ -515,7 +593,7 @@ public class YamlManager
 	
 	public void initMaterialLanguage()
 	{
-		for(Material m : Material.values())
+		for(org.bukkit.Material m : org.bukkit.Material.values())
 		{
 			String ger = "";
 			String eng = m.toString();
@@ -1239,7 +1317,7 @@ public class YamlManager
 			case STRUCTURE_BLOCK: ger = "Konstruktionsblock"; eng = "STRUCTURE_BLOCK"; break;
 			case JIGSAW: ger = "Verbundblock"; eng = "JIGSAW"; break;
 			case TURTLE_HELMET: ger = "Schildkrötenpanzer"; eng = "TURTLE_HELMET"; break;
-			case SCUTE: ger = "Hornschild"; eng = "SCUTE"; break;
+			case TURTLE_SCUTE: ger = "Hornschild"; eng = "SCUTE"; break;
 			case FLINT_AND_STEEL: ger = "Feuerzeug"; eng = "FLINT_AND_STEEL"; break;
 			case APPLE: ger = "Apfel"; eng = "APPLE"; break;
 			case BOW: ger = "Bogen"; eng = "BOW"; break;
@@ -1582,7 +1660,7 @@ public class YamlManager
 			case IRON_NUGGET: ger = "Eisenklumpen"; eng = "IRON_NUGGET"; break;
 			case KNOWLEDGE_BOOK: ger = "Buch des Wissens"; eng = "KNOWLEDGE_BOOK"; break;
 			case DEBUG_STICK: ger = "Debug-Stick"; eng = "DEBUG_STICK"; break;
-			case MUSIC_DISC_13: ger = "Schallplatte C418-13-"; eng = "MUSIC_DISC_13"; break;
+			case MUSIC_DISC_13: ger = "Schallplatte C418-13"; eng = "MUSIC_DISC_13"; break;
 			case MUSIC_DISC_CAT: ger = "Schallplatte C418-Cat"; eng = "MUSIC_DISC_CAT"; break;
 			case MUSIC_DISC_BLOCKS: ger = "Schallplatte C418-Blocks"; eng = "MUSIC_DISC_BLOCKS"; break;
 			case MUSIC_DISC_CHIRP: ger = "Schallplatte C418-Chirp"; eng = "MUSIC_DISC_CHIRP"; break;
@@ -1984,6 +2062,28 @@ public class YamlManager
 			case WEATHERED_COPPER_DOOR: ger = "Verwitterte Kupfertüre"; break;
 			case WEATHERED_COPPER_GRATE: ger = "Verwitterter Kupferrost"; break;
 			case WEATHERED_COPPER_TRAPDOOR: ger = "Verwitterte Kupferfalltüre"; break;
+			//Below 1.21
+			case ARMADILLO_SCUTE: ger = "Armadillohornschild"; break;
+			case ARMADILLO_SPAWN_EGG: ger = "Armadillospawnei"; break;
+			case BOGGED_SPAWN_EGG: ger = "Sumpfskelettspawnei"; break;
+			case BOLT_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Bolzen"; break;
+			case BREEZE_ROD: ger = "Böerute"; break;
+			case FLOW_ARMOR_TRIM_SMITHING_TEMPLATE: ger = "Schmiedevorlage Spirale"; break;
+			case FLOW_BANNER_PATTERN: ger = "Bannervorlage Spirale"; break;
+			case FLOW_POTTERY_SHERD: ger = "Spiral-Töpferscherbe"; break;
+			case GUSTER_BANNER_PATTERN: ger = "Bannervorlage Wither"; break;
+			case GUSTER_POTTERY_SHERD: ger = "Wither-Töpferscherb"; break;
+			case HEAVY_CORE: ger = "Schwerer Kern"; break;
+			case MACE: ger = "Streitkolben"; break;
+			case MUSIC_DISC_CREATOR: ger = "Schallplatte C418-Erschaffer"; break;
+			case MUSIC_DISC_CREATOR_MUSIC_BOX: ger = "Schallplatte C418-ErschafferMusikbox"; break;
+			case MUSIC_DISC_PRECIPICE: ger = "Schallplatte C418-Abgrund"; break;
+			case OMINOUS_BOTTLE: ger = "Ominöse Flasche"; break;
+			case OMINOUS_TRIAL_KEY: ger = "Ominöser Trialschlüssel"; break;
+			case SCRAPE_POTTERY_SHERD: ger = "Kratzen-Töpferscherb"; break;
+			case VAULT: ger = "Tresor"; break;
+			case WIND_CHARGE: ger = "Windkugel"; break;
+			case WOLF_ARMOR: ger = "Wolfrüstung"; break;
 			}
 			matlanguageKeys.put(m.toString(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -1994,7 +2094,7 @@ public class YamlManager
 	
 	public void initEnchantmentLanguage() //INFO:EnchantmentLanguages
 	{		
-		for(Enchantment e : Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
+		for(org.bukkit.enchantments.Enchantment e : org.bukkit.Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
 		{
 			String ger = e.getKey().getKey();
 			String eng = e.getKey().getKey();
@@ -2049,9 +2149,9 @@ public class YamlManager
 	
 	public void initBannerLanguage() //INFO:BannerLanguages
 	{
-		for(DyeColor dc : DyeColor.values())
+		for(org.bukkit.DyeColor dc : org.bukkit.DyeColor.values())
 		{
-			for(PatternType p : PatternType.values())
+			for(org.bukkit.block.banner.PatternType p : org.bukkit.block.banner.PatternType.values())
 			{
 				String eng = "";
 				String ger = "";
@@ -2073,7 +2173,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Schwazer Balken"; eng = "BLACK_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Schwazer Schrägbalken"; eng = "BLACK_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Schwazer Schräglinksbalken"; eng = "BLACK_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier schwarze Pfähle"; eng = "BLACK_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier schwarze Pfähle"; eng = "BLACK_STRIPE_SMALL"; break;
 					case CROSS: ger = "Schwarzes Andreaskreuz"; eng = "BLACK_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Schwarzes Kreuz"; eng = "BLACK_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Schwarze halbe Spitze"; eng = "case TRIANGLE_BOTTOM"; break;
@@ -2082,14 +2182,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Schwarzes gespickeltes Bannerhaupt"; eng = "case TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Schwarz schräglinks geteilt"; eng = "case DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Schwarz schräglinks geteilt (Invertiert"; eng = "case DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Schwarz schrägrechts geteilt (Invertiert)"; eng = "case DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Schwarz schrägrechts geteilt"; eng = "case DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Schwarze Kugel"; eng = "BLACK_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Schwarze Raute"; eng = "BLACK_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Schwarz schrägrechts geteilt (Invertiert)"; eng = "case DIAGONAL_UP_LEFT"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Schwarz schrägrechts geteilt"; eng = "case DIAGONAL_UP_RIGHT"; break;
+					case CIRCLE: ger = "Schwarze Kugel"; eng = "BLACK_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Schwarze Raute"; eng = "BLACK_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts schwarz gespalten"; eng = "case HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben schwarz geteilt"; eng = "case HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links schwarz gespalten"; eng = "case HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten schwarz geteilt"; eng = "case HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links schwarz gespalten"; eng = "case HALF_VERTICAL_RIGHT"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten schwarz geteilt"; eng = "case HALF_HORIZONTAL_BOTTOM"; break;
 					case BORDER: ger = "Schwarzer Bord"; eng = "BLACK_BORDER"; break;
 					case CURLY_BORDER: ger = "Schwarzer Spickelbord"; eng = "BLACK_CURLY_BORDER"; break;
 					case CREEPER: ger = "Schwarzer Creeper"; eng = "BLACK_CREEPER"; break;
@@ -2101,6 +2201,8 @@ public class YamlManager
 					case MOJANG: ger = "Schwarzes Mojang-Logo"; eng = "BLACK_MOJANG"; break;
 					case GLOBE: ger = "Schwarzer Globus"; eng = "BLACK_GLOBE"; break;
 					case PIGLIN: ger = "Schwarzer Schnauze"; eng = "BLACK_PIGLIN"; break;
+					case FLOW: ger = "Schwarze Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Schwarzer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case BLUE:
@@ -2119,7 +2221,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Blauer Balken"; eng = "BLUE_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Blauer Schrägbalken"; eng = "BLUE_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Blauer Schräglinksbalken"; eng = "BLUE_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier blaue Pfähle"; eng = "BLUE_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier blaue Pfähle"; eng = "BLUE_STRIPE_SMALL"; break;
 					case CROSS: ger = "Blaues Andreaskreuz"; eng = "BLUE_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Blaues Kreuz"; eng = "BLUE_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Blaue halbe Spitze"; eng = "BLUE_TRIANGLE_BOTTOM"; break;
@@ -2128,14 +2230,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Blaues gespickeltes Bannerhaupt"; eng = "BLUE_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Blau schräglinks geteilt"; eng = "BLUE_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Blau schräglinks geteilt (Invertiert"; eng = "BLUE_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Blau schrägrechts geteilt (Invertiert)"; eng = "BLUE_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Blau schrägrechts geteilt"; eng = "BLUE_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Blaue Kugel"; eng = "BLUE_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Blaue Raute"; eng = "BLUE_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Blau schrägrechts geteilt (Invertiert)"; eng = "BLUE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Blau schrägrechts geteilt"; eng = "BLUE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Blaue Kugel"; eng = "BLUE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Blaue Raute"; eng = "BLUE_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts blau gespalten"; eng = "BLUE_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben blau geteilt"; eng = "BLUE_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links blau gespalten"; eng = "BLUE_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten blau geteilt"; eng = "BLUE_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links blau gespalten"; eng = "BLUE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten blau geteilt"; eng = "BLUE_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Blauer Bord"; eng = "BLUE_BORDER"; break;
 					case CURLY_BORDER: ger = "Blauer Spickelbord"; eng = "BLUE_CURLY_BORDER"; break;
 					case CREEPER: ger = "Blauer Creeper"; eng = "BLUE_CREEPER"; break;
@@ -2147,6 +2249,8 @@ public class YamlManager
 					case MOJANG: ger = "Blaues Mojang-Logo"; eng = "BLUE_MOJANG"; break;
 					case GLOBE: ger = "Blauer Globus"; eng = "BLUE_GLOBE"; break;
 					case PIGLIN: ger = "Blaue Schnauze"; eng = "BLUE_PIGLIN"; break;
+					case FLOW: ger = "Blaue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Blauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case BROWN:
@@ -2165,7 +2269,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Brauner Balken"; eng = "BROWN_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Brauner Schrägbalken"; eng = "BROWN_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Brauner Schräglinksbalken"; eng = "BROWN_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier braune Pfähle"; eng = "BROWN_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier braune Pfähle"; eng = "BROWN_STRIPE_SMALL"; break;
 					case CROSS: ger = "Braunes Andreaskreuz"; eng = "BROWN_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Braunes Kreuz"; eng = "BROWN_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Braune halbe Spitze"; eng = "BROWN_TRIANGLE_BOTTOM"; break;
@@ -2174,14 +2278,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Braunes gespickeltes Bannerhaupt"; eng = "BROWN_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Braun schräglinks geteilt"; eng = "BROWN_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Braun schräglinks geteilt (Invertiert"; eng = "BROWN_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Braun schrägrechts geteilt (Invertiert)"; eng = "BROWN_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Braun schrägrechts geteilt"; eng = "BROWN_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Braune Kugel"; eng = "BROWN_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Braune Raute"; eng = "BROWN_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Braun schrägrechts geteilt (Invertiert)"; eng = "BROWN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Braun schrägrechts geteilt"; eng = "BROWN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Braune Kugel"; eng = "BROWN_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Braune Raute"; eng = "BROWN_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts braun gespalten"; eng = "BROWN_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben braun geteilt"; eng = "BROWN_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links braun gespalten"; eng = "BROWN_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten braun geteilt"; eng = "BROWN_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links braun gespalten"; eng = "BROWN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten braun geteilt"; eng = "BROWN_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Brauner Bord"; eng = "BROWN_BORDER"; break;
 					case CURLY_BORDER: ger = "Brauner Spickelbord"; eng = "BROWN_CURLY_BORDER"; break;
 					case CREEPER: ger = "Brauner Creeper"; eng = "BROWN_CREEPER"; break;
@@ -2193,6 +2297,8 @@ public class YamlManager
 					case MOJANG: ger = "Braunes Mojang-Logo"; eng = "BROWN_MOJANG"; break;
 					case GLOBE: ger = "Brauner Globus"; eng = "BROWN_GLOBE"; break;
 					case PIGLIN: ger = "Braune Schnauze"; eng = "BROWN_PIGLIN"; break;
+					case FLOW: ger = "Braune Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Brauner Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case CYAN:
@@ -2211,7 +2317,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Türkiser Balken"; eng = "CYAN_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Türkiser Schrägbalken"; eng = "CYAN_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Türkiser Schräglinksbalken"; eng = "CYAN_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier türkise Pfähle"; eng = "CYAN_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier türkise Pfähle"; eng = "CYAN_STRIPE_SMALL"; break;
 					case CROSS: ger = "Türkises Andreaskreuz"; eng = "CYAN_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Türkises Kreuz"; eng = "CYAN_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Türkise halbe Spitze"; eng = "CYAN_TRIANGLE_BOTTOM"; break;
@@ -2220,14 +2326,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Türkises gespickeltes Bannerhaupt"; eng = "CYAN_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Türkis schräglinks geteilt"; eng = "CYAN_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Türkis schräglinks geteilt (Invertiert"; eng = "CYAN_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Türkis schrägrechts geteilt (Invertiert)"; eng = "CYAN_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Türkis schrägrechts geteilt"; eng = "CYAN_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Türkise Kugel"; eng = "CYAN_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Türkise Raute"; eng = "CYAN_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Türkis schrägrechts geteilt (Invertiert)"; eng = "CYAN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Türkis schrägrechts geteilt"; eng = "CYAN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Türkise Kugel"; eng = "CYAN_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Türkise Raute"; eng = "CYAN_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts türkis gespalten"; eng = "CYAN_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben türkis geteilt"; eng = "CYAN_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links türkis gespalten"; eng = "CYAN_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten türkis geteilt"; eng = "CYAN_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links türkis gespalten"; eng = "CYAN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten türkis geteilt"; eng = "CYAN_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Türkiser Bord"; eng = "CYAN_BORDER"; break;
 					case CURLY_BORDER: ger = "Türkiser Spickelbord"; eng = "CYAN_CURLY_BORDER"; break;
 					case CREEPER: ger = "Türkiser Creeper"; eng = "CYAN_CREEPER"; break;
@@ -2239,6 +2345,8 @@ public class YamlManager
 					case MOJANG: ger = "Türkises Mojang-Logo"; eng = "CYAN_MOJANG"; break;
 					case GLOBE: ger = "Türkiser Globus"; eng = "CYAN_GLOBE"; break;
 					case PIGLIN: ger = "Türkise Schnauze"; eng = "CYAN_PIGLIN"; break;
+					case FLOW: ger = "Türkise Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Türkiser Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case GRAY:
@@ -2257,7 +2365,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Grauer Balken"; eng = "GRAY_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Grauer Schrägbalken"; eng = "GRAY_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Grauer Schräglinksbalken"; eng = "GRAY_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier graue Pfähle"; eng = "GRAY_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier graue Pfähle"; eng = "GRAY_STRIPE_SMALL"; break;
 					case CROSS: ger = "Graues Andreaskreuz"; eng = "GRAY_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Graues Kreuz"; eng = "GRAY_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Graue halbe Spitze"; eng = "GRAY_TRIANGLE_BOTTOM"; break;
@@ -2266,14 +2374,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Graues gespickeltes Bannerhaupt"; eng = "GRAY_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Grau schräglinks geteilt"; eng = "GRAY_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Grau schräglinks geteilt (Invertiert"; eng = "GRAY_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Grau schrägrechts geteilt (Invertiert)"; eng = "GRAY_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Grau schrägrechts geteilt"; eng = "GRAY_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Graue Kugel"; eng = "GRAY_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Graue Raute"; eng = "GRAY_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Grau schrägrechts geteilt (Invertiert)"; eng = "GRAY_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Grau schrägrechts geteilt"; eng = "GRAY_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Graue Kugel"; eng = "GRAY_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Graue Raute"; eng = "GRAY_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts grau gespalten"; eng = "GRAY_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben grau geteilt"; eng = "GRAY_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links grau gespalten"; eng = "GRAY_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten grau geteilt"; eng = "GRAY_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links grau gespalten"; eng = "GRAY_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten grau geteilt"; eng = "GRAY_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Grauer Bord"; eng = "GRAY_BORDER"; break;
 					case CURLY_BORDER: ger = "Grauer Spickelbord"; eng = "GRAY_CURLY_BORDER"; break;
 					case CREEPER: ger = "Grauer Creeper"; eng = "GRAY_CREEPER"; break;
@@ -2285,6 +2393,8 @@ public class YamlManager
 					case MOJANG: ger = "Graues Mojang-Logo"; eng = "GRAY_MOJANG"; break;
 					case GLOBE: ger = "Grauer Globus"; eng = "GRAY_GLOBE"; break;
 					case PIGLIN: ger = "Graue Schnauze"; eng = "GRAY_PIGLIN"; break;
+					case FLOW: ger = "Graue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Grauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case GREEN:
@@ -2303,7 +2413,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Grüner Balken"; eng = "GREEN_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Grüner Schrägbalken"; eng = "GREEN_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Grüner Schräglinksbalken"; eng = "GREEN_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier grüne Pfähle"; eng = "GREEN_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier grüne Pfähle"; eng = "GREEN_STRIPE_SMALL"; break;
 					case CROSS: ger = "Grünes Andreaskreuz"; eng = "GREEN_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Grünes Kreuz"; eng = "GREEN_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Grüne halbe Spitze"; eng = "GREEN_TRIANGLE_BOTTOM"; break;
@@ -2312,14 +2422,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Grünes gespickeltes Bannerhaupt"; eng = "GREEN_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Grün schräglinks geteilt"; eng = "GREEN_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Grün schräglinks geteilt (Invertiert"; eng = "GREEN_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Grün schrägrechts geteilt (Invertiert)"; eng = "GREEN_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Grün schrägrechts geteilt"; eng = "GREEN_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Grüne Kugel"; eng = "case CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Grüne Raute"; eng = "GREEN_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Grün schrägrechts geteilt (Invertiert)"; eng = "GREEN_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Grün schrägrechts geteilt"; eng = "GREEN_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Grüne Kugel"; eng = "case CIRCLE"; break;
+					case RHOMBUS: ger = "Grüne Raute"; eng = "GREEN_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts grün gespalten"; eng = "GREEN_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben grün geteilt"; eng = "GREEN_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links grün gespalten"; eng = "GREEN_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten grün geteilt"; eng = "GREEN_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links grün gespalten"; eng = "GREEN_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten grün geteilt"; eng = "GREEN_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Grüner Bord"; eng = "GREEN_BORDER"; break;
 					case CURLY_BORDER: ger = "Grüner Spickelbord"; eng = "GREEN_CURLY_BORDER"; break;
 					case CREEPER: ger = "Grüner Creeper"; eng = "GREEN_CREEPER"; break;
@@ -2331,6 +2441,8 @@ public class YamlManager
 					case MOJANG: ger = "Grünes Mojang-Logo"; eng = "GREEN_MOJANG"; break;
 					case GLOBE: ger = "Grüner Globus"; eng = "GREEN_GLOBE"; break;
 					case PIGLIN: ger = "Grüne Schnauze"; eng = "GREEN_PIGLIN"; break;
+					case FLOW: ger = "Grüne Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Grüner Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case LIGHT_BLUE:
@@ -2349,7 +2461,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Hellblauer Balken"; eng = "LIGHT_BLUE_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Hellblauer Schrägbalken"; eng = "LIGHT_BLUE_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Hellblauer Schräglinksbalken"; eng = "LIGHT_BLUE_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier hellblaue Pfähle"; eng = "LIGHT_BLUE_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier hellblaue Pfähle"; eng = "LIGHT_BLUE_STRIPE_SMALL"; break;
 					case CROSS: ger = "Hellblaues Andreaskreuz"; eng = "LIGHT_BLUE_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Hellblaues Kreuz"; eng = "LIGHT_BLUE_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Hellblaue halbe Spitze"; eng = "LIGHT_BLUE_TRIANGLE_BOTTOM"; break;
@@ -2358,14 +2470,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Hellblaues gespickeltes Bannerhaupt"; eng = "LIGHT_BLUE_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Hellblau schräglinks geteilt"; eng = "LIGHT_BLUE_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Hellblau schräglinks geteilt (Invertiert"; eng = "LIGHT_BLUE_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Hellblau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_BLUE_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Hellblau schrägrechts geteilt"; eng = "LIGHT_BLUE_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Hellblaue Kugel"; eng = "LIGHT_BLUE_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Hellblaue Raute"; eng = "LIGHT_BLUE_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Hellblau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_BLUE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Hellblau schrägrechts geteilt"; eng = "LIGHT_BLUE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Hellblaue Kugel"; eng = "LIGHT_BLUE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Hellblaue Raute"; eng = "LIGHT_BLUE_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts hellblau gespalten"; eng = "LIGHT_BLUE_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben hellblau geteilt"; eng = "LIGHT_BLUE_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links hellblau gespalten"; eng = "LIGHT_BLUE_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellblau geteilt"; eng = "LIGHT_BLUE_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links hellblau gespalten"; eng = "LIGHT_BLUE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten hellblau geteilt"; eng = "LIGHT_BLUE_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Hellblauer Bord"; eng = "LIGHT_BLUE_BORDER"; break;
 					case CURLY_BORDER: ger = "Hellblauer Spickelbord"; eng = "LIGHT_BLUE_CURLY_BORDER"; break;
 					case CREEPER: ger = "Hellblauer Creeper"; eng = "LIGHT_BLUE_CREEPER"; break;
@@ -2377,6 +2489,8 @@ public class YamlManager
 					case MOJANG: ger = "Hellblaues Mojang-Logo"; eng = "LIGHT_BLUE_MOJANG"; break;
 					case GLOBE: ger = "Hellblauer Globus"; eng = "LIGHT_BLUE_GLOBE"; break;
 					case PIGLIN: ger = "Hellblaue Schnauze"; eng = "LIGHT_BLUE_PIGLIN"; break;
+					case FLOW: ger = "Hellblaue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Hellblauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case LIGHT_GRAY:
@@ -2395,7 +2509,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Hellgrauer Balken"; eng = "LIGHT_GRAY_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Hellgrauer Schrägbalken"; eng = "LIGHT_GRAY_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Hellgrauer Schräglinksbalken"; eng = "LIGHT_GRAY_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier hellgraue Pfähle"; eng = "LIGHT_GRAY_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier hellgraue Pfähle"; eng = "LIGHT_GRAY_STRIPE_SMALL"; break;
 					case CROSS: ger = "Hellgraues Andreaskreuz"; eng = "LIGHT_GRAY_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Hellgraues Kreuz"; eng = "LIGHT_GRAY_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Hellgraue halbe Spitze"; eng = "LIGHT_GRAY_TRIANGLE_BOTTOM"; break;
@@ -2404,14 +2518,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Hellgraues gespickeltes Bannerhaupt"; eng = "LIGHT_GRAY_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Hellgrau schräglinks geteilt"; eng = "LIGHT_GRAY_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Hellgrau schräglinks geteilt (Invertiert"; eng = "LIGHT_GRAY_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Hellgrau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_GRAY_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Hellgrau schrägrechts geteilt"; eng = "LIGHT_GRAY_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Hellgraue Kugel"; eng = "LIGHT_GRAY_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Hellgraue Raute"; eng = "LIGHT_GRAY_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Hellgrau schrägrechts geteilt (Invertiert)"; eng = "LIGHT_GRAY_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Hellgrau schrägrechts geteilt"; eng = "LIGHT_GRAY_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Hellgraue Kugel"; eng = "LIGHT_GRAY_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Hellgraue Raute"; eng = "LIGHT_GRAY_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts hellgrau gespalten"; eng = "LIGHT_GRAY_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben hellgrau geteilt "; eng = "LIGHT_GRAY_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links hellgrau gespalten"; eng = "LIGHT_GRAY_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellgrau geteilt"; eng = "LIGHT_GRAY_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links hellgrau gespalten"; eng = "LIGHT_GRAY_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten hellgrau geteilt"; eng = "LIGHT_GRAY_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Hellgrauer Bord"; eng = "LIGHT_GRAY_BORDER"; break;
 					case CURLY_BORDER: ger = "Hellgrauer Spickelbord"; eng = "LIGHT_GRAY_CURLY_BORDER"; break;
 					case CREEPER: ger = "Hellgrauer Creeper"; eng = "LIGHT_GRAY_CREEPER"; break;
@@ -2423,6 +2537,8 @@ public class YamlManager
 					case MOJANG: ger = "Hellgraues Mojang-Logo"; eng = "LIGHT_GRAY_MOJANG"; break;
 					case GLOBE: ger = "Hellgrauer Globus"; eng = "LIGHT_GRAY_GLOBE"; break;
 					case PIGLIN: ger = "Hellgraue Schnauze"; eng = "LIGHT_GRAY_PIGLIN"; break;
+					case FLOW: ger = "Hellgraue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Hellgrauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case LIME:
@@ -2441,7 +2557,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Hellgrüner Balken"; eng = "LIME_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Hellgrüner Schrägbalken"; eng = "LIME_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Hellgrüner Schräglinksbalken"; eng = "LIME_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier hellgrüne Pfähle"; eng = "LIME_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier hellgrüne Pfähle"; eng = "LIME_STRIPE_SMALL"; break;
 					case CROSS: ger = "Hellgrünes Andreaskreuz"; eng = "LIME_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Hellgrünes Kreuz"; eng = "LIME_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Hellgrüne halbe Spitze"; eng = "LIME_TRIANGLE_BOTTOM"; break;
@@ -2450,14 +2566,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Hellgrünes gespickeltes Bannerhaupt"; eng = "LIME_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Hellgrün schräglinks geteilt"; eng = "LIME_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Hellgrün schräglinks geteilt (Invertiert"; eng = "LIME_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Hellgrün schrägrechts geteilt (Invertiert)"; eng = "LIME_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Hellgrün schrägrechts geteilt"; eng = "LIME_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Hellgrüne Kugel"; eng = "LIME_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Hellgrüne Raute"; eng = "LIME_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Hellgrün schrägrechts geteilt (Invertiert)"; eng = "LIME_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Hellgrün schrägrechts geteilt"; eng = "LIME_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Hellgrüne Kugel"; eng = "LIME_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Hellgrüne Raute"; eng = "LIME_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts hellgrün gespalten"; eng = "LIME_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben hellgrün geteilt"; eng = "LIME_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links hellgrün gespalten"; eng = "LIME_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten hellgrün geteilt"; eng = "LIME_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links hellgrün gespalten"; eng = "LIME_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten hellgrün geteilt"; eng = "LIME_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Hellgrüner Bord"; eng = "LIME_BORDER"; break;
 					case CURLY_BORDER: ger = "Hellgrüner Spickelbord"; eng = "LIME_CURLY_BORDER"; break;
 					case CREEPER: ger = "Hellgrüner Creeper"; eng = "LIME_CREEPER"; break;
@@ -2469,6 +2585,8 @@ public class YamlManager
 					case MOJANG: ger = "Hellgrünes Mojang-Logo"; eng = "LIME_MOJANG"; break;
 					case GLOBE: ger = "Hellgrüner Globus"; eng = "LIME_GLOBE"; break;
 					case PIGLIN: ger = "Hellgrüne Schnauze"; eng = "LIME_PIGLIN"; break;
+					case FLOW: ger = "Hellgrüne Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Hellgrüner Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case MAGENTA:
@@ -2487,7 +2605,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Magenta Balken"; eng = "MAGENTA_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Magenta Schrägbalken"; eng = "MAGENTA_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Magenta Schräglinksbalken"; eng = "MAGENTA_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier Magenta Pfähle"; eng = "MAGENTA_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier Magenta Pfähle"; eng = "MAGENTA_STRIPE_SMALL"; break;
 					case CROSS: ger = "Magenta Andreaskreuz"; eng = "MAGENTA_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Magenta Kreuz"; eng = "MAGENTA_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Magenta halbe Spitze"; eng = "MAGENTA_TRIANGLE_BOTTOM"; break;
@@ -2496,14 +2614,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Magenta gespickeltes Bannerhaupt"; eng = "MAGENTA_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Magenta schräglinks geteilt"; eng = "MAGENTA_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Magenta schräglinks geteilt (Invertiert"; eng = "MAGENTA_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Magenta schrägrechts geteilt (Invertiert)"; eng = "MAGENTA_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Magenta schrägrechts geteilt"; eng = "MAGENTA_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Magenta Kugel"; eng = "MAGENTA_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Magenta Raute"; eng = "MAGENTA_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Magenta schrägrechts geteilt (Invertiert)"; eng = "MAGENTA_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Magenta schrägrechts geteilt"; eng = "MAGENTA_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Magenta Kugel"; eng = "MAGENTA_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Magenta Raute"; eng = "MAGENTA_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts Magenta gespalten"; eng = "MAGENTA_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben Magenta geteilt"; eng = "MAGENTA_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links Magenta gespalten"; eng = "MAGENTA_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten Magenta geteilt"; eng = "MAGENTA_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links Magenta gespalten"; eng = "MAGENTA_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten Magenta geteilt"; eng = "MAGENTA_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Magenta Bord"; eng = "MAGENTA_BORDER"; break;
 					case CURLY_BORDER: ger = "Magenta Spickelbord"; eng = "MAGENTA_CURLY_BORDER"; break;
 					case CREEPER: ger = "Magenta Creeper"; eng = "MAGENTA_CREEPER"; break;
@@ -2515,6 +2633,8 @@ public class YamlManager
 					case MOJANG: ger = "Magenta Mojang-Logo"; eng = "MAGENTA_MOJANG"; break;
 					case GLOBE: ger = "Magenta Globus"; eng = "MAGENTA_GLOBE"; break;
 					case PIGLIN: ger = "Magenta Schnauze"; eng = "MAGENTA_PIGLIN"; break;
+					case FLOW: ger = "Magenta Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Magenta Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case ORANGE:
@@ -2533,7 +2653,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Oranger Balken"; eng = "ORANGE_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Oranger Schrägbalken"; eng = "ORANGE_STRIPE_DOWNRIGHT";  break;
 					case STRIPE_DOWNLEFT: ger = "Oranger Schräglinksbalken"; eng = "ORANGE_STRIPE_DOWNLEFT";  break;
-					case STRIPE_SMALL: ger = "Vier orange Pfähle"; eng = "ORANGE_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier orange Pfähle"; eng = "ORANGE_STRIPE_SMALL"; break;
 					case CROSS: ger = "Oranges Andreaskreuz"; eng = "ORANGE_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Oranges Kreuz"; eng = "ORANGE_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Orange halbe Spitze"; eng = "ORANGE_TRIANGLE_BOTTOM";  break;
@@ -2542,14 +2662,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Oranges gespickeltes Bannerhaupt"; eng = "ORANGE_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Orange schräglinks geteilt"; eng = "ORANGE_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Orange schräglinks geteilt (Invertiert"; eng = "ORANGE_DIAGONAL_RIGHT";  break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Orange schrägrechts geteilt (Invertiert)"; eng = "ORANGE_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Orange schrägrechts geteilt"; eng = "ORANGE_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Orange Kugel"; eng = "ORANGE_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Orange Raute"; eng = "ORANGE_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Orange schrägrechts geteilt (Invertiert)"; eng = "ORANGE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Orange schrägrechts geteilt"; eng = "ORANGE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Orange Kugel"; eng = "ORANGE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Orange Raute"; eng = "ORANGE_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts orange gespalten"; eng = "ORANGE_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben orange geteilt"; eng = "ORANGE_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links orange gespalten"; eng = "ORANGE_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten orange geteilt"; eng = "ORANGE_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links orange gespalten"; eng = "ORANGE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten orange geteilt"; eng = "ORANGE_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Oranger Bord"; eng = "ORANGE_BORDER"; break;
 					case CURLY_BORDER: ger = "Oranger Spickelbord"; eng = "ORANGE_CURLY_BORDER"; break;
 					case CREEPER: ger = "Oranger Creeper"; eng = "ORANGE_CREEPER"; break;
@@ -2561,6 +2681,8 @@ public class YamlManager
 					case MOJANG: ger = "Oranges Mojang-Logo"; eng = "ORANGE_MOJANG"; break;
 					case GLOBE: ger = "Oranger Globus"; eng = "ORANGE_GLOBE"; break;
 					case PIGLIN: ger = "Orange Schnauze"; eng = "ORANGE_PIGLIN"; break;
+					case FLOW: ger = "Orange Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Oranger Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case PINK:
@@ -2579,7 +2701,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Rosa Balken"; eng = "PINK_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Rosa Schrägbalken"; eng = "PINK_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Rosa Schräglinksbalken"; eng = "PINK_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier rosa Pfähle"; eng = "PINK_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier rosa Pfähle"; eng = "PINK_STRIPE_SMALL"; break;
 					case CROSS: ger = "Rosa Andreaskreuz"; eng = "PINK_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Rosa Kreuz"; eng = "PINK_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Rosa halbe Spitze"; eng = "PINK_TRIANGLE_BOTTOM"; break;
@@ -2588,14 +2710,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Rosa gespickeltes Bannerhaupt"; eng = "PINK_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Rosa schräglinks geteilt"; eng = "PINK_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Rosa schräglinks geteilt (Invertiert"; eng = "PINK_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Rosa schrägrechts geteilt (Invertiert)"; eng = "PINK_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Rosa schrägrechts geteilt"; eng = "PINK_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Rosa Kugel"; eng = "PINK_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Rosa Raute"; eng = "PINK_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Rosa schrägrechts geteilt (Invertiert)"; eng = "PINK_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Rosa schrägrechts geteilt"; eng = "PINK_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Rosa Kugel"; eng = "PINK_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Rosa Raute"; eng = "PINK_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts rosa gespalten"; eng = "PINK_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben rosa geteilt"; eng = "PINK_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links rosa gespalten"; eng = "PINK_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten rosa geteilt"; eng = "PINK_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links rosa gespalten"; eng = "PINK_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten rosa geteilt"; eng = "PINK_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Rosa Bord"; eng = "PINK_BORDER"; break;
 					case CURLY_BORDER: ger = "Rosa Spickelbord"; eng = "PINK_CURLY_BORDER"; break;
 					case CREEPER: ger = "Rosa Creeper"; eng = "PINK_CREEPER"; break;
@@ -2607,6 +2729,8 @@ public class YamlManager
 					case MOJANG: ger = "Rosanes Mojang-Logo"; eng = "PINK_MOJANG"; break;
 					case GLOBE: ger = "Rosa Globus"; eng = "PINK_GLOBE"; break;
 					case PIGLIN: ger = "Rosa Schnauze"; eng = "PINK_PIGLIN"; break;
+					case FLOW: ger = "Rosa Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Rosa Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case PURPLE:
@@ -2625,7 +2749,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Violetter Balken"; eng = "PURPLE_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Violetter Schrägbalken"; eng = "PURPLE_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Violetter Schräglinksbalken"; eng = "PURPLE_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier violette Pfähle"; eng = "PURPLE_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier violette Pfähle"; eng = "PURPLE_STRIPE_SMALL"; break;
 					case CROSS: ger = "Violettes Andreaskreuz"; eng = "PURPLE_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Violettes Kreuz"; eng = "PURPLE_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Violette halbe Spitze"; eng = "PURPLE_TRIANGLE_BOTTOM"; break;
@@ -2634,14 +2758,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Violettes gespickeltes Bannerhaupt"; eng = "PURPLE_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Violett schräglinks geteilt"; eng = "PURPLE_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Violett schräglinks geteilt (Invertiert"; eng = "PURPLE_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Violett schrägrechts geteilt (Invertiert)"; eng = "PURPLE_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Violett schrägrechts geteilt"; eng = "PURPLE_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Violette Kugel"; eng = "PURPLE_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Violette Raute"; eng = "PURPLE_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Violett schrägrechts geteilt (Invertiert)"; eng = "PURPLE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Violett schrägrechts geteilt"; eng = "PURPLE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Violette Kugel"; eng = "PURPLE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Violette Raute"; eng = "PURPLE_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts violett gespalten"; eng = "PURPLE_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben violett geteilt"; eng = "PURPLE_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links violett gespalten"; eng = "PURPLE_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten violett geteilt"; eng = "PURPLE_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links violett gespalten"; eng = "PURPLE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten violett geteilt"; eng = "PURPLE_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Violetter Bord"; eng = "PURPLE_BORDER"; break;
 					case CURLY_BORDER: ger = "Violetter Spickelbord"; eng = "PURPLE_CURLY_BORDER"; break;
 					case CREEPER: ger = "Violetter Creeper"; eng = "PURPLE_CREEPER"; break;
@@ -2653,6 +2777,8 @@ public class YamlManager
 					case MOJANG: ger = "Violettes Mojang-Logo"; eng = "PURPLE_MOJANG"; break;
 					case GLOBE: ger = "Violetter Globus"; eng = "PURPLE_GLOBE"; break;
 					case PIGLIN: ger = "Violette Schnauze"; eng = "PURPLE_PIGLIN"; break;
+					case FLOW: ger = "Violette Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Violetter Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case RED:
@@ -2671,7 +2797,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Roter Balken"; eng = "RED_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Roter Schrägbalken"; eng = "RED_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Roter Schräglinksbalken"; eng = "RED_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier rote Pfähle"; eng = "RED_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier rote Pfähle"; eng = "RED_STRIPE_SMALL"; break;
 					case CROSS: ger = "Rotes Andreaskreuz"; eng = "RED_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Rotes Kreuz"; eng = "RED_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Rote halbe Spitze"; eng = "RED_TRIANGLE_BOTTOM"; break;
@@ -2680,14 +2806,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Rotes gespickeltes Bannerhaupt"; eng = "RED_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Rot schräglinks geteilt"; eng = "RED_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Rot schräglinks geteilt (Invertiert"; eng = "RED_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Rot schrägrechts geteilt (Invertiert)"; eng = "RED_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Rot schrägrechts geteilt"; eng = "RED_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Rote Kugel"; eng = "RED_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Rote Raute"; eng = "RED_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Rot schrägrechts geteilt (Invertiert)"; eng = "RED_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Rot schrägrechts geteilt"; eng = "RED_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Rote Kugel"; eng = "RED_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Rote Raute"; eng = "RED_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts rot gespalten"; eng = "RED_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben rot geteilt"; eng = "RED_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links rot gespalten"; eng = "RED_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten rot geteilt"; eng = "RED_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links rot gespalten"; eng = "RED_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten rot geteilt"; eng = "RED_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Roter Bord"; eng = "RED_BORDER"; break;
 					case CURLY_BORDER: ger = "Roter Spickelbord"; eng = "RED_CURLY_BORDER"; break;
 					case CREEPER: ger = "Roter Creeper"; eng = "RED_CREEPER"; break;
@@ -2699,6 +2825,8 @@ public class YamlManager
 					case MOJANG: ger = "Rotes Mojang-Logo"; eng = "RED_MOJANG"; break;
 					case GLOBE: ger = "Roter Globus"; eng = "RED_GLOBE"; break;
 					case PIGLIN: ger = "Rote Schnauze"; eng = "RED_PIGLIN"; break;
+					case FLOW: ger = "Rote Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Roter Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case WHITE:
@@ -2717,7 +2845,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Weißer Balken"; eng = "WHITE_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Weißer Schrägbalken"; eng = "WHITE_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Weißer Schräglinksbalken"; eng = "WHITE_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier weiße Pfähle"; eng = "WHITE_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier weiße Pfähle"; eng = "WHITE_STRIPE_SMALL"; break;
 					case CROSS: ger = "Weißes Andreaskreuz"; eng = "WHITE_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Weißes Kreuz"; eng = "WHITE_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Weiße halbe Spitze"; eng = "WHITE_TRIANGLE_BOTTOM"; break;
@@ -2726,14 +2854,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Weißes gespickeltes Bannerhaupt"; eng = "WHITE_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Weiß schräglinks geteilt"; eng = "WHITE_DIAGONAL_LEFT";  break;
 					case DIAGONAL_RIGHT: ger = "Weiß schräglinks geteilt (Invertiert)"; eng = "WHITE_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Weiß schrägrechts geteilt (Invertiert)"; eng = "WHITE_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Weiß schrägrechts geteilt"; eng = "WHITE_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Weiße Kugel"; eng = "WHITE_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Weiße Raute"; eng = "WHITE_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Weiß schrägrechts geteilt (Invertiert)"; eng = "WHITE_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Weiß schrägrechts geteilt"; eng = "WHITE_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Weiße Kugel"; eng = "WHITE_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Weiße Raute"; eng = "WHITE_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts weiß gespalten"; eng = "WHITE_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben weiß geteilt"; eng = "WHITE_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links weiß gespalten"; eng = "WHITE_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten weiß geteilt"; eng = "WHITE_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links weiß gespalten"; eng = "WHITE_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten weiß geteilt"; eng = "WHITE_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Weißer Bord"; eng = "WHITE_BORDER"; break;
 					case CURLY_BORDER: ger = "Weißer Spickelbord"; eng = "WHITE_CURLY_BORDER"; break;
 					case CREEPER: ger = "Weißer Creeper"; eng = "WHITE_CREEPER"; break;
@@ -2745,6 +2873,8 @@ public class YamlManager
 					case MOJANG: ger = "Weißes Mojang-Logo"; eng = "WHITE_MOJANG"; break;
 					case GLOBE: ger = "Weißer Globus"; eng = "WHITE_GLOBE"; break;
 					case PIGLIN: ger = "Weiße Schnauze"; eng = "WHITE_PIGLIN"; break;
+					case FLOW: ger = "Weiße Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Weißer Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				case YELLOW:
@@ -2763,7 +2893,7 @@ public class YamlManager
 					case STRIPE_MIDDLE: ger = "Gelber Balken"; eng = "YELLOW_STRIPE_MIDDLE"; break;
 					case STRIPE_DOWNRIGHT: ger = "Gelber Schrägbalken"; eng = "YELLOW_STRIPE_DOWNRIGHT"; break;
 					case STRIPE_DOWNLEFT: ger = "Gelber Schräglinksbalken"; eng = "YELLOW_STRIPE_DOWNLEFT"; break;
-					case STRIPE_SMALL: ger = "Vier gelbe Pfähle"; eng = "YELLOW_STRIPE_SMALL"; break;
+					case SMALL_STRIPES: ger = "Vier gelbe Pfähle"; eng = "YELLOW_STRIPE_SMALL"; break;
 					case CROSS: ger = "Gelbes Andreaskreuz"; eng = "YELLOW_CROSS"; break;
 					case STRAIGHT_CROSS: ger = "Gelbes Kreuz"; eng = "YELLOW_STRAIGHT_CROSS"; break;
 					case TRIANGLE_BOTTOM: ger = "Gelbe halbe Spitze"; eng = "YELLOW_TRIANGLE_BOTTOM"; break;
@@ -2772,14 +2902,14 @@ public class YamlManager
 					case TRIANGLES_TOP: ger = "Gelbes gespickeltes Bannerhaupt"; eng = "YELLOW_TRIANGLES_TOP"; break;
 					case DIAGONAL_LEFT: ger = "Gelb schräglinks geteilt"; eng = "YELLOW_DIAGONAL_LEFT"; break;
 					case DIAGONAL_RIGHT: ger = "Gelb schräglinks geteilt (Invertiert"; eng = "YELLOW_DIAGONAL_RIGHT"; break;
-					case DIAGONAL_LEFT_MIRROR: ger = "Gelb schrägrechts geteilt (Invertiert)"; eng = "YELLOW_DIAGONAL_LEFT_MIRROR"; break;
-					case DIAGONAL_RIGHT_MIRROR: ger = "Gelb schrägrechts geteilt"; eng = "YELLOW_DIAGONAL_RIGHT_MIRROR"; break;
-					case CIRCLE_MIDDLE: ger = "Gelbe Kugel"; eng = "YELLOW_CIRCLE_MIDDLE"; break;
-					case RHOMBUS_MIDDLE: ger = "Gelbe Raute"; eng = "YELLOW_RHOMBUS_MIDDLE"; break;
+					case DIAGONAL_UP_LEFT: ger = "Gelb schrägrechts geteilt (Invertiert)"; eng = "YELLOW_DIAGONAL_LEFT_MIRROR"; break;
+					case DIAGONAL_UP_RIGHT: ger = "Gelb schrägrechts geteilt"; eng = "YELLOW_DIAGONAL_RIGHT_MIRROR"; break;
+					case CIRCLE: ger = "Gelbe Kugel"; eng = "YELLOW_CIRCLE_MIDDLE"; break;
+					case RHOMBUS: ger = "Gelbe Raute"; eng = "YELLOW_RHOMBUS_MIDDLE"; break;
 					case HALF_VERTICAL: ger = "Rechts gelb gespalten"; eng = "YELLOW_HALF_VERTICAL"; break;
 					case HALF_HORIZONTAL: ger = "Oben gelb geteilt"; eng = "YELLOW_HALF_HORIZONTAL"; break;
-					case HALF_VERTICAL_MIRROR: ger = "Links gelb gespalten"; eng = "YELLOW_HALF_VERTICAL_MIRROR"; break;
-					case HALF_HORIZONTAL_MIRROR: ger = "Unten gelb geteilt"; eng = "YELLOW_HALF_HORIZONTAL_MIRROR"; break;
+					case HALF_VERTICAL_RIGHT: ger = "Links gelb gespalten"; eng = "YELLOW_HALF_VERTICAL_MIRROR"; break;
+					case HALF_HORIZONTAL_BOTTOM: ger = "Unten gelb geteilt"; eng = "YELLOW_HALF_HORIZONTAL_MIRROR"; break;
 					case BORDER: ger = "Gelber Bord"; eng = "YELLOW_BORDER"; break;
 					case CURLY_BORDER: ger = "Gelber Spickelbord"; eng = "YELLOW_CURLY_BORDER"; break;
 					case CREEPER: ger = "Gelber Creeper"; eng = "YELLOW_CREEPER"; break;
@@ -2791,6 +2921,8 @@ public class YamlManager
 					case MOJANG: ger = "Gelbes Mojang-Logo"; eng = "YELLOW_MOJANG"; break;
 					case GLOBE: ger = "Gelber Globus"; eng = "YELLOW_GLOBE"; break;
 					case PIGLIN: ger = "Gelbe Schnauze"; eng = "YELLOW_PIGLIN"; break;
+					case FLOW: ger = "Gelbe Spirale"; eng = dc.toString()+"_"+p.toString(); break;
+					case GUSTER: ger = "Gelber Wither"; eng = dc.toString()+"_"+p.toString(); break;
 					}
 					break;
 				}
@@ -2804,7 +2936,7 @@ public class YamlManager
 	
 	public void initItemFlagLanguage() //INFO:ItemFlagLanguages
 	{
-		for(ItemFlag i : ItemFlag.values())
+		for(org.bukkit.inventory.ItemFlag i : org.bukkit.inventory.ItemFlag.values())
 		{
 			String ger = "";
 			String eng = "";
@@ -2816,8 +2948,9 @@ public class YamlManager
 			case HIDE_DYE: ger = "Verstecke Einfärbung"; eng = "Hide Dye"; break;
 			case HIDE_ENCHANTS: ger = "Verstecke Verzauberung"; eng = "Hide Enchants"; break;
 			case HIDE_PLACED_ON: ger = "Verstecke Baumöglichkeit"; eng = "Hide Place on"; break;
-			case HIDE_POTION_EFFECTS: ger = "Verstecke Trankeffekte"; eng = "Hide Potion Effects"; break;
+			//case HIDE_POTION_EFFECTS: ger = "Verstecke Trankeffekte"; eng = "Hide Potion Effects"; break;
 			case HIDE_UNBREAKABLE: ger = "Verstecke Unzerstörbarkeit"; eng = "Hide Unbreakable"; break;
+			case HIDE_ADDITIONAL_TOOLTIP: ger = "Verstecke additionale Hilfetipps"; eng = "Hide additional tooltip"; break;
 			}
 			itemflaglanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -2828,7 +2961,7 @@ public class YamlManager
 	public void initPotionTypeLanguage() //INFO:PotionTypeLanguages
 	{
 		
-		for(PotionType pt : PotionType.values())
+		for(org.bukkit.potion.PotionType pt : org.bukkit.potion.PotionType.values())
 		{
 			String ger = "";
 			String eng = "";
@@ -2838,12 +2971,12 @@ public class YamlManager
 			case FIRE_RESISTANCE: ger = "Feuerresistenz"; eng = "Fire Resistance"; break;
 			case LONG_FIRE_RESISTANCE: ger = "Feuerresistenz (verlängert)"; eng = "Fire Resistance (extended)"; break;
 			case STRONG_HARMING: ger = "Schaden (verstärkt)"; eng = "Harm (amplified)"; break;
-			case INSTANT_DAMAGE: ger = "Schaden"; eng = "Instant Damage"; break;
-			case INSTANT_HEAL: ger = "Direktheilung"; eng = "Instante Heal"; break;
+			case HARMING: ger = "Schaden"; eng = "Harming"; break;
+			case HEALING: ger = "Heilung"; eng = "Healing"; break;
 			case STRONG_HEALING: ger = "Heilung (verstärkt)"; eng = "Heal (amplified)"; break;
 			case INVISIBILITY: ger = "Unsichtbarkeit"; eng = "Invisbility"; break;
 			case LONG_INVISIBILITY: ger = "Unsichtbarkeit (verlängert)"; eng = "Invisbility (extended)"; break;
-			case JUMP: ger = "Sprungkraft"; eng = "Jump"; break;
+			case LEAPING: ger = "Sprungkraft"; eng = "Jump"; break;
 			case LUCK: ger = "Glück"; eng = "Luck"; break;
 			case LONG_LEAPING: ger = "Sprungkraft (verlängert)"; eng = "Jump (extended)"; break;
 			case STRONG_LEAPING: ger = "Sprungkraft (verstärkt)"; eng = "Jump (amplified)"; break;
@@ -2853,7 +2986,7 @@ public class YamlManager
 			case POISON: ger = "Vergiftung"; eng = "Poison"; break;
 			case LONG_POISON: ger = "Vergiftung (verlängert)"; eng = "Poison (extended)"; break;
 			case STRONG_POISON: ger = "Vergiftung (verstärkt)"; eng = "Poison (amplified)"; break;
-			case REGEN: ger = "Regeneration"; eng = "Regeneration"; break;
+			case REGENERATION: ger = "Regeneration"; eng = "Regeneration"; break;
 			case LONG_REGENERATION: ger = "Regeneration (verlängert)"; eng = "Regeneration (extended)"; break;
 			case STRONG_REGENERATION: ger = "Regeneration (verstärkt)"; eng = "Regeneration (amplified)"; break;
 			case SLOW_FALLING: ger = "sanfter Fall"; eng = "Slow Falling"; break;
@@ -2861,22 +2994,25 @@ public class YamlManager
 			case SLOWNESS: ger = "Langsamkeit"; eng = "Slowness"; break;
 			case LONG_SLOWNESS: ger = "Langsamkeit (verlängert)"; eng = "Slowness (extended)"; break;
 			case STRONG_SLOWNESS: ger = "Langsamkeit (verstärkt)"; eng = "Slowness (amplified)"; break;
-			case SPEED: ger = "Schnelligkeit"; eng = "Speed"; break;
 			case STRENGTH: ger = "Stärke"; eng = "Strength"; break;
 			case LONG_STRENGTH: ger = "Stärke (verlängert)"; eng = "Strength (extended)"; break;
 			case STRONG_STRENGTH: ger = "Stärke (verstärkt)"; eng = "Strength (amplified)"; break;
-			case LONG_SWIFTNESS: ger = "Schnelligkeit (verlängert)"; eng = "Speed (extended)"; break;
-			case STRONG_SWIFTNESS: ger = "Schnelligkeit (verstärkt)"; eng = "Speed (amplified)"; break;
+			case SWIFTNESS: ger = "Schnelligkeit"; eng = "Swiftness"; break;
+			case LONG_SWIFTNESS: ger = "Schnelligkeit (verlängert)"; eng = "Swiftness (extended)"; break;
+			case STRONG_SWIFTNESS: ger = "Schnelligkeit (verstärkt)"; eng = "Swiftness (amplified)"; break;
 			case THICK: ger = "Dickflüssiger Trank"; eng = "Thick Potion"; break;
 			case TURTLE_MASTER: ger = "Schildkrötenmeister"; eng = "Turtle Master"; break;
 			case LONG_TURTLE_MASTER: ger = "Schildkrötenmeister (verlängert)"; eng = "Turtle Master (extended)"; break;
 			case STRONG_TURTLE_MASTER: ger = "Schildkrötenmeister (verstärkt)"; eng = "Turtle Master (amplified)"; break;
-			case UNCRAFTABLE: ger = "Trank"; eng = "Potion"; break;
 			case WATER: ger = "Wasserflasche"; eng = "Waterbottle"; break;
 			case WATER_BREATHING: ger = "Unterwasseratmung"; eng = "Water Breathing"; break;
 			case LONG_WATER_BREATHING: ger = "Unterwasseratmung (verlängert)"; eng = "Water Breathing (extended)"; break;
 			case WEAKNESS: ger = "Schwäche"; eng = "Weakness"; break;
 			case LONG_WEAKNESS: ger = "Schwäche (verlängert)"; eng = "Weakness (extended)"; break;
+			case INFESTED: ger = "Befallen"; eng = "Infested"; break;
+			case OOZING: ger = "Schleimen"; eng = "Oozing"; break;
+			case WEAVING: ger = "Weben"; eng = "Weaving"; break;
+			case WIND_CHARGED: ger = "Windgeladen"; eng = "Wind Charged"; break;
 			}
 			potiontypelanguageKeys.put(pt.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -2887,43 +3023,49 @@ public class YamlManager
 	@SuppressWarnings("deprecation")
 	public void initPotionEffectTypeLanguage() //INFO:PotionEffectTypeLanguages
 	{
-		for(PotionEffectType pet : PotionEffectType.values())
+		for(org.bukkit.potion.PotionEffectType pet : org.bukkit.potion.PotionEffectType.values())
 		{
 			String ger = "";
 			String eng = "";
-			if(pet.getName().equals(PotionEffectType.ABSORPTION.getName())){ger = "Absorption"; eng = "Absorption";} 
-			else if(pet.getName().equals(PotionEffectType.BAD_OMEN.getName())){ger = "Böses Omen"; eng = "Bad Omen";}
-			else if(pet.getName().equals(PotionEffectType.BLINDNESS.getName())){ger = "Blindheit"; eng = "Blindness";}
-			else if(pet.getName().equals(PotionEffectType.CONDUIT_POWER.getName())){ger = "Meereskraft"; eng = "Conduit Power";}
-			else if(pet.getName().equals(PotionEffectType.CONFUSION.getName())){ger = "Verwirrung"; eng = "Confusion";}
-			else if(pet.getName().equals(PotionEffectType.DAMAGE_RESISTANCE.getName())){ger = "Resistenz"; eng = "Resistance";}
-			else if(pet.getName().equals(PotionEffectType.DARKNESS.getName())){ger = "Dunkelheit"; eng = "Darkness";}
-			else if(pet.getName().equals(PotionEffectType.DOLPHINS_GRACE.getName())){ger = "Gunst des Delphins"; eng = "Dolphins Grace";}
-			else if(pet.getName().equals(PotionEffectType.FAST_DIGGING.getName())){ger = "Eile"; eng = "Fast Digging";}
-			else if(pet.getName().equals(PotionEffectType.FIRE_RESISTANCE.getName())){ger = "Feuerresistenz"; eng = "Fireresistance";}
-			else if(pet.getName().equals(PotionEffectType.GLOWING.getName())){ger = "Leuchten"; eng = "Leuchten";}
-			else if(pet.getName().equals(PotionEffectType.HARM.getName())){ger = "Schaden"; eng = "Harm";}
-			else if(pet.getName().equals(PotionEffectType.HEAL.getName())){ger = "Heilung"; eng = "Heal";}
-			else if(pet.getName().equals(PotionEffectType.HEALTH_BOOST.getName())){ger = "Extra Energie"; eng = "Health Boost";}
-			else if(pet.getName().equals(PotionEffectType.HERO_OF_THE_VILLAGE.getName())){ger = "Held des Dorfes"; eng = "Hero of the Village";}
-			else if(pet.getName().equals(PotionEffectType.HUNGER.getName())){ger = "Hunger"; eng = "Hunger";}
-			else if(pet.getName().equals(PotionEffectType.INCREASE_DAMAGE.getName())){ger = "Stärke"; eng = "Strenght";}
-			else if(pet.getName().equals(PotionEffectType.INVISIBILITY.getName())){ger = "Unsichtbarkeit"; eng = "Invisibility";}
-			else if(pet.getName().equals(PotionEffectType.JUMP.getName())){ger = "Sprungkraft"; eng = "Jump";}
-			else if(pet.getName().equals(PotionEffectType.LEVITATION.getName())){ger = "Schwebekraft"; eng = "Levitation";}
-			else if(pet.getName().equals(PotionEffectType.LUCK.getName())){ger = "Glück"; eng = "Luck";}
-			else if(pet.getName().equals(PotionEffectType.NIGHT_VISION.getName())){ger = "Nachtsicht"; eng = "Night Vision";}
-			else if(pet.getName().equals(PotionEffectType.POISON.getName())){ger = "Vergiftung"; eng = "Poison";}
-			else if(pet.getName().equals(PotionEffectType.REGENERATION.getName())){ger = "Regeneration"; eng = "Regeneration";}
-			else if(pet.getName().equals(PotionEffectType.SATURATION.getName())){ger = "Sättigung"; eng = "Saturation";}
-			else if(pet.getName().equals(PotionEffectType.SLOW.getName())){ger = "Langsamkeit"; eng = "Slow";}
-			else if(pet.getName().equals(PotionEffectType.SLOW_DIGGING.getName())){ger = "Abbaulähmung"; eng = "Slow Digging";}
-			else if(pet.getName().equals(PotionEffectType.SLOW_FALLING.getName())){ger = "Sanfter Fall"; eng = "Slow Falling";}
-			else if(pet.getName().equals(PotionEffectType.SPEED.getName())){ger = "Schnelligkeit"; eng = "Speed";}
-			else if(pet.getName().equals(PotionEffectType.UNLUCK.getName())){ger = "Unglück"; eng = "Unluck";}
-			else if(pet.getName().equals(PotionEffectType.WATER_BREATHING.getName())){ger = "Wasseratmung"; eng = "Water Breathing";}
-			else if(pet.getName().equals(PotionEffectType.WEAKNESS.getName())){ger = "Schwäche"; eng = "Weakness";}
-			else if(pet.getName().equals(PotionEffectType.WITHER.getName())){ger = "Wither"; eng = "Wither";}
+			if(pet.getName().equals(org.bukkit.potion.PotionEffectType.ABSORPTION.getName())){ger = "Absorption"; eng = "Absorption";} 
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.BAD_OMEN.getName())){ger = "Böses Omen"; eng = "Bad Omen";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.BLINDNESS.getName())){ger = "Blindheit"; eng = "Blindness";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.CONDUIT_POWER.getName())){ger = "Meereskraft"; eng = "Conduit Power";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.DARKNESS.getName())){ger = "Dunkelheit"; eng = "Darkness";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.DOLPHINS_GRACE.getName())){ger = "Gunst des Delphins"; eng = "Dolphins Grace";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.FIRE_RESISTANCE.getName())){ger = "Feuerresistenz"; eng = "Fireresistance";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.GLOWING.getName())){ger = "Leuchten"; eng = "Leuchten";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HASTE.getName())){ger = "Eile"; eng = "Haste";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HEALTH_BOOST.getName())){ger = "Extra Energie"; eng = "Health Boost";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HERO_OF_THE_VILLAGE.getName())){ger = "Held des Dorfes"; eng = "Hero of the Village";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HUNGER.getName())){ger = "Hunger"; eng = "Hunger";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INFESTED.getName())){ger = "Befallen"; eng = "infested";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INSTANT_DAMAGE.getName())){ger = "Schaden"; eng = "Harm";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INSTANT_HEALTH.getName())){ger = "Heilung"; eng = "Heal";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INVISIBILITY.getName())){ger = "Unsichtbarkeit"; eng = "Invisibility";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.JUMP_BOOST.getName())){ger = "Sprungkraft"; eng = "Jump";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.LEVITATION.getName())){ger = "Schwebekraft"; eng = "Levitation";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.LUCK.getName())){ger = "Glück"; eng = "Luck";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.MINING_FATIGUE.getName())){ger = "Abbaulähmung"; eng = "Slow Digging";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.NAUSEA.getName())){ger = "Verwirrung"; eng = "Confusion";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.NIGHT_VISION.getName())){ger = "Nachtsicht"; eng = "Night Vision";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.OOZING.getName())){ger = "Schleimen"; eng = "Oozing";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.POISON.getName())){ger = "Vergiftung"; eng = "Poison";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.RAID_OMEN.getName())){ger = "Omen des Überfall"; eng = "Raid Omen";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.REGENERATION.getName())){ger = "Regeneration"; eng = "Regeneration";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.RESISTANCE.getName())){ger = "Resistenz"; eng = "Resistance";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SATURATION.getName())){ger = "Sättigung"; eng = "Saturation";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SLOWNESS.getName())){ger = "Langsamkeit"; eng = "Slow";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.STRENGTH.getName())){ger = "Stärke"; eng = "Strenght";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SLOW_FALLING.getName())){ger = "Sanfter Fall"; eng = "Slow Falling";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SPEED.getName())){ger = "Schnelligkeit"; eng = "Speed";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.TRIAL_OMEN.getName())){ger = "Omen des Trial"; eng = "Trial Omen";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.UNLUCK.getName())){ger = "Unglück"; eng = "Unluck";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WATER_BREATHING.getName())){ger = "Wasseratmung"; eng = "Water Breathing";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WEAKNESS.getName())){ger = "Schwäche"; eng = "Weakness";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WEAVING.getName())){ger = "Weben"; eng = "Weaving";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WIND_CHARGED.getName())){ger = "Windgeladen"; eng = "Wind Charged";}
+			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WITHER.getName())){ger = "Wither"; eng = "Wither";}			
 			potioneffecttypelanguageKeys.put(pet.getName(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
@@ -2932,7 +3074,7 @@ public class YamlManager
 	
 	public void initEntityType() //INFO:EntityType
 	{
-		for(EntityType i : EntityType.values())
+		for(org.bukkit.entity.EntityType i : org.bukkit.entity.EntityType.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -2957,14 +3099,13 @@ public class YamlManager
 			case DOLPHIN: ger = "Delphin"; eng = "Dolphin"; break;
 			case DONKEY: ger = "Esel"; eng = "Donkey"; break;
 			case DRAGON_FIREBALL: ger = "Drachenfeuerball"; eng = "Dragon Fireball"; break;
-			case DROPPED_ITEM: ger = "Fallengelassenes Item"; eng = "Dropped Item"; break;
+			case ITEM: ger = "Fallengelassenes Item"; eng = "Dropped Item"; break;
 			case DROWNED: ger = "Ertrunkener"; eng = "Drowned"; break;
 			case EGG: ger = "Ei"; eng = "Egg"; break;
 			case ELDER_GUARDIAN: ger = "Großer Wächter"; eng = "Elder Guardian"; break;
-			case ENDER_CRYSTAL: ger = "Ender Kristall"; eng = "Ender Crystal"; break;
+			case END_CRYSTAL: ger = "Ender Kristall"; eng = "Ender Crystal"; break;
 			case ENDER_DRAGON: ger = "Enderdrache"; eng = "Ender Dragon"; break;
 			case ENDER_PEARL: ger = "Enderperle"; eng = "Ender Pearl"; break;
-			case ENDER_SIGNAL: ger = "Endsignal"; eng = "Ender Signal"; break;
 			case ENDERMAN: ger = "Endermaln"; eng = "Enderman"; break;
 			case ENDERMITE: ger = "Endermite"; eng = "Endermite"; break;
 			case EVOKER: ger = "Magier"; eng = "Evoker"; break;
@@ -2972,8 +3113,8 @@ public class YamlManager
 			case EXPERIENCE_ORB: ger = "Erfahrungsorb"; eng = "Experience Orb"; break;
 			case FALLING_BLOCK: ger = "Fallender Block"; eng = "Falling Block"; break;
 			case FIREBALL: ger = "Feuerball"; eng = "Fireball"; break;
-			case FIREWORK: ger = "Feuerwerk"; eng = "Firework"; break;
-			case FISHING_HOOK: ger = "Angelhacken"; eng = "Fishing Hook"; break;
+			case FIREWORK_ROCKET: ger = "Feuerwerk"; eng = "Firework"; break;
+			case FISHING_BOBBER: ger = "Angelhacken"; eng = "Fishing Hook"; break;
 			case FOX: ger = "Fuchs"; eng = "Fox"; break;
 			case FROG: ger = "Frosch"; eng = "Frog"; break;
 			case GHAST: ger = "Ghast"; eng = "Ghast"; break;
@@ -2988,21 +3129,21 @@ public class YamlManager
 			case ILLUSIONER: ger = "Illusionist"; eng = "Illusioner"; break;
 			case IRON_GOLEM: ger = "Eisengolem"; eng = "Irom Golem"; break;
 			case ITEM_FRAME: ger = "Rahmen"; eng = "Item Frame"; break;
-			case LEASH_HITCH: ger = "Leinenpfosten"; eng = "Leash Hitch"; break;
-			case LIGHTNING: ger = "Blitz"; eng = "Lightning"; break;
+			case LEASH_KNOT: ger = "Leinenpfosten"; eng = "Leash Hitch"; break;
+			case LIGHTNING_BOLT: ger = "Blitz"; eng = "Lightning"; break;
 			case LLAMA: ger = "Lama"; eng = "Llama"; break;
 			case LLAMA_SPIT: ger = "Lamaspucke"; eng = "Llama Spit"; break;
 			case MAGMA_CUBE: ger = "Magmawürfel"; eng = "Magma Cube"; break;
 			case MARKER: ger = "Marker"; eng = "Marker"; break;
 			case MINECART: ger = "Lore"; eng = "Minecart"; break;
-			case MINECART_CHEST: ger = "Kistenlore"; eng = "Minecart Chest"; break;
-			case MINECART_COMMAND: ger = "Befehlslore"; eng = "Minecart Command"; break;
-			case MINECART_FURNACE: ger = "Ofenlore"; eng = "Minecart Furnace"; break;
-			case MINECART_HOPPER: ger = "Trichterlore"; eng = "Minecart Hopper"; break;
-			case MINECART_MOB_SPAWNER: ger = "Spawnerlore"; eng = "Minecraft Mob Spawner"; break;
-			case MINECART_TNT: ger = "TNT Lore"; eng = "Minecart Lore"; break;
+			case CHEST_MINECART: ger = "Kistenlore"; eng = "Minecart Chest"; break;
+			case COMMAND_BLOCK_MINECART: ger = "Befehlslore"; eng = "Minecart Command"; break;
+			case FURNACE_MINECART: ger = "Ofenlore"; eng = "Minecart Furnace"; break;
+			case HOPPER_MINECART: ger = "Trichterlore"; eng = "Minecart Hopper"; break;
+			case SPAWNER_MINECART: ger = "Spawnerlore"; eng = "Minecraft Mob Spawner"; break;
+			case TNT_MINECART: ger = "TNT Lore"; eng = "Minecart Lore"; break;
 			case MULE: ger = "Maultier"; eng = "Mule"; break;
-			case MUSHROOM_COW: ger = "Pilzkuh"; eng = "Mushroom Cow"; break;
+			case MOOSHROOM: ger = "Pilzkuh"; eng = "Mushroom Cow"; break;
 			case OCELOT: ger = "Ozelot"; eng = "Ocelot"; break;
 			case PAINTING: ger = "Gemälde"; eng = "Painting"; break;
 			case PANDA: ger = "Panda"; eng = "Panda"; break;
@@ -3014,7 +3155,7 @@ public class YamlManager
 			case PILLAGER: ger = "Plünderer"; eng = "Pillager"; break;
 			case PLAYER: ger = "Spieler"; eng = "Player"; break;
 			case POLAR_BEAR: ger = "Polarbär"; eng = "Polar Bear"; break;
-			case PRIMED_TNT: ger = "Gezündetes TNT"; eng = "Primed TNT"; break;
+			case TNT: ger = "Gezündetes TNT"; eng = "Primed TNT"; break;
 			case PUFFERFISH: ger = "Kugelfisch"; eng = "Pufferfish"; break;
 			case RABBIT: ger = "Kaninschen"; eng = "Rabbit"; break;
 			case RAVAGER: ger = "Verwüster"; eng = "Ravager"; break;
@@ -3028,15 +3169,14 @@ public class YamlManager
 			case SLIME: ger = "Schleim"; eng = "Slime"; break;
 			case SMALL_FIREBALL: ger = "Kleiner Feuerball"; eng = "Small Fireball"; break;
 			case SNOWBALL: ger = "Schneeball"; eng = "Snowball"; break;
-			case SNOWMAN: ger = "Schneeman"; eng = "Snowman"; break;
+			case SNOW_GOLEM: ger = "Schneeman"; eng = "Snowman"; break;
 			case SPECTRAL_ARROW: ger = "Spektralpfeil"; eng = "Spectral Arrow"; break;
 			case SPIDER:  ger = "Spinne"; eng = "Spider"; break;
-			case SPLASH_POTION: ger = "Werfbarer Trank"; eng = "Splash Potion"; break;
 			case SQUID: ger = "Tintenfisch"; eng = "Squid"; break;
 			case STRAY: ger = "Eiswanderer"; eng = "Stray"; break;
 			case STRIDER: ger = "Schreiter"; eng = "Strider"; break;
 			case TADPOLE: ger = "Kaulquappe"; eng = "Tadpole"; break;
-			case THROWN_EXP_BOTTLE: ger = "Geworfene Expflasche"; eng = "Thrown Exp Bottle"; break;
+			case EXPERIENCE_BOTTLE: ger = "Geworfene Expflasche"; eng = "Thrown Exp Bottle"; break;
 			case TRADER_LLAMA: ger = "Händlerlama"; eng = "Trader Llama"; break;
 			case TRIDENT: ger = "Dreizack"; eng = "Trident"; break;
 			case TROPICAL_FISH: ger = "Tropenfisch"; eng = "Tropical Fish"; break;
@@ -3065,7 +3205,14 @@ public class YamlManager
 			case ITEM_DISPLAY: ger = "Itemdisplay"; eng = "Itemdisplay"; break;
 			case SNIFFER: ger = "Sniffer"; eng = "Sniffer"; break;
 			case TEXT_DISPLAY: ger = "Textdisplay"; eng = "Textdisplay"; break;
-			case WIND_CHARGE: ger = "Windcharge"; eng = "Windcharge"; break;
+			case WIND_CHARGE: ger = "Windladung"; eng = "Windcharge"; break;
+			//1.21
+			case ARMADILLO: ger = "Armadillo"; eng = "Armadillo"; break;
+			case BOGGED: ger = "Sumpfskelett"; eng = "Bogged"; break;
+			case BREEZE_WIND_CHARGE: ger = "Böen Windladung"; eng = "Breeze Wind Charge"; break;
+			case EYE_OF_ENDER: ger = "Auge des Enders"; eng = "Eye of Ender"; break;
+			case OMINOUS_ITEM_SPAWNER: ger = "Ominöser Itemspawner"; eng = "Ominous Itemspawner"; break;
+			case POTION: ger = "Trank"; eng = "Trank"; break;
 			}
 			entitytypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3075,7 +3222,7 @@ public class YamlManager
 	
 	public void initAxolotlVariant() //INFO:AxolotlVariant
 	{
-		for(Axolotl.Variant i : Axolotl.Variant.values())
+		for(org.bukkit.entity.Axolotl.Variant i : org.bukkit.entity.Axolotl.Variant.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3095,7 +3242,7 @@ public class YamlManager
 	
 	public void initBookMetaGeneration() //INFO:BookMetaGeneration
 	{
-		for(BookMeta.Generation i : BookMeta.Generation.values())
+		for(org.bukkit.inventory.meta.BookMeta.Generation i : org.bukkit.inventory.meta.BookMeta.Generation.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3114,33 +3261,35 @@ public class YamlManager
 	
 	public void initColor() //INFO:Color
 	{
-		List<Color> colors = Arrays.asList(new Color[]
+		List<org.bukkit.Color> colors = Arrays.asList(new org.bukkit.Color[]
 				{
-						Color.AQUA,Color.BLACK,Color.BLUE,Color.FUCHSIA,Color.GRAY,Color.GREEN,Color.LIME,
-						Color.MAROON,Color.NAVY,Color.OLIVE,Color.ORANGE,Color.PURPLE,Color.RED,Color.SILVER,
-						Color.TEAL,Color.WHITE,Color.YELLOW
+					org.bukkit.Color.AQUA, org.bukkit.Color.BLACK, org.bukkit.Color.BLUE, org.bukkit.Color.FUCHSIA, 
+					org.bukkit.Color.GRAY, org.bukkit.Color.GREEN, org.bukkit.Color.LIME,
+					org.bukkit.Color.MAROON, org.bukkit.Color.NAVY, org.bukkit.Color.OLIVE, org.bukkit.Color.ORANGE, 
+					org.bukkit.Color.PURPLE, org.bukkit.Color.RED, org.bukkit.Color.SILVER,
+					org.bukkit.Color.TEAL, org.bukkit.Color.WHITE, org.bukkit.Color.YELLOW
 				});
-		for(Color i : colors)
+		for(org.bukkit.Color i : colors)
 		{
 			String eng = "";
 			String ger = "";
-			if(i == Color.AQUA){ger = "Aqua"; eng = "Aqua";}
-			if(i == Color.BLACK){ger = "Schwarz"; eng = "Black";}
-			if(i == Color.BLUE){ger = "Blau"; eng = "Blue";}
-			if(i == Color.FUCHSIA){ger = "Fuchsie"; eng = "Fuchsia";}
-			if(i == Color.GRAY){ger = "Grau"; eng = "Gray";}
-			if(i == Color.GREEN){ger = "Grün"; eng = "Green";}
-			if(i == Color.LIME){ger = "Limettegrün"; eng = "Lime";}
-			if(i == Color.MAROON){ger = "Kastanienbraun"; eng = "Maroon";}
-			if(i == Color.NAVY){ger = "Navyblau"; eng = "Navy";}
-			if(i == Color.OLIVE){ger = "Olivengrün"; eng = "Olive";}
-			if(i == Color.ORANGE){ger = "Orange"; eng = "Orange";}
-			if(i == Color.PURPLE){ger = "Violett"; eng = "Purple";}
-			if(i == Color.RED){ger = "Rot"; eng = "Red";}
-			if(i == Color.SILVER){ger = "Silber"; eng = "Silver";}
-			if(i == Color.TEAL){ger = "Blaugrün"; eng = "Teal";}
-			if(i == Color.WHITE){ger = "Weiß"; eng = "White";}
-			if(i == Color.YELLOW){ger = "Gelb"; eng = "Yellow";}
+			if(i == org.bukkit.Color.AQUA){ger = "Aqua"; eng = "Aqua";}
+			if(i == org.bukkit.Color.BLACK){ger = "Schwarz"; eng = "Black";}
+			if(i == org.bukkit.Color.BLUE){ger = "Blau"; eng = "Blue";}
+			if(i == org.bukkit.Color.FUCHSIA){ger = "Fuchsie"; eng = "Fuchsia";}
+			if(i == org.bukkit.Color.GRAY){ger = "Grau"; eng = "Gray";}
+			if(i == org.bukkit.Color.GREEN){ger = "Grün"; eng = "Green";}
+			if(i == org.bukkit.Color.LIME){ger = "Limettegrün"; eng = "Lime";}
+			if(i == org.bukkit.Color.MAROON){ger = "Kastanienbraun"; eng = "Maroon";}
+			if(i == org.bukkit.Color.NAVY){ger = "Navyblau"; eng = "Navy";}
+			if(i == org.bukkit.Color.OLIVE){ger = "Olivengrün"; eng = "Olive";}
+			if(i == org.bukkit.Color.ORANGE){ger = "Orange"; eng = "Orange";}
+			if(i == org.bukkit.Color.PURPLE){ger = "Violett"; eng = "Purple";}
+			if(i == org.bukkit.Color.RED){ger = "Rot"; eng = "Red";}
+			if(i == org.bukkit.Color.SILVER){ger = "Silber"; eng = "Silver";}
+			if(i == org.bukkit.Color.TEAL){ger = "Blaugrün"; eng = "Teal";}
+			if(i == org.bukkit.Color.WHITE){ger = "Weiß"; eng = "White";}
+			if(i == org.bukkit.Color.YELLOW){ger = "Gelb"; eng = "Yellow";}
 			
 			colorlanguageKeys.put(String.valueOf(i.asRGB()), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3150,7 +3299,7 @@ public class YamlManager
 	
 	public void initDyeColor() //INFO:DyeColor
 	{
-		for(DyeColor i : DyeColor.values())
+		for(org.bukkit.DyeColor i : org.bukkit.DyeColor.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3181,7 +3330,7 @@ public class YamlManager
 	
 	public void initTropicalFish() //INFO:TropicalFish
 	{
-		for(DyeColor i : DyeColor.values())
+		for(org.bukkit.DyeColor i : org.bukkit.DyeColor.values())
 		{
 			String ger = "";
 			String eng = "";
@@ -3204,7 +3353,7 @@ public class YamlManager
 			case WHITE: ger += "Weißer "; break;
 			case YELLOW: ger += "Gelber "; break;
 			}
-			for(DyeColor h : DyeColor.values())
+			for(org.bukkit.DyeColor h : org.bukkit.DyeColor.values())
 			{
 				switch(i)
 				{
@@ -3225,7 +3374,7 @@ public class YamlManager
 				case WHITE: ger += "Weiß"; break;
 				case YELLOW: ger += "Gelb"; break;
 				}
-				for(TropicalFish.Pattern j : TropicalFish.Pattern.values())
+				for(org.bukkit.entity.TropicalFish.Pattern j : org.bukkit.entity.TropicalFish.Pattern.values())
 				{
 					switch(j)
 					{
@@ -3254,7 +3403,7 @@ public class YamlManager
 	
 	public void initCatType() //INFO:CatType
 	{
-		for(Cat.Type i : Cat.Type.values())
+		for(org.bukkit.entity.Cat.Type i : org.bukkit.entity.Cat.Type.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3281,7 +3430,7 @@ public class YamlManager
 	
 	public void initFoxType() //INFO:FoxType
 	{
-		for(Fox.Type i : Fox.Type.values())
+		for(org.bukkit.entity.Fox.Type i : org.bukkit.entity.Fox.Type.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3298,22 +3447,14 @@ public class YamlManager
 	
 	public void initMapCursorType() //INFO:MapCursorType
 	{
-		for(MapCursor.Type i : MapCursor.Type.values())
+		for(org.bukkit.map.MapCursor.Type i : org.bukkit.map.MapCursor.Type.values())
 		{
 			String eng = "";
 			String ger = "";
 			switch(i)
 			{
-			case WHITE_POINTER: ger = "Weißer Zeiger"; eng = "WHITE_POINTER"; break;
-			case GREEN_POINTER: ger = "Grüner Zeiger"; eng = "GREEN_POINTER"; break;
-			case RED_POINTER: ger = "Roter Zeiger"; eng = "RED_POINTER"; break;
-			case BLUE_POINTER: ger = "Blauer Zeiger"; eng = "BLUE_POINTER"; break;
-			case WHITE_CROSS: ger = "Weißes Kreuz"; eng = "WHITE_CROSS"; break;
 			case RED_MARKER: ger = "Rote Markierung"; eng = "RED_MARKER"; break;
-			case WHITE_CIRCLE: ger = "Weißer Kreis"; eng = "WHITE_CIRCLE"; break;
-			case SMALL_WHITE_CIRCLE: ger = "Kleiner Weißer Kreis"; eng = "SMALL_WHITE_CIRCLE"; break;
 			case MANSION: ger = "Waldanwesen"; eng = "MANSION"; break;
-			case TEMPLE: ger = "TEMPLE"; eng = "TEMPLE"; break;
 			case BANNER_WHITE: ger = "Weißes Banner"; eng = "BANNER_WHITE"; break;
 			case BANNER_ORANGE: ger = "Oranges Banner"; eng = "BANNER_ORANGE"; break;
 			case BANNER_MAGENTA: ger = "Magenta Banner"; eng = "BANNER_MAGENTA"; break;
@@ -3331,13 +3472,22 @@ public class YamlManager
 			case BANNER_RED: ger = "Rotes Banner"; eng = "BANNER_RED"; break;
 			case BANNER_BLACK: ger = "Schwarzes Banner"; eng = "BANNER_BLACK"; break;
 			case RED_X: ger = "Rotes X"; eng = "RED_X"; break;
-			case DESERT_VILLAGE: ger = "Wüstendorf"; eng = "DESERT_VILLAGE"; break;
 			case JUNGLE_TEMPLE: ger = "Dschungeltempel"; eng = "JUNGLE_TEMPLE"; break;
-			case PLAINS_VILLAGE: ger = "Ebenendorf"; eng = "PLAINS_VILLAGE"; break;
-			case SAVANNA_VILLAGE: ger = "Savannadorf"; eng = "SAVANNA_VILLAGE"; break;
-			case SNOWY_VILLAGE: ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
 			case SWAMP_HUT: ger = "Moorhütte"; eng = "SWAMP_HUT"; break;
-			case TAIGA_VILLAGE: ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
+			case BLUE_MARKER: ger = "Blauer Zeiger"; eng = "Blue Marker"; break;
+			case FRAME: ger = "Rahmen"; eng = "Frame"; break;
+			case MONUMENT: ger = "Monument"; eng = "Monument"; break;
+			case PLAYER: ger = "Spieler"; eng = "Player"; break;
+			case PLAYER_OFF_LIMITS: ger = "Spieler außer Reichweite"; eng = "Player off Limits"; break;
+			case PLAYER_OFF_MAP: ger = "Spieler außerhalb der Karte"; eng = "Player off Map"; break;
+			case TARGET_POINT: ger = "Zielpunkt"; eng = "Targetpoint"; break;
+			case TARGET_X: ger = "Ziel X"; eng = "Target X"; break;
+			case TRIAL_CHAMBERS: ger = "Trialkammer"; eng = "Trial Chamber"; break;
+			case VILLAGE_DESERT: ger = "Wüstendorf"; eng = "DESERT_VILLAGE"; break;
+			case VILLAGE_PLAINS: ger = "Ebenendorf"; eng = "PLAINS_VILLAGE"; break;
+			case VILLAGE_SAVANNA: ger = "Savannadorf"; eng = "SAVANNA_VILLAGE"; break;
+			case VILLAGE_SNOWY: ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
+			case VILLAGE_TAIGA: ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
 			}
 			mapcursortypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3347,7 +3497,7 @@ public class YamlManager
 	
 	public void initRabbitType() //INFO:RabbitType
 	{
-		for(Rabbit.Type i : Rabbit.Type.values())
+		for(org.bukkit.entity.Rabbit.Type i : org.bukkit.entity.Rabbit.Type.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3369,7 +3519,7 @@ public class YamlManager
 	
 	public void initVillagerType() //INFO:VillagerType
 	{
-		for(Villager.Type i : Villager.Type.values())
+		for(org.bukkit.entity.Villager.Type i : org.bukkit.entity.Villager.Type.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3391,7 +3541,7 @@ public class YamlManager
 	
 	public void initVillagerProfession() //INFO:VillagerProfession
 	{
-		for(Villager.Profession i : Villager.Profession.values())
+		for(org.bukkit.entity.Villager.Profession i : org.bukkit.entity.Villager.Profession.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3421,7 +3571,7 @@ public class YamlManager
 	
 	public void initTreeType() //INFO:TreeType
 	{
-		for(TreeType i : TreeType.values())
+		for(org.bukkit.TreeType i : org.bukkit.TreeType.values())
 		{
 			String eng = "";
 			String ger = "";
@@ -3450,6 +3600,7 @@ public class YamlManager
 			case MANGROVE: ger = "Mangrove"; eng = "MANGROVE"; break;
 			case TALL_MANGROVE: ger = "Hohe Mangrove"; eng = "TALL_MANGROVE"; break;
 			case CHERRY: ger = "Kirschbaum"; eng = "CHERRY"; break;
+			case MEGA_PINE: ger = "Mega Kiefer"; eng = "Mega Pine"; break;
 			}
 			treetypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {

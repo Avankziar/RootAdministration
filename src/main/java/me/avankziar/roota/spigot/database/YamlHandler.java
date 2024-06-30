@@ -12,9 +12,10 @@ import java.util.List;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import main.java.me.avankziar.roota.general.Language;
-import main.java.me.avankziar.roota.general.Language.ISO639_2B;
-import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.roota.general.database.Language;
+import main.java.me.avankziar.roota.general.database.YamlManager;
+import main.java.me.avankziar.roota.general.database.Language.ISO639_2B;
+import main.java.me.avankziar.roota.general.database.YamlManager.Type;
 import main.java.me.avankziar.roota.spigot.RootA;
 
 public class YamlHandler
@@ -177,7 +178,7 @@ public class YamlHandler
 			yaml.load(file);
 		} catch (IOException | InvalidConfigurationException e) 
 		{
-			RootA.log.severe(
+			RootA.logger.severe(
 					"Could not load the %file% file! You need to regenerate the %file%! Error: ".replace("%file%", file.getName())
 					+ e.getMessage());
 			e.printStackTrace();
@@ -212,7 +213,7 @@ public class YamlHandler
 	
 	public boolean loadYamlHandler()
 	{
-		plugin.setYamlManager(new YamlManager(true));
+		plugin.setYamlManager(new YamlManager(Type.SPIGOT));
 		
 		if(!mkdirStaticFiles())
 		{
@@ -235,7 +236,7 @@ public class YamlHandler
 		config = new File(plugin.getDataFolder(), "config.yml");
 		if(!config.exists()) 
 		{
-			RootA.log.info("Create config.yml...");
+			RootA.logger.info("Create config.yml...");
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, config.toPath());
@@ -249,13 +250,13 @@ public class YamlHandler
 		{
 			return false;
 		}
-		writeFile(config, cfg, plugin.getYamlManager().getConfigKey());
-		
 		languages = cfg.getString("Language", "ENG").toUpperCase();
+		setLanguage();
+		writeFile(config, cfg, plugin.getYamlManager().getConfigKey());
 		return true;
 	}
 	
-	private boolean mkdirDynamicFiles()
+	private void setLanguage()
 	{
 		List<Language.ISO639_2B> types = new ArrayList<Language.ISO639_2B>(EnumSet.allOf(Language.ISO639_2B.class));
 		ISO639_2B languageType = ISO639_2B.ENG;
@@ -268,6 +269,10 @@ public class YamlHandler
 			}
 		}
 		plugin.getYamlManager().setLanguageType(languageType);
+	}
+	
+	private boolean mkdirDynamicFiles()
+	{
 		if(!mkdirLanguage())
 		{
 			return false;
@@ -305,7 +310,7 @@ public class YamlHandler
 		matlanguage = new File(directory.getPath(), languageString+"_material.yml");
 		if(!matlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_material.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_material.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, matlanguage.toPath());
@@ -324,7 +329,7 @@ public class YamlHandler
 		enchlanguage = new File(directory.getPath(), languageString+"_enchantment.yml");
 		if(!enchlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_enchantment.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_enchantment.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, enchlanguage.toPath());
@@ -343,7 +348,7 @@ public class YamlHandler
 		bannerlanguage = new File(directory.getPath(), languageString+"_banner.yml");
 		if(!bannerlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_banner.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_banner.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, bannerlanguage.toPath());
@@ -362,7 +367,7 @@ public class YamlHandler
 		itemflaglanguage = new File(directory.getPath(), languageString+"_itemflag.yml");
 		if(!itemflaglanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_itemflag.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_itemflag.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, itemflaglanguage.toPath());
@@ -381,7 +386,7 @@ public class YamlHandler
 		potiontypelanguage = new File(directory.getPath(), languageString+"_potiontype.yml");
 		if(!potiontypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_potiontype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_potiontype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, potiontypelanguage.toPath());
@@ -400,7 +405,7 @@ public class YamlHandler
 		potioneffecttypelanguage = new File(directory.getPath(), languageString+"_potioneffecttype.yml");
 		if(!potioneffecttypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_potioneffecttype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_potioneffecttype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, potioneffecttypelanguage.toPath());
@@ -419,7 +424,7 @@ public class YamlHandler
 		entitytypelanguage = new File(directory.getPath(), languageString+"_entitytype.yml");
 		if(!entitytypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_entitytype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_entitytype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, entitytypelanguage.toPath());
@@ -438,7 +443,7 @@ public class YamlHandler
 		axolotlvariantlanguage = new File(directory.getPath(), languageString+"_axolotlvariant.yml");
 		if(!axolotlvariantlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_axolotlvariant.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_axolotlvariant.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, axolotlvariantlanguage.toPath());
@@ -457,7 +462,7 @@ public class YamlHandler
 		bookmetagenerationlanguage = new File(directory.getPath(), languageString+"_bookmetageneration.yml");
 		if(!bookmetagenerationlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_bookmetageneration.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_bookmetageneration.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, bookmetagenerationlanguage.toPath());
@@ -476,7 +481,7 @@ public class YamlHandler
 		colorlanguage = new File(directory.getPath(), languageString+"_color.yml");
 		if(!colorlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_color.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_color.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, colorlanguage.toPath());
@@ -495,7 +500,7 @@ public class YamlHandler
 		dyecolorlanguage = new File(directory.getPath(), languageString+"_dyecolor.yml");
 		if(!dyecolorlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_dyecolor.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_dyecolor.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, dyecolorlanguage.toPath());
@@ -514,7 +519,7 @@ public class YamlHandler
 		tropicalfishbucketlanguage = new File(directory.getPath(), languageString+"_tropicalfishbucket.yml");
 		if(!tropicalfishbucketlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_tropicalfishbucket.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_tropicalfishbucket.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, tropicalfishbucketlanguage.toPath());
@@ -533,7 +538,7 @@ public class YamlHandler
 		cattypelanguage = new File(directory.getPath(), languageString+"_cattype.yml");
 		if(!cattypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_cattype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_cattype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, cattypelanguage.toPath());
@@ -552,7 +557,7 @@ public class YamlHandler
 		foxtypelanguage = new File(directory.getPath(), languageString+"_foxtype.yml");
 		if(!foxtypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_foxtype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_foxtype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, foxtypelanguage.toPath());
@@ -571,7 +576,7 @@ public class YamlHandler
 		mapcursortypelanguage = new File(directory.getPath(), languageString+"_mapcursortype.yml");
 		if(!mapcursortypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_mapcursortype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_mapcursortype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, mapcursortypelanguage.toPath());
@@ -590,7 +595,7 @@ public class YamlHandler
 		rabbittypelanguage = new File(directory.getPath(), languageString+"_rabbittype.yml");
 		if(!rabbittypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_rabbittype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_rabbittype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, rabbittypelanguage.toPath());
@@ -609,7 +614,7 @@ public class YamlHandler
 		villagertypelanguage = new File(directory.getPath(), languageString+"_villagertype.yml");
 		if(!villagertypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_villagertype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_villagertype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, villagertypelanguage.toPath());
@@ -628,7 +633,7 @@ public class YamlHandler
 		villagerprofessionlanguage = new File(directory.getPath(), languageString+"_villagerprofession.yml");
 		if(!villagerprofessionlanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_villagerprofession.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_villagerprofession.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, villagerprofessionlanguage.toPath());
@@ -647,7 +652,7 @@ public class YamlHandler
 		treetypelanguage = new File(directory.getPath(), languageString+"_treetype.yml");
 		if(!treetypelanguage.exists()) 
 		{
-			RootA.log.info("Create %lang%_treetype.yml...".replace("%lang%", languageString));
+			RootA.logger.info("Create %lang%_treetype.yml...".replace("%lang%", languageString));
 			try(InputStream in = plugin.getResource("default.yml"))
 			{
 				Files.copy(in, treetypelanguage.toPath());

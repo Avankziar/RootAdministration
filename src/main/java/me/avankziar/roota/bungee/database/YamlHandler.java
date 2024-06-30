@@ -7,8 +7,9 @@ import java.nio.file.Files;
 import java.util.LinkedHashMap;
 
 import main.java.me.avankziar.roota.bungee.RootA;
-import main.java.me.avankziar.roota.general.Language;
-import main.java.me.avankziar.roota.general.YamlManager;
+import main.java.me.avankziar.roota.general.database.Language;
+import main.java.me.avankziar.roota.general.database.YamlManager;
+import main.java.me.avankziar.roota.general.database.YamlManager.Type;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -73,7 +74,7 @@ public class YamlHandler
 	
 	public boolean loadYamlHandler()
 	{
-		plugin.setYamlManager(new YamlManager(false));
+		plugin.setYamlManager(new YamlManager(Type.BUNGEE));
 		if(!mkdirStaticFiles())
 		{
 			return false;

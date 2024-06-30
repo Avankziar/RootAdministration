@@ -1,4 +1,4 @@
-package main.java.me.avankziar.roota.spigot.object;
+package main.java.me.avankziar.roota.general.object;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import main.java.me.avankziar.roota.spigot.database.MysqlHandable;
-import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
+import main.java.me.avankziar.roota.general.database.MysqlBaseHandler;
+import main.java.me.avankziar.roota.general.database.MysqlHandable;
+import main.java.me.avankziar.roota.general.database.QueryType;
 
 public class PlayerLocation implements MysqlHandable
 {
@@ -72,11 +73,11 @@ public class PlayerLocation implements MysqlHandable
 	        ps.setString(2, getPlayerUUID().toString());
 	        ps.setString(3, getServer());
 	        int i = ps.executeUpdate();
-	        MysqlHandler.addRows(MysqlHandler.QueryType.INSERT, i);
+	        MysqlBaseHandler.addRows(QueryType.INSERT, i);
 	        return true;
 		} catch (SQLException e)
 		{
-			this.log(Level.WARNING, "SQLException! Could not create a "+this.getClass().getSimpleName()+" Object!", e);
+			MysqlBaseHandler.getLogger().log(Level.WARNING, "SQLException! Could not create a "+this.getClass().getSimpleName()+" Object!", e);
 		}
 		return false;
 	}
@@ -100,11 +101,11 @@ public class PlayerLocation implements MysqlHandable
 				i++;
 			}			
 			int u = ps.executeUpdate();
-			MysqlHandler.addRows(MysqlHandler.QueryType.UPDATE, u);
+			MysqlBaseHandler.addRows(QueryType.UPDATE, u);
 			return true;
 		} catch (SQLException e)
 		{
-			this.log(Level.WARNING, "SQLException! Could not update a "+this.getClass().getSimpleName()+" Object!", e);
+			MysqlBaseHandler.getLogger().log(Level.WARNING, "SQLException! Could not update a "+this.getClass().getSimpleName()+" Object!", e);
 		}
 		return false;
 	}
@@ -125,7 +126,7 @@ public class PlayerLocation implements MysqlHandable
 			}
 			
 			ResultSet rs = ps.executeQuery();
-			MysqlHandler.addRows(MysqlHandler.QueryType.READ, rs.getMetaData().getColumnCount());
+			MysqlBaseHandler.addRows(QueryType.READ, rs.getMetaData().getColumnCount());
 			ArrayList<Object> al = new ArrayList<>();
 			while (rs.next()) 
 			{
@@ -137,7 +138,7 @@ public class PlayerLocation implements MysqlHandable
 			return al;
 		} catch (SQLException e)
 		{
-			this.log(Level.WARNING, "SQLException! Could not get a "+this.getClass().getSimpleName()+" Object!", e);
+			MysqlBaseHandler.getLogger().log(Level.WARNING, "SQLException! Could not get a "+this.getClass().getSimpleName()+" Object!", e);
 		}
 		return new ArrayList<>();
 	}

@@ -1,7 +1,7 @@
-package main.java.me.avankziar.roota.bungee.database;
+package main.java.me.avankziar.roota.velocity.database;
 
-import main.java.me.avankziar.roota.bungee.RootA;
 import main.java.me.avankziar.roota.general.database.MysqlBaseHandler;
+import main.java.me.avankziar.roota.velocity.RootA;
 
 public class MysqlHandler extends MysqlBaseHandler
 {	

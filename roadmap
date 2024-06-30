@@ -1,5 +1,10 @@
 Future Build
 
+Build 1-6-0
+- Spigot 1.21 support
+- Java 21 Dependency
+- IFH Interface spigot.interfaces.BungeeOnlinePlayers wurde zu spigot.interfaces.ProxyOnlinePlayers
+
 Build 1-5-0
 - Config Kommentare in ENG und GER hinzugefügt.
 - ItemStackComparison.matchSkull NPE fix

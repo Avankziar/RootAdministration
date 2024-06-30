@@ -2,7 +2,6 @@ package main.java.me.avankziar.roota.bungee;
 
 import java.util.logging.Logger;
 
-import main.java.me.avankziar.ifh.bungee.InterfaceHub;
 import main.java.me.avankziar.ifh.bungee.plugin.ServicePriority;
 import main.java.me.avankziar.roota.bungee.database.MysqlHandler;
 import main.java.me.avankziar.roota.bungee.database.MysqlSetup;
@@ -10,8 +9,7 @@ import main.java.me.avankziar.roota.bungee.database.YamlHandler;
 import main.java.me.avankziar.roota.bungee.ifh.AdministrationProvider;
 import main.java.me.avankziar.roota.bungee.listener.PlayerObserverListener;
 import main.java.me.avankziar.roota.bungee.metric.Metrics;
-import main.java.me.avankziar.roota.general.YamlManager;
-import net.md_5.bungee.BungeeCord;
+import main.java.me.avankziar.roota.general.database.YamlManager;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
@@ -41,17 +39,17 @@ public class RootA extends Plugin
 		
 		yamlHandler = new YamlHandler(plugin);
 		
+		setupIFHProvider();
 		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");
 		boolean adm = plugin.getAdministration() != null 
 				&& plugin.getAdministration().isMysqlPathActive(path);
 		if(adm || yamlHandler.getConfig().getBoolean("Mysql.Status", false) == true)
 		{
-			mysqlHandler = new MysqlHandler(plugin);
 			mysqlSetup = new MysqlSetup(plugin, adm, path);
+			mysqlHandler = new MysqlHandler(plugin);
 		}
-		setupBstats();
 		ListenerSetup();
-		setupIFHProvider();
+		setupBstats();
 	}
 	
 	public void onDisable()
@@ -98,12 +96,12 @@ public class RootA extends Plugin
 	
 	private void setupIFHProvider()
 	{
-		Plugin ifhp = BungeeCord.getInstance().getPluginManager().getPlugin("InterfaceHub");
+		Plugin ifhp = plugin.getProxy().getPluginManager().getPlugin("InterfaceHub");
         if (ifhp == null) 
         {
             return;
         }
-        main.java.me.avankziar.ifh.bungee.InterfaceHub ifh = (InterfaceHub) ifhp;
+        main.java.me.avankziar.ifh.bungee.IFH ifh = (main.java.me.avankziar.ifh.bungee.IFH) ifhp;
         try
         {
         	administrationProvider = new AdministrationProvider(plugin);

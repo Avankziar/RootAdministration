@@ -1,10 +1,9 @@
-package main.java.me.avankziar.roota.bungee.database;
+package main.java.me.avankziar.roota.general.database;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
-
-import main.java.me.avankziar.roota.bungee.RootA;
+import java.util.logging.Logger;
 
 public interface MysqlHandable
 {
@@ -14,8 +13,8 @@ public interface MysqlHandable
 	
 	public ArrayList<Object> get(Connection conn, String tablename, String orderby, String limit, String whereColumn, Object... whereObject);
 	
-	default void log(Level level, String log, Exception e)
+	default void log(Logger logger, Level level, String log, Exception e)
 	{
-		RootA.log.log(level, log, e);
+		logger.log(level, log, e);
 	}
 }

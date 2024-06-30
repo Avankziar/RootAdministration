@@ -1,0 +1,8 @@
+{"id":"rootadministration",
+"name":"RootAdministration",
+"version":"1-6-0",
+"description":"A administration plugin for server and mysql data",
+"authors":["Avankziar"],
+"url":"https://www.spigotmc.org/resources/rootadministration.104833/",
+"dependencies":[{id='interfacehub', version='null', optional=false}],
+"main":"main.java.me.avankziar.roota.velocity.RootA"}

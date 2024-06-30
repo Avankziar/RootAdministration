@@ -1,13 +1,13 @@
-package main.java.me.avankziar.roota.spigot.database;
+package main.java.me.avankziar.roota.velocity.database;
 
 import java.util.logging.Level;
 
 import main.java.me.avankziar.roota.general.database.MysqlBaseSetup;
 import main.java.me.avankziar.roota.general.database.ServerType;
-import main.java.me.avankziar.roota.spigot.RootA;
+import main.java.me.avankziar.roota.velocity.RootA;
 
-public class MysqlSetup  extends MysqlBaseSetup
-{	
+public class MysqlSetup extends MysqlBaseSetup
+{
 	public MysqlSetup(RootA plugin, boolean adm, String path)
 	{
 		super(plugin.getLogger());
@@ -32,6 +32,6 @@ public class MysqlSetup  extends MysqlBaseSetup
 		boolean isSSLEnabled = adm ? plugin.getAdministration().useSSL(path)
 				: plugin.getYamlHandler().getConfig().getBoolean("Mysql.SSLEnabled", false);
 		init(host, port, database, user, password, isAutoConnect, isVerifyServerCertificate, isSSLEnabled);
-		loadMysqlSetup(ServerType.SPIGOT);
+		loadMysqlSetup(ServerType.VELOCITY);
 	}
 }

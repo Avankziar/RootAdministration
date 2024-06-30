@@ -1,4 +1,4 @@
-package main.java.me.avankziar.roota.general;
+package main.java.me.avankziar.roota.general.assistance;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
 
 @SuppressWarnings("deprecation")
-public class ChatApi
+public class ChatApiOld
 {	
 	public static String tl(String s)
 	{
@@ -139,7 +139,7 @@ public class ChatApi
 		String sepb = "~";
 		String sepw = "@";
 		String sepspace = "+";
-		TextComponent tc = ChatApi.tc("");
+		TextComponent tc = ChatApiOld.tc("");
 		List<BaseComponent> list = new ArrayList<>();
 		String[] space = message.split(" ");
 		for(String word : space)
@@ -148,18 +148,18 @@ public class ChatApi
 			if(word.contains(sepb))
 			{
 				String[] function = word.split(sepb);
-				newtc = ChatApi.tctl(function[0].replace(sepspace, " ")+" ");
+				newtc = ChatApiOld.tctl(function[0].replace(sepspace, " ")+" ");
 				if(function.length == 2)
 				{
 					if(function[1].contains(idhover))
 					{
 						String[] at = function[1].split(sepw);
-						ChatApi.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					}
 					if(function[1].contains(idclick))
 					{
 						String[] at = function[1].split(sepw);
-						ChatApi.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					}
 				}
 				if(function.length == 3)
@@ -167,25 +167,25 @@ public class ChatApi
 					if(function[1].contains(idhover))
 					{
 						String[] at = function[1].split(sepw);
-						ChatApi.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					} else if(function[2].contains(idhover))
 					{
 						String[] at = function[2].split(sepw);
-						ChatApi.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.hoverEvent(newtc,HoverEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					}
 					if(function[1].contains(idclick))
 					{
 						String[] at = function[1].split(sepw);
-						ChatApi.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					} else if(function[2].contains(idclick))
 					{
 						String[] at = function[2].split(sepw);
-						ChatApi.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
+						ChatApiOld.clickEvent(newtc,ClickEvent.Action.valueOf(at[1]), at[2].replace(sepspace, " "));
 					}
 				}
 			} else
 			{
-				newtc = ChatApi.tctl(word+" ");
+				newtc = ChatApiOld.tctl(word+" ");
 			}
 			list.add(newtc);
 		}
