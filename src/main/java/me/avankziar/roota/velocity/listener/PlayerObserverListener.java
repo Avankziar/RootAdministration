@@ -53,6 +53,10 @@ public class PlayerObserverListener
 		}
 		PlayerLocation pl = (PlayerLocation) plugin.getMysqlHandler().getData(MysqlType.PLAYERLOCATION, "player_uuid = ?",
 				event.getPlayer().getUniqueId().toString());
+		if(pl == null)
+		{
+			return;
+		}
 		pl.setServer(event.getServer().getServerInfo().getName());
 		plugin.getMysqlHandler().updateData(MysqlType.PLAYERLOCATION, pl, "player_uuid = ?", event.getPlayer().getUniqueId().toString());
 	}

@@ -10,10 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
 import main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
+import main.java.me.avankziar.roota.general.database.YamlHandler;
 import main.java.me.avankziar.roota.general.database.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
 import main.java.me.avankziar.roota.spigot.database.MysqlSetup;
-import main.java.me.avankziar.roota.spigot.database.YamlHandler;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
 import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
 import main.java.me.avankziar.roota.spigot.ifh.InteractionBlockerProvider;
@@ -46,7 +46,9 @@ public class RootA extends JavaPlugin
 		logger.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepend().toString());
 		logger.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | LoadBefore: "+plugin.getDescription().getLoadBefore().toString());
 		
-		yamlHandler = new YamlHandler(this);
+		yamlHandler = new YamlHandler(YamlManager.Type.SPIGOT, pluginName, logger, plugin.getDataFolder().toPath(),
+        		(plugin.getAdministration() == null ? null : plugin.getAdministration().getLanguage()));
+        setYamlManager(yamlHandler.getYamlManager());
 		
 		setupIFHAdministration();
 		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");

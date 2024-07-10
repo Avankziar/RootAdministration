@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 import main.java.me.avankziar.ifh.bungee.plugin.ServicePriority;
 import main.java.me.avankziar.roota.bungee.database.MysqlHandler;
 import main.java.me.avankziar.roota.bungee.database.MysqlSetup;
-import main.java.me.avankziar.roota.bungee.database.YamlHandler;
 import main.java.me.avankziar.roota.bungee.ifh.AdministrationProvider;
 import main.java.me.avankziar.roota.bungee.listener.PlayerObserverListener;
 import main.java.me.avankziar.roota.bungee.metric.Metrics;
+import main.java.me.avankziar.roota.general.database.YamlHandler;
 import main.java.me.avankziar.roota.general.database.YamlManager;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
@@ -16,7 +16,7 @@ import net.md_5.bungee.api.plugin.PluginManager;
 public class RootA extends Plugin
 {
 	public static RootA plugin;
-	public static Logger log;
+	public static Logger logger;
 	public static String pluginName = "RootAdministration";
 	private static YamlHandler yamlHandler;
 	private static YamlManager yamlManager;
@@ -27,17 +27,19 @@ public class RootA extends Plugin
 	public void onEnable() 
 	{
 		plugin = this;
-		log = getLogger();
+		logger = getLogger();
 		
 		//https://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=SCC
-		log.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | Version: "+plugin.getDescription().getVersion());
-		log.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthor());
-		log.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: https://www.spigotmc.org/resources/rootadministration.104833/");
-		log.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepends().toString());
-		log.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepends().toString());
-		log.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | Have Fun^^");
+		logger.info(" ██████╗  ██████╗  ██████╗ ████████╗ █████╗  | Version: "+plugin.getDescription().getVersion());
+		logger.info(" ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔══██╗ | Author: "+plugin.getDescription().getAuthor());
+		logger.info(" ██████╔╝██║   ██║██║   ██║   ██║   ███████║ | Plugin Website: https://www.spigotmc.org/resources/rootadministration.104833/");
+		logger.info(" ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══██║ | Depend Plugins: "+plugin.getDescription().getDepends().toString());
+		logger.info(" ██║  ██║╚██████╔╝╚██████╔╝   ██║   ██║  ██║ | SoftDepend Plugins: "+plugin.getDescription().getSoftDepends().toString());
+		logger.info(" ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝ | Have Fun^^");
 		
-		yamlHandler = new YamlHandler(plugin);
+		yamlHandler = new YamlHandler(YamlManager.Type.BUNGEE, pluginName, logger, plugin.getDataFolder().toPath(),
+        		(plugin.getAdministration() == null ? null : plugin.getAdministration().getLanguage()));
+        setYamlManager(yamlHandler.getYamlManager());
 		
 		setupIFHProvider();
 		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");
@@ -55,7 +57,7 @@ public class RootA extends Plugin
 	public void onDisable()
 	{
 		getProxy().getScheduler().cancel(plugin);		
-		log.info(pluginName + " is disabled!");
+		logger.info(pluginName + " is disabled!");
 	}
 	
 	public static RootA getPlugin()
@@ -108,7 +110,7 @@ public class RootA extends Plugin
             ifh.getServicesManager().register(
              		main.java.me.avankziar.ifh.bungee.administration.Administration.class,
              		administrationProvider, plugin, ServicePriority.Normal);
-            log.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
+            logger.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
     		
         } catch(NoClassDefFoundError e){}
 	}

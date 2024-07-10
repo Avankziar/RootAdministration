@@ -19,7 +19,7 @@
 	</properties>
 	<build>
 		<defaultGoal>clean package</defaultGoal>
-		<finalName>rootadministration-${project.version}</finalName>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>${basedir}/src/</sourceDirectory>
 		<resources>
 			<resource>
@@ -40,6 +40,29 @@
 					<source>21</source>
 					<target>21</target>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+      			<artifactId>maven-shade-plugin</artifactId>
+      			<version>3.6.0</version>
+      			<configuration>
+      				<filters>
+      					<filter>
+      						<artifact>*:*</artifact>
+      						<excludes>
+      							<exclude>META-INF/*.MF</exclude>
+      						</excludes>
+      					</filter>
+      				</filters>
+      			</configuration>
+      				<executions>
+		        		<execution>
+			          		<phase>package</phase>
+				          		<goals>
+				            		<goal>shade</goal>
+				          		</goals>
+		        		</execution>
+	      			</executions>
 			</plugin>
 			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>

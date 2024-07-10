@@ -126,19 +126,19 @@ public class ChatApi
 			r = "<white>";
 			break;
 		case 'k':
-			r = "<obfuscated>";
+			r = "<obf>";
 			break;
 		case 'l':
-			r = "<bold>";
+			r = "<b>";
 			break;
 		case 'm':
-			r = "<strikethrough>";
+			r = "<st>";
 			break;
 		case 'n':
-			r = "<underline>";
+			r = "<u>";
 			break;
 		case 'o':
-			r = "<italic>";
+			r = "<i>";
 			break;
 		case 'r':
 			r = "<reset>";
@@ -149,6 +149,57 @@ public class ChatApi
 	
 	private static String getBukkitHexColorConvertKyoriAdventure(String hexnumber)
 	{
-		return "<color:"+hexnumber+">";
+		return "<#"+hexnumber+">";
+	}
+	
+	public static String hover(String s, String hoverType, String hover)
+	{
+		switch(hoverType)
+		{
+		default:
+		case "SHOW_TEXT":
+			return "<hover:show_text:'"+oldBukkitFormat(hover)+"'>"+oldBukkitFormat(s)+"</hover>";
+		case "SHOW_ITEM":
+			return "<hover:show_item:'"+oldBukkitFormat(hover)+"'>"+oldBukkitFormat(s)+"</hover>";
+		}
+	}
+	
+	public static String click(String s, String clickType, String click)
+	{
+		switch(clickType)
+		{
+		default:
+		case "SUGGEST_COMMAND":
+			return "<click:suggest_command:'"+click+"'>"+oldBukkitFormat(s)+"</click>";
+		case "RUN_COMMAND":
+			return "<click:run_command:'"+click+"'>"+oldBukkitFormat(s)+"</click>";
+		case "OPEN_URL":
+			return "<click:open_url:'"+click+"'>"+oldBukkitFormat(s)+"</click>";
+		}
+	}
+	
+	public static String clickHover(String s, String clickType, String click, String hoverType, String hover)
+	{
+		StringBuilder sb = new StringBuilder();
+		switch(hoverType)
+		{
+		default:
+		case "SHOW_TEXT":
+			sb.append("<hover:show_text:'"+oldBukkitFormat(hover)+"'>"); break;
+		case "SHOW_ITEM":
+			sb.append("<hover:show_item:'"+oldBukkitFormat(hover)+"'>"); break;
+		}
+		switch(clickType)
+		{
+		default:
+		case "SUGGEST_COMMAND":
+			sb.append("<click:suggest_command:'"+click+"'>"+oldBukkitFormat(s)); break;
+		case "RUN_COMMAND":
+			sb.append("<click:run_command:'"+click+"'>"+oldBukkitFormat(s)); break;
+		case "OPEN_URL":
+			sb.append("<click:open_url:'"+click+"'>"+oldBukkitFormat(s)); break;
+		}
+		sb.append("</click></hover>");
+		return sb.toString();
 	}
 }

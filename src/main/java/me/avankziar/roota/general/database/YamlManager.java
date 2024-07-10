@@ -18,6 +18,7 @@ public class YamlManager
 	private ISO639_2B languageType = ISO639_2B.GER;
 	//The default language of your plugin. Mine is german.
 	private ISO639_2B defaultLanguageType = ISO639_2B.GER;
+	private Type type;
 	
 	//Per Flatfile a linkedhashmap.
 	private static LinkedHashMap<String, Language> configKeys = new LinkedHashMap<>();
@@ -66,15 +67,10 @@ public class YamlManager
 			initVillagerProfession();
 			initTreeType();
 		}
-		if(type == Type.BUNGEE)
+		if(type == Type.BUNGEE || type == Type.VELO)
 		{
 			initConfig(type);
-		}
-		if(type == Type.VELO)
-		{
-			initConfig(type);
-		}
-		
+		}		
 	}
 	
 	public ISO639_2B getLanguageType()
@@ -318,7 +314,7 @@ public class YamlManager
 		}
 	}
 	
-	public void setFileInputVelocity(dev.dejvokep.boostedyaml.YamlDocument yml,
+	public void setFileInput(dev.dejvokep.boostedyaml.YamlDocument yml,
 			LinkedHashMap<String, Language> keyMap, String key, ISO639_2B languageType) throws org.spongepowered.configurate.serialize.SerializationException
 	{
 		if(!keyMap.containsKey(key))
@@ -376,7 +372,7 @@ public class YamlManager
 		{
 			if(keyMap.get(key).languageValues.get(languageType)[0] instanceof String)
 			{
-				yml.set(key, ((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", ""));
+				yml.set(key, convertMiniMessageToBungee(((String) keyMap.get(key).languageValues.get(languageType)[0]).replace("\r\n", "")));
 			} else
 			{
 				yml.set(key, keyMap.get(key).languageValues.get(languageType)[0]);
@@ -391,7 +387,7 @@ public class YamlManager
 				{
 					if(o instanceof String)
 					{
-						stringList.add(((String) o).replace("\r\n", ""));
+						stringList.add(convertMiniMessageToBungee(((String) o).replace("\r\n", "")));
 					} else
 					{
 						stringList.add(o.toString().replace("\r\n", ""));
@@ -400,6 +396,167 @@ public class YamlManager
 			}
 			yml.set(key, (List<String>) stringList);
 		}
+	}
+	
+	private String convertMiniMessageToBungee(String s)
+	{
+		if(type != Type.BUNGEE)
+		{
+			//If Server is not Bungee, there is no need to convert.
+			return s;
+		}
+		StringBuilder b = new StringBuilder();
+		for(int i = 0; i < s.length(); i++)
+		{
+			char c = s.charAt(i);
+			if(c == '<' && i+1 < s.length())
+			{
+				char cc = s.charAt(i+1);
+				if(cc == '#' && i+8 < s.length())
+				{
+					//Hexcolors
+					//     i12345678
+					//f.e. <#00FF00>
+					String rc = s.substring(i, i+8);
+					b.append(rc.replace("<#", "&#").replace(">", ""));
+					i += 8;
+				} else
+				{
+					//Normal Colors
+					String r = null;
+					StringBuilder sub = new StringBuilder();
+					sub.append(c).append(cc);
+					i++;
+					for(int j = i+1; j < s.length(); j++)
+					{
+						i++;
+						char jc = s.charAt(j);
+						if(jc == '>')
+						{
+							sub.append(jc);
+							switch(sub.toString())
+							{
+							case "</color>":
+							case "</black>":
+							case "</dark_blue>":
+							case "</dark_green>":
+							case "</dark_aqua>":
+							case "</dark_red>":
+							case "</dark_purple>":
+							case "</gold>":
+							case "</gray>":
+							case "</dark_gray>":
+							case "</blue>":
+							case "</green>":
+							case "</aqua>":
+							case "</red>":
+							case "</light_purple>":
+							case "</yellow>":
+							case "</white>":
+							case "</obf>":
+							case "</obfuscated>":
+							case "</b>":
+							case "</bold>":
+							case "</st>":
+							case "</strikethrough>":
+							case "</u>":
+							case "</underlined>":
+							case "</i>":
+							case "</em>":
+							case "</italic>":
+								r = "";
+								break;
+							case "<black>":
+								r = "&0";
+								break;
+							case "<dark_blue>":
+								r = "&1";
+								break;
+							case "<dark_green>":
+								r = "&2";
+								break;
+							case "<dark_aqua>":
+								r = "&3";
+								break;
+							case "<dark_red>":
+								r = "&4";
+								break;
+							case "<dark_purple>":
+								r = "&5";
+								break;
+							case "<gold>":
+								r = "&6";
+								break;
+							case "<gray>":
+								r = "&7";
+								break;
+							case "<dark_gray>":
+								r = "&8";
+								break;
+							case "<blue>":
+								r = "&9";
+								break;
+							case "<green>":
+								r = "&a";
+								break;
+							case "<aqua>":
+								r = "&b";
+								break;
+							case "<red>":
+								r = "&c";
+								break;
+							case "<light_purple>":
+								r = "&d";
+								break;
+							case "<yellow>":
+								r = "&e";
+								break;
+							case "<white>":
+								r = "&f";
+								break;
+							case "<obf>":
+							case "<obfuscated>":
+								r = "&k";
+								break;
+							case "<b>":
+							case "<bold>":
+								r = "&l";
+								break;
+							case "<st>":
+							case "<strikethrough>":
+								r = "&m";
+								break;
+							case "<u>":
+							case "<underlined>":
+								r = "&n";
+								break;
+							case "<i>":
+							case "<em>":
+							case "<italic>":
+								r = "&o";
+								break;
+							case "<reset>":
+								r = "&r";
+								break;
+							case "<newline>":
+								r = "~!~";
+								break;
+							}
+							b.append(r);
+							break;
+						} else
+						{
+							//Search for the color.
+							sub.append(jc);
+						}
+					}
+				}
+			} else
+			{
+				b.append(c);
+			}
+		}
+		return b.toString();
 	}
 	
 	private void addComments(LinkedHashMap<String, Language> mapKeys, String path, Object[] o)
@@ -3401,26 +3558,27 @@ public class YamlManager
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void initCatType() //INFO:CatType
 	{
 		for(org.bukkit.entity.Cat.Type i : org.bukkit.entity.Cat.Type.values())
 		{
 			String eng = "";
 			String ger = "";
-			switch(i)
+			switch(i.getKey().getKey())
 			{
 			default: break;
-			case ALL_BLACK: ger = "Ganz Schwarz"; eng = "All Black"; break;
-			case BLACK: ger = "Schwarz"; eng = "Black"; break;
-			case BRITISH_SHORTHAIR: ger = "Britisch Kurzhaar"; eng = "British Shorthair"; break;
-			case CALICO: ger = "Calico"; eng = "Calico"; break;
-			case JELLIE: ger = "Jellie"; eng = "Jellie"; break;
-			case PERSIAN: ger = "Perser"; eng = "Persian"; break;
-			case RAGDOLL: ger = "Ragdoll"; eng = "Ragdoll"; break;
-			case RED: ger = "Rot"; eng = "Red"; break;
-			case SIAMESE: ger = "Siamese"; eng = "Siamese"; break;
-			case TABBY: ger = "Getigert"; eng = "Tabby"; break;
-			case WHITE: ger = "Weiß"; eng = "White"; break;
+			case "ALL_BLACK": ger = "Ganz Schwarz"; eng = "All Black"; break;
+			case "BLACK": ger = "Schwarz"; eng = "Black"; break;
+			case "BRITISH_SHORTHAIR": ger = "Britisch Kurzhaar"; eng = "British Shorthair"; break;
+			case "CALICO": ger = "Calico"; eng = "Calico"; break;
+			case "JELLIE": ger = "Jellie"; eng = "Jellie"; break;
+			case "PERSIAN": ger = "Perser"; eng = "Persian"; break;
+			case "RAGDOLL": ger = "Ragdoll"; eng = "Ragdoll"; break;
+			case "RED": ger = "Rot"; eng = "Red"; break;
+			case "SIAMESE": ger = "Siamese"; eng = "Siamese"; break;
+			case "TABBY": ger = "Getigert"; eng = "Tabby"; break;
+			case "WHITE": ger = "Weiß"; eng = "White"; break;
 			}
 			cattypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3445,49 +3603,51 @@ public class YamlManager
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void initMapCursorType() //INFO:MapCursorType
 	{
 		for(org.bukkit.map.MapCursor.Type i : org.bukkit.map.MapCursor.Type.values())
 		{
 			String eng = "";
 			String ger = "";
-			switch(i)
+			switch(i.getKey().getKey())
 			{
-			case RED_MARKER: ger = "Rote Markierung"; eng = "RED_MARKER"; break;
-			case MANSION: ger = "Waldanwesen"; eng = "MANSION"; break;
-			case BANNER_WHITE: ger = "Weißes Banner"; eng = "BANNER_WHITE"; break;
-			case BANNER_ORANGE: ger = "Oranges Banner"; eng = "BANNER_ORANGE"; break;
-			case BANNER_MAGENTA: ger = "Magenta Banner"; eng = "BANNER_MAGENTA"; break;
-			case BANNER_LIGHT_BLUE: ger = "Hellblaues Banner"; eng = "BANNER_LIGHT_BLUE"; break;
-			case BANNER_YELLOW: ger = "Gelbes Banner"; eng = "BANNER_YELLOW"; break;
-			case BANNER_LIME: ger = "Hellgrünes Banner"; eng = "BANNER_LIME"; break;
-			case BANNER_PINK: ger = "Rosa Banner"; eng = "BANNER_PINK"; break;
-			case BANNER_GRAY: ger = "Graues Banner"; eng = "BANNER_GRAY"; break;
-			case BANNER_LIGHT_GRAY: ger = "Hellgraues Banner"; eng = "BANNER_LIGHT_GRAY"; break;
-			case BANNER_CYAN: ger = "Türkises Banner"; eng = "BANNER_CYAN"; break;
-			case BANNER_PURPLE: ger = "Violettes Banner"; eng = "BANNER_PURPLE"; break;
-			case BANNER_BLUE: ger = "Blaues Banner"; eng = "BANNER_BLUE"; break;
-			case BANNER_BROWN: ger = "Braunes Banner"; eng = "BANNER_BROWN"; break;
-			case BANNER_GREEN: ger = "Grünes Banner"; eng = "BANNER_GREEN"; break;
-			case BANNER_RED: ger = "Rotes Banner"; eng = "BANNER_RED"; break;
-			case BANNER_BLACK: ger = "Schwarzes Banner"; eng = "BANNER_BLACK"; break;
-			case RED_X: ger = "Rotes X"; eng = "RED_X"; break;
-			case JUNGLE_TEMPLE: ger = "Dschungeltempel"; eng = "JUNGLE_TEMPLE"; break;
-			case SWAMP_HUT: ger = "Moorhütte"; eng = "SWAMP_HUT"; break;
-			case BLUE_MARKER: ger = "Blauer Zeiger"; eng = "Blue Marker"; break;
-			case FRAME: ger = "Rahmen"; eng = "Frame"; break;
-			case MONUMENT: ger = "Monument"; eng = "Monument"; break;
-			case PLAYER: ger = "Spieler"; eng = "Player"; break;
-			case PLAYER_OFF_LIMITS: ger = "Spieler außer Reichweite"; eng = "Player off Limits"; break;
-			case PLAYER_OFF_MAP: ger = "Spieler außerhalb der Karte"; eng = "Player off Map"; break;
-			case TARGET_POINT: ger = "Zielpunkt"; eng = "Targetpoint"; break;
-			case TARGET_X: ger = "Ziel X"; eng = "Target X"; break;
-			case TRIAL_CHAMBERS: ger = "Trialkammer"; eng = "Trial Chamber"; break;
-			case VILLAGE_DESERT: ger = "Wüstendorf"; eng = "DESERT_VILLAGE"; break;
-			case VILLAGE_PLAINS: ger = "Ebenendorf"; eng = "PLAINS_VILLAGE"; break;
-			case VILLAGE_SAVANNA: ger = "Savannadorf"; eng = "SAVANNA_VILLAGE"; break;
-			case VILLAGE_SNOWY: ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
-			case VILLAGE_TAIGA: ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
+			default:
+			case "RED_MARKER": ger = "Rote Markierung"; eng = "RED_MARKER"; break;
+			case "MANSION": ger = "Waldanwesen"; eng = "MANSION"; break;
+			case "BANNER_WHITE": ger = "Weißes Banner"; eng = "BANNER_WHITE"; break;
+			case "BANNER_ORANGE": ger = "Oranges Banner"; eng = "BANNER_ORANGE"; break;
+			case "BANNER_MAGENTA": ger = "Magenta Banner"; eng = "BANNER_MAGENTA"; break;
+			case "BANNER_LIGHT_BLUE": ger = "Hellblaues Banner"; eng = "BANNER_LIGHT_BLUE"; break;
+			case "BANNER_YELLOW": ger = "Gelbes Banner"; eng = "BANNER_YELLOW"; break;
+			case "BANNER_LIME": ger = "Hellgrünes Banner"; eng = "BANNER_LIME"; break;
+			case "BANNER_PINK": ger = "Rosa Banner"; eng = "BANNER_PINK"; break;
+			case "BANNER_GRAY": ger = "Graues Banner"; eng = "BANNER_GRAY"; break;
+			case "BANNER_LIGHT_GRAY": ger = "Hellgraues Banner"; eng = "BANNER_LIGHT_GRAY"; break;
+			case "BANNER_CYAN": ger = "Türkises Banner"; eng = "BANNER_CYAN"; break;
+			case "BANNER_PURPLE": ger = "Violettes Banner"; eng = "BANNER_PURPLE"; break;
+			case "BANNER_BLUE": ger = "Blaues Banner"; eng = "BANNER_BLUE"; break;
+			case "BANNER_BROWN": ger = "Braunes Banner"; eng = "BANNER_BROWN"; break;
+			case "BANNER_GREEN": ger = "Grünes Banner"; eng = "BANNER_GREEN"; break;
+			case "BANNER_RED": ger = "Rotes Banner"; eng = "BANNER_RED"; break;
+			case "BANNER_BLACK": ger = "Schwarzes Banner"; eng = "BANNER_BLACK"; break;
+			case "RED_X": ger = "Rotes X"; eng = "RED_X"; break;
+			case "JUNGLE_TEMPLE": ger = "Dschungeltempel"; eng = "JUNGLE_TEMPLE"; break;
+			case "SWAMP_HUT": ger = "Moorhütte"; eng = "SWAMP_HUT"; break;
+			case "BLUE_MARKER": ger = "Blauer Zeiger"; eng = "Blue Marker"; break;
+			case "FRAME": ger = "Rahmen"; eng = "Frame"; break;
+			case "MONUMENT": ger = "Monument"; eng = "Monument"; break;
+			case "PLAYER": ger = "Spieler"; eng = "Player"; break;
+			case "PLAYER_OFF_LIMITS": ger = "Spieler außer Reichweite"; eng = "Player off Limits"; break;
+			case "PLAYER_OFF_MAP": ger = "Spieler außerhalb der Karte"; eng = "Player off Map"; break;
+			case "TARGET_POINT": ger = "Zielpunkt"; eng = "Targetpoint"; break;
+			case "TARGET_X": ger = "Ziel X"; eng = "Target X"; break;
+			case "TRIAL_CHAMBERS": ger = "Trialkammer"; eng = "Trial Chamber"; break;
+			case "VILLAGE_DESERT": ger = "Wüstendorf"; eng = "DESERT_VILLAGE"; break;
+			case "VILLAGE_PLAINS": ger = "Ebenendorf"; eng = "PLAINS_VILLAGE"; break;
+			case "VILLAGE_SAVANNA": ger = "Savannadorf"; eng = "SAVANNA_VILLAGE"; break;
+			case "VILLAGE_SNOWY": ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
+			case "VILLAGE_TAIGA": ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
 			}
 			mapcursortypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3517,21 +3677,23 @@ public class YamlManager
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void initVillagerType() //INFO:VillagerType
 	{
 		for(org.bukkit.entity.Villager.Type i : org.bukkit.entity.Villager.Type.values())
 		{
 			String eng = "";
 			String ger = "";
-			switch(i)
+			switch(i.getKey().getKey())
 			{
-			case DESERT: ger = "Wüste"; eng = "Desert"; break;
-			case JUNGLE: ger = "Dschungel"; eng = "Jungle"; break;
-			case PLAINS: ger = "Ebenen"; eng = "Plains"; break;
-			case SAVANNA: ger = "Savanne"; eng = "Savanna"; break;
-			case SNOW: ger = "Schnee"; eng = "Snow"; break;
-			case SWAMP: ger = "Sumpf"; eng = "Swamp"; break;
-			case TAIGA: ger = "Taiga"; eng = "Taiga"; break;
+			default:
+			case "DESERT": ger = "Wüste"; eng = "Desert"; break;
+			case "JUNGLE": ger = "Dschungel"; eng = "Jungle"; break;
+			case "PLAINS": ger = "Ebenen"; eng = "Plains"; break;
+			case "SAVANNA": ger = "Savanne"; eng = "Savanna"; break;
+			case "SNOW": ger = "Schnee"; eng = "Snow"; break;
+			case "SWAMP": ger = "Sumpf"; eng = "Swamp"; break;
+			case "TAIGA": ger = "Taiga"; eng = "Taiga"; break;
 			}
 			villagertypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3539,29 +3701,30 @@ public class YamlManager
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void initVillagerProfession() //INFO:VillagerProfession
 	{
 		for(org.bukkit.entity.Villager.Profession i : org.bukkit.entity.Villager.Profession.values())
 		{
 			String eng = "";
 			String ger = "";
-			switch(i)
+			switch(i.getKey().getKey())
 			{
-			case ARMORER: ger = "Rüstungsschmied"; eng = "Armorer"; break;
-			case BUTCHER: ger = "Metzger"; eng = "Butcher"; break;
-			case CARTOGRAPHER: ger = "Kartenzeichner"; eng = "Cartographer"; break;
-			case CLERIC: ger = "Geistliche"; eng = "Cleric"; break;
-			case FARMER: ger = "Bauer"; eng = "Farmer"; break;
-			case FISHERMAN: ger = "Fischer"; eng = "Fisherman"; break;
-			case FLETCHER: ger = "Pfeilmacher"; eng = "Fletcher"; break;
-			case LEATHERWORKER: ger = "Gerber"; eng = "Leatherworker"; break;
-			case LIBRARIAN: ger = "Bibliothekar"; eng = "Librarian"; break;
-			case MASON: ger = "Steinmetz"; eng = "Mason"; break;
-			case NITWIT: ger = "Nichtnutz"; eng = "Niwit"; break;
-			case NONE: ger = "Arbeitsloser"; eng = "None"; break;
-			case SHEPHERD: ger = "Schäfer"; eng = "Shepherd"; break;
-			case TOOLSMITH: ger = "Werkzeugschmied"; eng = "Toolsmith"; break;
-			case WEAPONSMITH: ger = "Waffenschmied"; eng = "Weaponsmith"; break;
+			case "ARMORER": ger = "Rüstungsschmied"; eng = "Armorer"; break;
+			case "BUTCHER": ger = "Metzger"; eng = "Butcher"; break;
+			case "CARTOGRAPHER": ger = "Kartenzeichner"; eng = "Cartographer"; break;
+			case "CLERIC": ger = "Geistliche"; eng = "Cleric"; break;
+			case "FARMER": ger = "Bauer"; eng = "Farmer"; break;
+			case "FISHERMAN": ger = "Fischer"; eng = "Fisherman"; break;
+			case "FLETCHER": ger = "Pfeilmacher"; eng = "Fletcher"; break;
+			case "LEATHERWORKER": ger = "Gerber"; eng = "Leatherworker"; break;
+			case "LIBRARIAN": ger = "Bibliothekar"; eng = "Librarian"; break;
+			case "MASON": ger = "Steinmetz"; eng = "Mason"; break;
+			case "NITWIT": ger = "Nichtnutz"; eng = "Niwit"; break;
+			case "NONE": ger = "Arbeitsloser"; eng = "None"; break;
+			case "SHEPHERD": ger = "Schäfer"; eng = "Shepherd"; break;
+			case "TOOLSMITH": ger = "Werkzeugschmied"; eng = "Toolsmith"; break;
+			case "WEAPONSMITH": ger = "Waffenschmied"; eng = "Weaponsmith"; break;
 			}
 			villagerprofessionlanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
