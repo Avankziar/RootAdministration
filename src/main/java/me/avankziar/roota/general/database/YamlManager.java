@@ -59,13 +59,13 @@ public class YamlManager
 			initColor();
 			initDyeColor();
 			initTropicalFish();
-			initCatType();
+			/*initCatType(); FIXME Gesperrt wegen der 1.21
 			initFoxType();
 			initMapCursorType();
 			initRabbitType();
 			initVillagerType();
 			initVillagerProfession();
-			initTreeType();
+			initTreeType();*/
 		}
 		if(type == Type.BUNGEE || type == Type.VELO)
 		{
@@ -3558,14 +3558,13 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initCatType() //INFO:CatType
 	{
-		for(org.bukkit.entity.Cat.Type i : org.bukkit.entity.Cat.Type.values())
+		for(org.bukkit.entity.Cat.Type i : org.bukkit.Registry.CAT_VARIANT.stream().collect(Collectors.toList()))
 		{
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.toString())
 			{
 			default: break;
 			case "ALL_BLACK": ger = "Ganz Schwarz"; eng = "All Black"; break;
@@ -3603,14 +3602,13 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initMapCursorType() //INFO:MapCursorType
 	{
-		for(org.bukkit.map.MapCursor.Type i : org.bukkit.map.MapCursor.Type.values())
+		for(org.bukkit.map.MapCursor.Type i : org.bukkit.Registry.MAP_DECORATION_TYPE.stream().collect(Collectors.toList()))
 		{
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.toString())
 			{
 			default:
 			case "RED_MARKER": ger = "Rote Markierung"; eng = "RED_MARKER"; break;
@@ -3677,14 +3675,13 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initVillagerType() //INFO:VillagerType
 	{
-		for(org.bukkit.entity.Villager.Type i : org.bukkit.entity.Villager.Type.values())
+		for(org.bukkit.entity.Villager.Type i : org.bukkit.Registry.VILLAGER_TYPE.stream().collect(Collectors.toList()))
 		{
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.toString())
 			{
 			default:
 			case "DESERT": ger = "Wüste"; eng = "Desert"; break;
@@ -3701,14 +3698,13 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initVillagerProfession() //INFO:VillagerProfession
 	{
-		for(org.bukkit.entity.Villager.Profession i : org.bukkit.entity.Villager.Profession.values())
+		for(org.bukkit.entity.Villager.Profession i : org.bukkit.Registry.VILLAGER_PROFESSION.stream().collect(Collectors.toList()))
 		{
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.toString())
 			{
 			case "ARMORER": ger = "Rüstungsschmied"; eng = "Armorer"; break;
 			case "BUTCHER": ger = "Metzger"; eng = "Butcher"; break;

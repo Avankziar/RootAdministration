@@ -120,7 +120,8 @@ public class EnumTranslationProvider implements EnumTranslation
 				
 			}
 		}
-		for(Cat.Type i : Cat.Type.values())
+		/* FIXME Gesperrt für die 1.21
+		for(Cat.Type i :org.bukkit.Registry.CAT_VARIANT.stream().collect(Collectors.toList()))
 		{
 			cattypeLocalization.put(i, plugin.getYamlHandler().getCatTypeLang().getString(i.toString(), i.toString()));
 		}
@@ -128,7 +129,7 @@ public class EnumTranslationProvider implements EnumTranslation
 		{
 			foxtypeLocalization.put(i, plugin.getYamlHandler().getFoxTypeLang().getString(i.toString(), i.toString()));
 		}
-		for(MapCursor.Type i : MapCursor.Type.values())
+		for(MapCursor.Type i : org.bukkit.Registry.MAP_DECORATION_TYPE.stream().collect(Collectors.toList()))
 		{
 			mapcursortypeLocalization.put(i, plugin.getYamlHandler().getMapCursorTypeLang().getString(i.toString(), i.toString()));
 		}
@@ -136,18 +137,18 @@ public class EnumTranslationProvider implements EnumTranslation
 		{
 			rabbittypeLocalization.put(i, plugin.getYamlHandler().getRabbitTypeLang().getString(i.toString(), i.toString()));
 		}
-		for(Villager.Type i : Villager.Type.values())
+		for(Villager.Type i : org.bukkit.Registry.VILLAGER_TYPE.stream().collect(Collectors.toList()))
 		{
 			villagertypeLocalization.put(i, plugin.getYamlHandler().getVillagerTypeLang().getString(i.toString(), i.toString()));
 		}
-		for(Villager.Profession i : Villager.Profession.values())
+		for(Villager.Profession i : org.bukkit.Registry.VILLAGER_PROFESSION.stream().collect(Collectors.toList()))
 		{
 			villagerprofessionLocalization.put(i, plugin.getYamlHandler().getVillagerProfessionLang().getString(i.toString(), i.toString()));
 		}
 		for(TreeType i : TreeType.values())
 		{
 			treetypeLocalization.put(i, plugin.getYamlHandler().getTreeTypeLang().getString(i.toString(), i.toString()));
-		}
+		}*/
 	}
 	
 	public String getLocalization(Material mat)

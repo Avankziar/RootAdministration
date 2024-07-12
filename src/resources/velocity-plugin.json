@@ -1,6 +1,6 @@
 {"id":"rootadministration",
 "name":"RootAdministration",
-"version":"1-6-0",
+"version":"${version}",
 "description":"A administration plugin for server and mysql data",
 "authors":["Avankziar"],
 "url":"https://www.spigotmc.org/resources/rootadministration.104833/",
