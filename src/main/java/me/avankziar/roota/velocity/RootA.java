@@ -17,8 +17,6 @@ import com.velocitypowered.api.plugin.PluginDescription;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 
-import main.java.me.avankziar.ifh.velocity.IFH;
-import main.java.me.avankziar.ifh.velocity.plugin.ServicePriority;
 import main.java.me.avankziar.roota.general.database.YamlHandler;
 import main.java.me.avankziar.roota.general.database.YamlManager;
 import main.java.me.avankziar.roota.velocity.database.MysqlHandler;
@@ -26,6 +24,8 @@ import main.java.me.avankziar.roota.velocity.database.MysqlSetup;
 import main.java.me.avankziar.roota.velocity.ifh.AdministrationProvider;
 import main.java.me.avankziar.roota.velocity.listener.PlayerObserverListener;
 import main.java.me.avankziar.roota.velocity.metric.Metrics;
+import me.avankziar.ifh.velocity.IFH;
+import me.avankziar.ifh.velocity.plugin.ServicePriority;
 
 @Plugin(
 		id = "rootadministration", 
@@ -156,12 +156,12 @@ public class RootA
         	logger.info(pluginName + " dont find InterfaceHub!");
             return;
         }
-        main.java.me.avankziar.ifh.velocity.IFH ifh = IFH.getPlugin();
+        me.avankziar.ifh.velocity.IFH ifh = IFH.getPlugin();
         try
         {
         	administrationProvider = new AdministrationProvider(getPlugin());
             ifh.getServicesManager().register(
-             		main.java.me.avankziar.ifh.velocity.administration.Administration.class,
+             		me.avankziar.ifh.velocity.administration.Administration.class,
              		administrationProvider, plugin.get(), ServicePriority.Normal);
             logger.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
     		

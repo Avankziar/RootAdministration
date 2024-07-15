@@ -31,8 +31,8 @@ import org.bukkit.inventory.meta.SpawnEggMeta;
 import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 import org.bukkit.potion.PotionEffect;
 
-import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
 import main.java.me.avankziar.roota.spigot.RootA;
+import me.avankziar.ifh.spigot.comparison.ItemStackComparison;
 
 public class ItemStackComparisonProvider implements ItemStackComparison
 {

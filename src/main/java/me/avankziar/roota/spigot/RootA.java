@@ -8,8 +8,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison;
-import main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
 import main.java.me.avankziar.roota.general.database.YamlHandler;
 import main.java.me.avankziar.roota.general.database.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
@@ -20,6 +18,8 @@ import main.java.me.avankziar.roota.spigot.ifh.InteractionBlockerProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ItemStackComparisonProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ProxyOnlinePlayersProvider;
 import main.java.me.avankziar.roota.spigot.metric.Metrics;
+import me.avankziar.ifh.spigot.comparison.ItemStackComparison;
+import me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
 
 public class RootA extends JavaPlugin
 {
@@ -108,7 +108,7 @@ public class RootA extends JavaPlugin
 		{
         	administrationProvider = new AdministrationProvider(plugin);
         	plugin.getServer().getServicesManager().register(
-        			main.java.me.avankziar.ifh.spigot.administration.Administration.class,
+        			me.avankziar.ifh.spigot.administration.Administration.class,
         			administrationProvider,
              		this,
              		ServicePriority.Normal);
@@ -123,7 +123,7 @@ public class RootA extends JavaPlugin
             EnumTranslationProvider.init(plugin);
             EnumTranslationProvider et = new EnumTranslationProvider();
             plugin.getServer().getServicesManager().register(
-        			main.java.me.avankziar.ifh.spigot.interfaces.EnumTranslation.class,
+        			me.avankziar.ifh.spigot.interfaces.EnumTranslation.class,
         			et,
              		this,
              		ServicePriority.Normal);
@@ -131,7 +131,7 @@ public class RootA extends JavaPlugin
             
             ItemStackComparison itemStackComparisonProvider = new ItemStackComparisonProvider();
         	plugin.getServer().getServicesManager().register(
-        			main.java.me.avankziar.ifh.spigot.comparison.ItemStackComparison.class,
+        			me.avankziar.ifh.spigot.comparison.ItemStackComparison.class,
         			itemStackComparisonProvider,
             this,
             ServicePriority.Normal);
@@ -139,7 +139,7 @@ public class RootA extends JavaPlugin
         	
         	InteractionBlockerProvider ib = new InteractionBlockerProvider();
             plugin.getServer().getServicesManager().register(
-        			main.java.me.avankziar.ifh.spigot.interactionblocker.InteractionBlocker.class,
+        			me.avankziar.ifh.spigot.interactionblocker.InteractionBlocker.class,
         			ib,
              		this,
              		ServicePriority.Normal);
@@ -151,7 +151,7 @@ public class RootA extends JavaPlugin
 				{
 					ProxyOnlinePlayers bungeeOnlinePlayers = new ProxyOnlinePlayersProvider();
 		        	plugin.getServer().getServicesManager().register(
-		        			main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers.class,
+		        			me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers.class,
 		        			bungeeOnlinePlayers,
 		            this,
 		            ServicePriority.Normal);

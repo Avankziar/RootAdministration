@@ -2,8 +2,8 @@ package main.java.me.avankziar.roota.velocity.ifh;
 
 import java.util.LinkedHashMap;
 
-import main.java.me.avankziar.ifh.velocity.administration.Administration;
 import main.java.me.avankziar.roota.velocity.RootA;
+import me.avankziar.ifh.velocity.administration.Administration;
 
 public class AdministrationProvider implements Administration
 {

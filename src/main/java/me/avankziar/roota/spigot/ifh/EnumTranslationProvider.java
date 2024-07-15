@@ -26,8 +26,8 @@ import org.bukkit.map.MapCursor;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-import main.java.me.avankziar.ifh.spigot.interfaces.EnumTranslation;
 import main.java.me.avankziar.roota.spigot.RootA;
+import me.avankziar.ifh.spigot.interfaces.EnumTranslation;
 
 public class EnumTranslationProvider implements EnumTranslation
 {

@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import main.java.me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
 import main.java.me.avankziar.roota.general.database.MysqlType;
 import main.java.me.avankziar.roota.general.object.PlayerLocation;
 import main.java.me.avankziar.roota.spigot.RootA;
+import me.avankziar.ifh.spigot.interfaces.ProxyOnlinePlayers;
 
 public class ProxyOnlinePlayersProvider implements ProxyOnlinePlayers
 {

@@ -2,8 +2,8 @@ package main.java.me.avankziar.roota.spigot.ifh;
 
 import java.util.LinkedHashMap;
 
-import main.java.me.avankziar.ifh.spigot.administration.Administration;
 import main.java.me.avankziar.roota.spigot.RootA;
+import me.avankziar.ifh.spigot.administration.Administration;
 
 public class AdministrationProvider implements Administration
 {

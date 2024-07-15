@@ -2,8 +2,8 @@ package main.java.me.avankziar.roota.bungee.ifh;
 
 import java.util.LinkedHashMap;
 
-import main.java.me.avankziar.ifh.bungee.administration.Administration;
 import main.java.me.avankziar.roota.bungee.RootA;
+import me.avankziar.ifh.bungee.administration.Administration;
 
 public class AdministrationProvider implements Administration
 {

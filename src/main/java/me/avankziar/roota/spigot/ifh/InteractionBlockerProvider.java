@@ -7,10 +7,10 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import main.java.me.avankziar.ifh.spigot.interactionblocker.InteractionBlocker;
-import main.java.me.avankziar.ifh.spigot.interactionblocker.InteractionBlockerType;
 import main.java.me.avankziar.roota.spigot.RootA;
 import main.java.me.avankziar.roota.spigot.object.PlayerBlocker;
+import me.avankziar.ifh.spigot.interactionblocker.InteractionBlocker;
+import me.avankziar.ifh.spigot.interactionblocker.InteractionBlockerType;
 
 public class InteractionBlockerProvider implements InteractionBlocker
 {

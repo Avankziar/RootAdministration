@@ -2,7 +2,6 @@ package main.java.me.avankziar.roota.bungee;
 
 import java.util.logging.Logger;
 
-import main.java.me.avankziar.ifh.bungee.plugin.ServicePriority;
 import main.java.me.avankziar.roota.bungee.database.MysqlHandler;
 import main.java.me.avankziar.roota.bungee.database.MysqlSetup;
 import main.java.me.avankziar.roota.bungee.ifh.AdministrationProvider;
@@ -10,6 +9,7 @@ import main.java.me.avankziar.roota.bungee.listener.PlayerObserverListener;
 import main.java.me.avankziar.roota.bungee.metric.Metrics;
 import main.java.me.avankziar.roota.general.database.YamlHandler;
 import main.java.me.avankziar.roota.general.database.YamlManager;
+import me.avankziar.ifh.bungee.plugin.ServicePriority;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 
@@ -103,12 +103,12 @@ public class RootA extends Plugin
         {
             return;
         }
-        main.java.me.avankziar.ifh.bungee.IFH ifh = (main.java.me.avankziar.ifh.bungee.IFH) ifhp;
+        me.avankziar.ifh.bungee.IFH ifh = (me.avankziar.ifh.bungee.IFH) ifhp;
         try
         {
         	administrationProvider = new AdministrationProvider(plugin);
             ifh.getServicesManager().register(
-             		main.java.me.avankziar.ifh.bungee.administration.Administration.class,
+             		me.avankziar.ifh.bungee.administration.Administration.class,
              		administrationProvider, plugin, ServicePriority.Normal);
             logger.info(pluginName + " detected InterfaceHub >>> Administration.class is provided!");
     		
