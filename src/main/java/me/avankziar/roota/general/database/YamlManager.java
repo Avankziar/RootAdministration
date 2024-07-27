@@ -6,7 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bukkit.Registry;
+import org.bukkit.block.banner.PatternType;
+
+import com.google.common.collect.Lists;
+
 import main.java.me.avankziar.roota.general.database.Language.ISO639_2B;
+import main.java.me.avankziar.roota.spigot.RootA;
 
 public class YamlManager
 {
@@ -48,8 +54,8 @@ public class YamlManager
 		{
 			initConfig(type);
 			initMaterialLanguage();
-			initEnchantmentLanguage();
-			initBannerLanguage();
+			//initEnchantmentLanguage();
+			//initBannerLanguage();
 			initItemFlagLanguage();
 			initPotionTypeLanguage();
 			initPotionEffectTypeLanguage();
@@ -2308,14 +2314,15 @@ public class YamlManager
 	{
 		for(org.bukkit.DyeColor dc : org.bukkit.DyeColor.values())
 		{
-			for(org.bukkit.block.banner.PatternType p : org.bukkit.Registry.BANNER_PATTERN.stream().collect(Collectors.toList()))
+			for(org.bukkit.block.banner.PatternType p : Lists.newArrayList(Registry.BANNER_PATTERN))
 			{
+				String ps = p.getKey().getKey();
 				String eng = "";
 				String ger = "";
 				switch(dc)
 				{
 				case BLACK:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Schwarzes Banner"; eng = "BLACK_BASE"; break;
 					case "square_bottom_left": ger = "Schwarzes rechtes Untereck"; eng = "BLACK_SQUARE_BOTTOM_LEFT"; break;
@@ -2363,7 +2370,7 @@ public class YamlManager
 					}
 					break;
 				case BLUE:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Blaues Banner"; eng = "BLUE_BASE"; break;
 					case "square_bottom_left": ger = "Blaues rechtes Untereck"; eng = "BLUE_SQUARE_BOTTOM_LEFT"; break;
@@ -2411,7 +2418,7 @@ public class YamlManager
 					}
 					break;
 				case BROWN:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Braunes Banner"; eng = "BROWN_BASE"; break;
 					case "square_bottom_left": ger = "Braunes rechtes Untereck"; eng = "BROWN_SQUARE_BOTTOM_LEFT"; break;
@@ -2459,7 +2466,7 @@ public class YamlManager
 					}
 					break;
 				case CYAN:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Türkises Banner"; eng = "CYAN_BASE"; break;
 					case "square_bottom_left": ger = "Türkises rechtes Untereck"; eng = "CYAN_SQUARE_BOTTOM_LEFT"; break;
@@ -2507,7 +2514,7 @@ public class YamlManager
 					}
 					break;
 				case GRAY:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Graues Banner"; eng = "GRAY_BASE"; break;
 					case "square_bottom_left": ger = "Graues rechtes Untereck"; eng = "GRAY_SQUARE_BOTTOM_LEFT"; break;
@@ -2555,7 +2562,7 @@ public class YamlManager
 					}
 					break;
 				case GREEN:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Grünes Banner"; eng = "GREEN_BASE"; break;
 					case "square_bottom_left": ger = "Grünes rechtes Untereck"; eng = "GREEN_SQUARE_BOTTOM_LEFT"; break;
@@ -2603,7 +2610,7 @@ public class YamlManager
 					}
 					break;
 				case LIGHT_BLUE:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Hellblaues Banner"; eng = "LIGHT_BLUE_BASE"; break;
 					case "square_bottom_left": ger = "Hellblaues rechtes Untereck"; eng = "LIGHT_BLUE_SQUARE_BOTTOM_LEFT"; break;
@@ -2651,7 +2658,7 @@ public class YamlManager
 					}
 					break;
 				case LIGHT_GRAY:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Hellgraues Banner"; eng = "LIGHT_GRAY_BASE"; break;
 					case "square_bottom_left": ger = "Hellgraues rechtes Untereck"; eng = "LIGHT_GRAY_SQUARE_BOTTOM_LEFT"; break;
@@ -2699,7 +2706,7 @@ public class YamlManager
 					}
 					break;
 				case LIME:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Hellgrünes Banner"; eng = "LIME_BASE"; break;
 					case "square_bottom_left": ger = "Hellgrünes rechtes Untereck"; eng = "LIME_SQUARE_BOTTOM_LEFT"; break;
@@ -2747,7 +2754,7 @@ public class YamlManager
 					}
 					break;
 				case MAGENTA:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Magenta Banner"; eng = "MAGENTA_BASE"; break;
 					case "square_bottom_left": ger = "Magenta rechtes Untereck"; eng = "MAGENTA_SQUARE_BOTTOM_LEFT"; break;
@@ -2795,7 +2802,7 @@ public class YamlManager
 					}
 					break;
 				case ORANGE:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Oranges Banner"; eng = "ORANGE_BASE"; break;
 					case "square_bottom_left": ger = "Oranges rechtes Untereck"; eng = "ORANGE_SQUARE_BOTTOM_LEFT"; break;
@@ -2843,7 +2850,7 @@ public class YamlManager
 					}
 					break;
 				case PINK:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Rosa Banner"; eng = "PINK_BASE"; break;
 					case "square_bottom_left": ger = "Rosa rechtes Untereck"; eng = "PINK_SQUARE_BOTTOM_LEFT"; break;
@@ -2891,7 +2898,7 @@ public class YamlManager
 					}
 					break;
 				case PURPLE:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Violettes Banner"; eng = "PURPLE_BASE"; break;
 					case "square_bottom_left": ger = "Violettes rechtes Untereck"; eng = "PURPLE_SQUARE_BOTTOM_LEFT"; break;
@@ -2939,7 +2946,7 @@ public class YamlManager
 					}
 					break;
 				case RED:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Rotes Banner"; eng = "RED_BASE"; break;
 					case "square_bottom_left": ger = "Rotes rechtes Untereck"; eng = "RED_SQUARE_BOTTOM_LEFT"; break;
@@ -2987,7 +2994,7 @@ public class YamlManager
 					}
 					break;
 				case WHITE:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Weißes Banner"; eng = "WHITE_BASE"; break;
 					case "square_bottom_left": ger = "Weißes rechtes Untereck"; eng = "WHITE_SQUARE_BOTTOM_LEFT"; break;
@@ -3035,7 +3042,7 @@ public class YamlManager
 					}
 					break;
 				case YELLOW:
-					switch(p.getKey().getKey())
+					switch(ps)
 					{
 					case "base": ger = "Gelbes Banner"; eng = "YELLOW_BASE"; break;
 					case "square_bottom_left": ger = "Gelbes rechtes Untereck"; eng = "YELLOW_SQUARE_BOTTOM_LEFT"; break;

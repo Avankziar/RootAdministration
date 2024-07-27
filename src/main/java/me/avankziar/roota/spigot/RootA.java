@@ -120,14 +120,14 @@ public class RootA extends JavaPlugin
 	{      
         if (plugin.getServer().getPluginManager().isPluginEnabled("InterfaceHub")) 
 		{            
-            EnumTranslationProvider.init(plugin);
+            /*EnumTranslationProvider.init(plugin);
             EnumTranslationProvider et = new EnumTranslationProvider();
             plugin.getServer().getServicesManager().register(
         			me.avankziar.ifh.spigot.interfaces.EnumTranslation.class,
         			et,
              		this,
              		ServicePriority.Normal);
-            logger.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");
+            logger.info(pluginName + " detected InterfaceHub >>> EnumTranslation.class is provided!");*/
             
             ItemStackComparison itemStackComparisonProvider = new ItemStackComparisonProvider();
         	plugin.getServer().getServicesManager().register(
