@@ -3,7 +3,7 @@ main: main.java.me.avankziar.roota.spigot.RootA
 version: 1
 load: STARTUP
 author: Avankziar
-api-version: 1.20
+api-version: 1.21
 description: A administration plugin for server and mysql data
 depend: [InterfaceHub]
 website: https://www.spigotmc.org/resources/rootadministration.104833/

@@ -2,17 +2,14 @@ package main.java.me.avankziar.roota.general.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.bukkit.Registry;
 import org.bukkit.block.banner.PatternType;
 
-import com.google.common.collect.Lists;
-
 import main.java.me.avankziar.roota.general.database.Language.ISO639_2B;
-import main.java.me.avankziar.roota.spigot.RootA;
 
 public class YamlManager
 {
@@ -54,8 +51,8 @@ public class YamlManager
 		{
 			initConfig(type);
 			initMaterialLanguage();
-			//initEnchantmentLanguage();
-			//initBannerLanguage();
+			initEnchantmentLanguage();
+			initBannerLanguage();
 			initItemFlagLanguage();
 			initPotionTypeLanguage();
 			initPotionEffectTypeLanguage();
@@ -65,13 +62,13 @@ public class YamlManager
 			initColor();
 			initDyeColor();
 			initTropicalFish();
-			/*initCatType(); FIXME Gesperrt wegen der 1.21
+			initCatType();
 			initFoxType();
 			initMapCursorType();
 			initRabbitType();
 			initVillagerType();
 			initVillagerProfession();
-			initTreeType();*/
+			initTreeType();
 		}
 		if(type == Type.BUNGEE || type == Type.VELO)
 		{
@@ -2257,8 +2254,9 @@ public class YamlManager
 	
 	public void initEnchantmentLanguage() //INFO:EnchantmentLanguages
 	{		
-		for(org.bukkit.enchantments.Enchantment e : org.bukkit.Registry.ENCHANTMENT.stream().collect(Collectors.toList()))
+		for(Iterator<org.bukkit.enchantments.Enchantment> iter = Registry.ENCHANTMENT.iterator(); iter.hasNext();)
 		{
+			org.bukkit.enchantments.Enchantment e = iter.next();
 			String ger = e.getKey().getKey();
 			String eng = e.getKey().getKey();
 			switch(e.getKey().getKey())
@@ -2303,8 +2301,11 @@ public class YamlManager
 			case "fire_aspect": ger = "Verbrennung"; break;
 			case "aqua_affinity": ger = "Wasseraffinität"; break;
 			case "depth_strider": ger = "Wafferläufer"; break;
+			case "density": ger = "Festigkeit"; break;
+			case "breack": ger = "Durchbruch"; break;
+			case "wind_burst": ger = "Windstoß"; break;
 			}
-			enchlanguageKeys.put(e.getKey().getKey(),
+			enchlanguageKeys.put(e.getKey().getKey().toUpperCase(),
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -2314,9 +2315,10 @@ public class YamlManager
 	{
 		for(org.bukkit.DyeColor dc : org.bukkit.DyeColor.values())
 		{
-			for(org.bukkit.block.banner.PatternType p : Lists.newArrayList(Registry.BANNER_PATTERN))
+			for(Iterator<PatternType> iter = Registry.BANNER_PATTERN.iterator(); iter.hasNext();)
 			{
-				String ps = p.getKey().getKey();
+				PatternType pt = iter.next();
+				String ps = pt.getKey().getKey();
 				String eng = "";
 				String ger = "";
 				switch(dc)
@@ -2365,8 +2367,9 @@ public class YamlManager
 					case "mojang": ger = "Schwarzes Mojang-Logo"; eng = "BLACK_MOJANG"; break;
 					case "globe": ger = "Schwarzer Globus"; eng = "BLACK_GLOBE"; break;
 					case "piglin": ger = "Schwarzer Schnauze"; eng = "BLACK_PIGLIN"; break;
-					case "flow": ger = "Schwarze Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Schwarzer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Schwarze Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Schwarzer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Schwarze Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case BLUE:
@@ -2413,8 +2416,9 @@ public class YamlManager
 					case "mojang": ger = "Blaues Mojang-Logo"; eng = "BLUE_MOJANG"; break;
 					case "globe": ger = "Blauer Globus"; eng = "BLUE_GLOBE"; break;
 					case "piglin": ger = "Blaue Schnauze"; eng = "BLUE_PIGLIN"; break;
-					case "flow": ger = "Blaue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Blauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Blaue Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Blauer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Blaue Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case BROWN:
@@ -2461,8 +2465,9 @@ public class YamlManager
 					case "mojang": ger = "Braunes Mojang-Logo"; eng = "BROWN_MOJANG"; break;
 					case "globe": ger = "Brauner Globus"; eng = "BROWN_GLOBE"; break;
 					case "piglin": ger = "Braune Schnauze"; eng = "BROWN_PIGLIN"; break;
-					case "flow": ger = "Braune Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Brauner Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Braune Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Brauner Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Braune Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case CYAN:
@@ -2509,8 +2514,9 @@ public class YamlManager
 					case "mojang": ger = "Türkises Mojang-Logo"; eng = "CYAN_MOJANG"; break;
 					case "globe": ger = "Türkiser Globus"; eng = "CYAN_GLOBE"; break;
 					case "piglin": ger = "Türkise Schnauze"; eng = "CYAN_PIGLIN"; break;
-					case "flow": ger = "Türkise Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Türkiser Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Türkise Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Türkiser Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Türkise Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case GRAY:
@@ -2557,8 +2563,9 @@ public class YamlManager
 					case "mojang": ger = "Graues Mojang-Logo"; eng = "GRAY_MOJANG"; break;
 					case "globe": ger = "Grauer Globus"; eng = "GRAY_GLOBE"; break;
 					case "piglin": ger = "Graue Schnauze"; eng = "GRAY_PIGLIN"; break;
-					case "flow": ger = "Graue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Grauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Graue Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Grauer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Graue Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case GREEN:
@@ -2605,8 +2612,9 @@ public class YamlManager
 					case "mojang": ger = "Grünes Mojang-Logo"; eng = "GREEN_MOJANG"; break;
 					case "globe": ger = "Grüner Globus"; eng = "GREEN_GLOBE"; break;
 					case "piglin": ger = "Grüne Schnauze"; eng = "GREEN_PIGLIN"; break;
-					case "flow": ger = "Grüne Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Grüner Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Grüne Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Grüner Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Grüne Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case LIGHT_BLUE:
@@ -2653,8 +2661,9 @@ public class YamlManager
 					case "mojang": ger = "Hellblaues Mojang-Logo"; eng = "LIGHT_BLUE_MOJANG"; break;
 					case "globe": ger = "Hellblauer Globus"; eng = "LIGHT_BLUE_GLOBE"; break;
 					case "piglin": ger = "Hellblaue Schnauze"; eng = "LIGHT_BLUE_PIGLIN"; break;
-					case "flow": ger = "Hellblaue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Hellblauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Hellblaue Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Hellblauer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Hellblaue Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case LIGHT_GRAY:
@@ -2701,8 +2710,9 @@ public class YamlManager
 					case "mojang": ger = "Hellgraues Mojang-Logo"; eng = "LIGHT_GRAY_MOJANG"; break;
 					case "globe": ger = "Hellgrauer Globus"; eng = "LIGHT_GRAY_GLOBE"; break;
 					case "piglin": ger = "Hellgraue Schnauze"; eng = "LIGHT_GRAY_PIGLIN"; break;
-					case "flow": ger = "Hellgraue Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Hellgrauer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Hellgraue Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Hellgrauer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Hellgraue Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case LIME:
@@ -2749,8 +2759,9 @@ public class YamlManager
 					case "mojang": ger = "Hellgrünes Mojang-Logo"; eng = "LIME_MOJANG"; break;
 					case "globe": ger = "Hellgrüner Globus"; eng = "LIME_GLOBE"; break;
 					case "piglin": ger = "Hellgrüne Schnauze"; eng = "LIME_PIGLIN"; break;
-					case "flow": ger = "Hellgrüne Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Hellgrüner Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Hellgrüne Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Hellgrüner Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Hellgrüne Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case MAGENTA:
@@ -2797,8 +2808,9 @@ public class YamlManager
 					case "mojang": ger = "Magenta Mojang-Logo"; eng = "MAGENTA_MOJANG"; break;
 					case "globe": ger = "Magenta Globus"; eng = "MAGENTA_GLOBE"; break;
 					case "piglin": ger = "Magenta Schnauze"; eng = "MAGENTA_PIGLIN"; break;
-					case "flow": ger = "Magenta Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Magenta Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Magenta Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Magenta Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Magenta Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case ORANGE:
@@ -2845,8 +2857,9 @@ public class YamlManager
 					case "mojang": ger = "Oranges Mojang-Logo"; eng = "ORANGE_MOJANG"; break;
 					case "globe": ger = "Oranger Globus"; eng = "ORANGE_GLOBE"; break;
 					case "piglin": ger = "Orange Schnauze"; eng = "ORANGE_PIGLIN"; break;
-					case "flow": ger = "Orange Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Oranger Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Orange Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Oranger Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Orange Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case PINK:
@@ -2893,8 +2906,9 @@ public class YamlManager
 					case "mojang": ger = "Rosanes Mojang-Logo"; eng = "PINK_MOJANG"; break;
 					case "globe": ger = "Rosa Globus"; eng = "PINK_GLOBE"; break;
 					case "piglin": ger = "Rosa Schnauze"; eng = "PINK_PIGLIN"; break;
-					case "flow": ger = "Rosa Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Rosa Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Rosa Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Rosa Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Rose Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case PURPLE:
@@ -2941,8 +2955,9 @@ public class YamlManager
 					case "mojang": ger = "Violettes Mojang-Logo"; eng = "PURPLE_MOJANG"; break;
 					case "globe": ger = "Violetter Globus"; eng = "PURPLE_GLOBE"; break;
 					case "piglin": ger = "Violette Schnauze"; eng = "PURPLE_PIGLIN"; break;
-					case "flow": ger = "Violette Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Violetter Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Violette Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Violetter Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Violette Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case RED:
@@ -2989,8 +3004,9 @@ public class YamlManager
 					case "mojang": ger = "Rotes Mojang-Logo"; eng = "RED_MOJANG"; break;
 					case "globe": ger = "Roter Globus"; eng = "RED_GLOBE"; break;
 					case "piglin": ger = "Rote Schnauze"; eng = "RED_PIGLIN"; break;
-					case "flow": ger = "Rote Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Roter Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Rote Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Roter Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Rote Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case WHITE:
@@ -3037,8 +3053,9 @@ public class YamlManager
 					case "mojang": ger = "Weißes Mojang-Logo"; eng = "WHITE_MOJANG"; break;
 					case "globe": ger = "Weißer Globus"; eng = "WHITE_GLOBE"; break;
 					case "piglin": ger = "Weiße Schnauze"; eng = "WHITE_PIGLIN"; break;
-					case "flow": ger = "Weiße Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Weißer Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Weiße Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Weißer Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Weiße Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
 				case YELLOW:
@@ -3085,13 +3102,13 @@ public class YamlManager
 					case "mojang": ger = "Gelbes Mojang-Logo"; eng = "YELLOW_MOJANG"; break;
 					case "globe": ger = "Gelber Globus"; eng = "YELLOW_GLOBE"; break;
 					case "piglin": ger = "Gelbe Schnauze"; eng = "YELLOW_PIGLIN"; break;
-					case "flow": ger = "Gelbe Spirale"; eng = dc.toString()+"_"+p.toString(); break;
-					case "guster": ger = "Gelber Wither"; eng = dc.toString()+"_"+p.toString(); break;
+					case "flow": ger = "Gelbe Spirale"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "guster": ger = "Gelber Wither"; eng = dc.toString()+"_"+ps.toString(); break;
+					case "gradient_up": ger = "Gelbe Steigung aufwärts"; eng = dc.toString()+"_"+ps.toString(); break;
 					}
 					break;
-				}
-								
-				bannerlanguageKeys.put(dc.toString()+"_"+p.toString(), 
+				}		
+				bannerlanguageKeys.put(dc.toString().toUpperCase()+"_"+ps.toString().toUpperCase(), 
 						new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 								ger, eng}));
 			}
@@ -3184,53 +3201,56 @@ public class YamlManager
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void initPotionEffectTypeLanguage() //INFO:PotionEffectTypeLanguages
 	{
-		for(org.bukkit.potion.PotionEffectType pet : org.bukkit.potion.PotionEffectType.values())
+		for(Iterator<org.bukkit.potion.PotionEffectType> iter = Registry.EFFECT.iterator(); iter.hasNext();)
 		{
+			org.bukkit.potion.PotionEffectType pet = iter.next();
 			String ger = "";
 			String eng = "";
-			if(pet.getName().equals(org.bukkit.potion.PotionEffectType.ABSORPTION.getName())){ger = "Absorption"; eng = "Absorption";} 
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.BAD_OMEN.getName())){ger = "Böses Omen"; eng = "Bad Omen";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.BLINDNESS.getName())){ger = "Blindheit"; eng = "Blindness";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.CONDUIT_POWER.getName())){ger = "Meereskraft"; eng = "Conduit Power";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.DARKNESS.getName())){ger = "Dunkelheit"; eng = "Darkness";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.DOLPHINS_GRACE.getName())){ger = "Gunst des Delphins"; eng = "Dolphins Grace";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.FIRE_RESISTANCE.getName())){ger = "Feuerresistenz"; eng = "Fireresistance";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.GLOWING.getName())){ger = "Leuchten"; eng = "Leuchten";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HASTE.getName())){ger = "Eile"; eng = "Haste";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HEALTH_BOOST.getName())){ger = "Extra Energie"; eng = "Health Boost";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HERO_OF_THE_VILLAGE.getName())){ger = "Held des Dorfes"; eng = "Hero of the Village";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.HUNGER.getName())){ger = "Hunger"; eng = "Hunger";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INFESTED.getName())){ger = "Befallen"; eng = "infested";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INSTANT_DAMAGE.getName())){ger = "Schaden"; eng = "Harm";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INSTANT_HEALTH.getName())){ger = "Heilung"; eng = "Heal";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.INVISIBILITY.getName())){ger = "Unsichtbarkeit"; eng = "Invisibility";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.JUMP_BOOST.getName())){ger = "Sprungkraft"; eng = "Jump";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.LEVITATION.getName())){ger = "Schwebekraft"; eng = "Levitation";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.LUCK.getName())){ger = "Glück"; eng = "Luck";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.MINING_FATIGUE.getName())){ger = "Abbaulähmung"; eng = "Slow Digging";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.NAUSEA.getName())){ger = "Verwirrung"; eng = "Confusion";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.NIGHT_VISION.getName())){ger = "Nachtsicht"; eng = "Night Vision";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.OOZING.getName())){ger = "Schleimen"; eng = "Oozing";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.POISON.getName())){ger = "Vergiftung"; eng = "Poison";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.RAID_OMEN.getName())){ger = "Omen des Überfall"; eng = "Raid Omen";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.REGENERATION.getName())){ger = "Regeneration"; eng = "Regeneration";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.RESISTANCE.getName())){ger = "Resistenz"; eng = "Resistance";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SATURATION.getName())){ger = "Sättigung"; eng = "Saturation";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SLOWNESS.getName())){ger = "Langsamkeit"; eng = "Slow";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.STRENGTH.getName())){ger = "Stärke"; eng = "Strenght";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SLOW_FALLING.getName())){ger = "Sanfter Fall"; eng = "Slow Falling";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.SPEED.getName())){ger = "Schnelligkeit"; eng = "Speed";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.TRIAL_OMEN.getName())){ger = "Omen des Trial"; eng = "Trial Omen";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.UNLUCK.getName())){ger = "Unglück"; eng = "Unluck";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WATER_BREATHING.getName())){ger = "Wasseratmung"; eng = "Water Breathing";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WEAKNESS.getName())){ger = "Schwäche"; eng = "Weakness";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WEAVING.getName())){ger = "Weben"; eng = "Weaving";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WIND_CHARGED.getName())){ger = "Windgeladen"; eng = "Wind Charged";}
-			else if(pet.getName().equals(org.bukkit.potion.PotionEffectType.WITHER.getName())){ger = "Wither"; eng = "Wither";}			
-			potioneffecttypelanguageKeys.put(pet.getName(), 
+			switch(pet.getKey().getKey())
+			{
+			case "speed": ger = "Schnelligkeit"; eng = "Speed"; break;
+			case "slowness": ger = "Langsamkeit"; eng = "Slow"; break;
+			case "haste": ger = "Eile"; eng = "Haste"; break;
+			case "mining_fatigue": ger = "Abbaulähmung"; eng = "Slow Digging"; break;
+			case "strength": ger = "Stärke"; eng = "Strenght"; break;
+			case "instant_health": ger = "Heilung"; eng = "Heal"; break;
+			case "instant_damage": ger = "Schaden"; eng = "Harm"; break;
+			case "jump_boost": ger = "Sprungkraft"; eng = "Jump"; break;
+			case "nausea": ger = "Verwirrung"; eng = "Confusion"; break;
+			case "regeneration": ger = "Regeneration"; eng = "Regeneration"; break;
+			case "resistance": ger = "Resistenz"; eng = "Resistance"; break;
+			case "fire_resistance": ger = "Feuerresistenz"; eng = "Fireresistance"; break;
+			case "water_breathing": ger = "Wasseratmung"; eng = "Water Breathing"; break;
+			case "invisibility": ger = "Unsichtbarkeit"; eng = "Invisibility"; break;
+			case "blindness": ger = "Blindheit"; eng = "Blindness"; break;
+			case "night_vision": ger = "Nachtsicht"; eng = "Night Vision"; break;
+			case "hunger": ger = "Hunger"; eng = "Hunger"; break;
+			case "weakness": ger = "Schwäche"; eng = "Weakness"; break;
+			case "poison": ger = "Vergiftung"; eng = "Poison"; break;
+			case "wither": ger = "Wither"; eng = "Wither"; break;
+			case "health_boost": ger = "Extra Energie"; eng = "Health Boost"; break;
+			case "absorption": ger = "Absorption"; eng = "Absorption"; break;
+			case "saturation": ger = "Sättigung"; eng = "Saturation"; break;
+			case "glowing": ger = "Leuchten"; eng = "Glowing"; break;
+			case "levitation": ger = "Schwebekraft"; eng = "Levitation"; break;
+			case "luck": ger = "Glück"; eng = "Luck"; break;
+			case "unluck": ger = "Unglück"; eng = "Unluck"; break;
+			case "slow_falling": ger = "Sanfter Fall"; eng = "Slow Falling"; break;
+			case "conduit_power": ger = "Meereskraft"; eng = "Conduit Power"; break;
+			case "dolphins_grace": ger = "Gunst des Delphins"; eng = "Dolphins Grace"; break;
+			case "bad_omen": ger = "Böses Omen"; eng = "Bad Omen"; break;
+			case "hero_of_the_village": ger = "Held des Dorfes"; eng = "Hero of the Village"; break;
+			case "darkness": ger = "Dunkelheit"; eng = "Darkness"; break;
+			case "trial_omen": ger = "Omen des Trial"; eng = "Trial Omen"; break;
+			case "raid_omen": ger = "Omen des Überfall"; eng = "Raid Omen"; break;
+			case "wind_charged": ger = "Windgeladen"; eng = "Wind Charged"; break;
+			case "weaving": ger = "Weben"; eng = "Weaving"; break;
+			case "oozing": ger = "Schleimen"; eng = "Oozing"; break;
+			case "infested": ger = "Befallen"; eng = "infested"; break;
+			}
+			potioneffecttypelanguageKeys.put(pet.getKey().getKey().toUpperCase(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -3252,10 +3272,8 @@ public class YamlManager
 			case BAT: ger = "Fledermaus"; eng = "Bat"; break;
 			case BEE: ger = "Biene"; eng = "Bee"; break;
 			case BLAZE: ger = "Lohe"; eng = "Blaze"; break;
-			case BOAT: ger = "Boot"; eng = "Boat"; break;
 			case CAT: ger = "Katze"; eng = "Cat"; break;
 			case CAVE_SPIDER: ger = "Höhlenspinne"; eng = "Cave Spider"; break;
-			case CHEST_BOAT: ger = "Kistenboot"; eng = "Chest Boat"; break;
 			case CHICKEN: ger = "Huhn"; eng = "Chicken"; break;
 			case COD: ger = "Kabeljau"; eng = "Cod"; break;
 			case COW: ger = "Kuh"; eng = "Cow"; break;
@@ -3377,6 +3395,32 @@ public class YamlManager
 			case EYE_OF_ENDER: ger = "Auge des Enders"; eng = "Eye of Ender"; break;
 			case OMINOUS_ITEM_SPAWNER: ger = "Ominöser Itemspawner"; eng = "Ominous Itemspawner"; break;
 			case POTION: ger = "Trank"; eng = "Trank"; break;
+			//1.21.3
+			case ACACIA_BOAT: ger = "Akazienboot"; eng = "Acaciaboat"; break;
+			case ACACIA_CHEST_BOAT: ger = "Akazienkistenboot"; eng = "Acaciachestboat"; break;
+			case BIRCH_BOAT: ger = "Birkenboot"; eng = "Brichboat"; break;
+			case BIRCH_CHEST_BOAT: ger = "Birkenkistenboot"; eng = "Brichchestboat"; break;
+			case BAMBOO_RAFT: ger = "Bamboofloß"; eng = "Bambooraft"; break;
+			case BAMBOO_CHEST_RAFT: ger = "Bambookistenfloß"; eng = "Bamboochestraft"; break;
+			case CHERRY_BOAT: ger = "Kirschboot"; eng = "Cherryboat"; break;
+			case CHERRY_CHEST_BOAT: ger = "Kirschkistenboot"; eng = "Cherrychestboat"; break;
+			case DARK_OAK_BOAT: ger = "Schwarzeichenboot"; eng = "Darkoakboat"; break;
+			case DARK_OAK_CHEST_BOAT: ger = "Schwarzeichenkistenboot"; eng = "Darkoakchestboat"; break;
+			case JUNGLE_BOAT: ger = "Tropenholzboot"; eng = "Jungleboat"; break;
+			case JUNGLE_CHEST_BOAT: ger = "Tropenholzkistenboot"; eng = "Junglechestboat"; break;
+			case MANGROVE_BOAT: ger = "Mangrovenboot"; eng = "Mangroveboat"; break;
+			case MANGROVE_CHEST_BOAT: ger = "Mangrovenkistenboot"; eng = "Mangrovechestboat"; break;
+			case OAK_BOAT: ger = "Eichenboot"; eng = "Oakboat"; break;
+			case OAK_CHEST_BOAT: ger = "Eichenkistenboot"; eng = "Oakchestboat"; break;
+			case PALE_OAK_BOAT: ger = "Blasseichenboot"; eng = "Paleoakboat"; break;
+			case PALE_OAK_CHEST_BOAT: ger = "Blasseichenkistenboot"; eng = "Paleoakchestboat"; break;
+			case SPRUCE_BOAT: ger = "Kiefernboot"; eng = "Spruceboat"; break;
+			case SPRUCE_CHEST_BOAT: ger = "Kiefernkistenboot"; eng = "Sprucechestboat"; break;
+			case CREAKING: ger = "Knarzen"; eng = "Creaking"; break;
+			//case CREAKING_TRANSIENT: ger = "Knarzen"; eng = "Creaking"; break;
+			default:
+				break;
+			
 			}
 			entitytypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
@@ -3500,65 +3544,67 @@ public class YamlManager
 			String eng = "";
 			switch(i)
 			{
-			case BLACK: ger += "Schwarzer "; break;
-			case BLUE: ger += "Blauer "; break;
-			case BROWN: ger += "Brauner "; break;
-			case CYAN: ger += "Cyaner "; break;
-			case GRAY: ger += "Grauer "; break;
-			case GREEN: ger += "Grüner "; break;
-			case LIGHT_BLUE: ger += "Hellblauer "; break;
-			case LIGHT_GRAY: ger += "Hellgrauer "; break;
-			case LIME: ger += "Limoner "; break;
-			case MAGENTA: ger += "Magenta "; break;
-			case ORANGE: ger += "Oranger "; break;
-			case PINK: ger += "Pinker "; break;
-			case PURPLE: ger += "Lilaner "; break;
-			case RED: ger += "Roter "; break;
-			case WHITE: ger += "Weißer "; break;
-			case YELLOW: ger += "Gelber "; break;
+			case BLACK: ger = "Schwarzer "; break;
+			case BLUE: ger = "Blauer "; break;
+			case BROWN: ger = "Brauner "; break;
+			case CYAN: ger = "Cyaner "; break;
+			case GRAY: ger = "Grauer "; break;
+			case GREEN: ger = "Grüner "; break;
+			case LIGHT_BLUE: ger = "Hellblauer "; break;
+			case LIGHT_GRAY: ger = "Hellgrauer "; break;
+			case LIME: ger = "Limoner "; break;
+			case MAGENTA: ger = "Magenta "; break;
+			case ORANGE: ger = "Oranger "; break;
+			case PINK: ger = "Pinker "; break;
+			case PURPLE: ger = "Lilaner "; break;
+			case RED: ger = "Roter "; break;
+			case WHITE: ger = "Weißer "; break;
+			case YELLOW: ger = "Gelber "; break;
 			}
 			for(org.bukkit.DyeColor h : org.bukkit.DyeColor.values())
 			{
-				switch(i)
+				String germ = "";
+				switch(h)
 				{
-				case BLACK: ger += "Schwarz"; break;
-				case BLUE: ger += "Blau"; break;
-				case BROWN: ger += "Braun"; break;
-				case CYAN: ger += "Cyan"; break;
-				case GRAY: ger += "Grau"; break;
-				case GREEN: ger += "Grün"; break;
-				case LIGHT_BLUE: ger += "Hellblau"; break;
-				case LIGHT_GRAY: ger += "Hellgrau"; break;
-				case LIME: ger += "Limon"; break;
-				case MAGENTA: ger += "Magenta"; break;
-				case ORANGE: ger += "Orange"; break;
-				case PINK: ger += "Pink"; break;
-				case PURPLE: ger += "Lila"; break;
-				case RED: ger += "Rot"; break;
-				case WHITE: ger += "Weiß"; break;
-				case YELLOW: ger += "Gelb"; break;
+				case BLACK: germ = ger + "Schwarz"; break;
+				case BLUE: germ = ger + "Blau"; break;
+				case BROWN: germ = ger + "Braun"; break;
+				case CYAN: germ = ger + "Cyan"; break;
+				case GRAY: germ = ger + "Grau"; break;
+				case GREEN: germ = ger + "Grün"; break;
+				case LIGHT_BLUE: germ = ger + "Hellblau"; break;
+				case LIGHT_GRAY: germ = ger + "Hellgrau"; break;
+				case LIME: germ = ger + "Limon"; break;
+				case MAGENTA: germ = ger + "Magenta"; break;
+				case ORANGE: germ = ger + "Orange"; break;
+				case PINK: germ = ger + "Pink"; break;
+				case PURPLE: germ = ger + "Lila"; break;
+				case RED: germ = ger + "Rot"; break;
+				case WHITE: germ = ger + "Weiß"; break;
+				case YELLOW: germ = ger + "Gelb"; break;
 				}
 				for(org.bukkit.entity.TropicalFish.Pattern j : org.bukkit.entity.TropicalFish.Pattern.values())
 				{
+					String german = "";
 					switch(j)
 					{
-					case BETTY: ger += "trommlerfisch"; break;
-					case BLOCKFISH: ger += "blockfisch"; break;
-					case BRINELY: ger += "salzfisch"; break;
-					case CLAYFISH: ger += "lehmfisch"; break;
-					case DASHER: ger += "flitzer"; break;
-					case FLOPPER: ger += "zappler"; break;
-					case GLITTER: ger += "glitzerfisch"; break;
-					case KOB: ger += "peitschenfisch"; break;
-					case SNOOPER: ger += "schnüffler"; break;
-					case SPOTTY: ger += "fleckenlippfisch"; break;
-					case STRIPEY: ger += "streifler"; break;
-					case SUNSTREAK: ger += "sonnenstreifenfisch"; break;
+					case BETTY: german = germ + "trommlerfisch"; break;
+					case BLOCKFISH: german = germ + "blockfisch"; break;
+					case BRINELY: german = germ + "salzfisch"; break;
+					case CLAYFISH: german = germ + "lehmfisch"; break;
+					case DASHER: german = germ + "flitzer"; break;
+					case FLOPPER: german = germ + "zappler"; break;
+					case GLITTER: german = germ + "glitzerfisch"; break;
+					case KOB: german = germ + "peitschenfisch"; break;
+					case SNOOPER: german = germ + "schnüffler"; break;
+					case SPOTTY: german = germ + "fleckenlippfisch"; break;
+					case STRIPEY: german = germ + "streifler"; break;
+					case SUNSTREAK: german = germ + "sonnenstreifenfisch"; break;
 					}
 					eng = i.toString()+"_"+j.toString()+"_"+h.toString();
 					tropicalfishbucketlanguageKeys.put(i.toString()+"_"+j.toString()+"_"+h.toString(), 
 							new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
-									ger, eng}));
+									german, eng}));
 				}
 				
 			}
@@ -3567,11 +3613,12 @@ public class YamlManager
 	
 	public void initCatType() //INFO:CatType
 	{
-		for(org.bukkit.entity.Cat.Type i : org.bukkit.Registry.CAT_VARIANT.stream().collect(Collectors.toList()))
+		for(Iterator<org.bukkit.entity.Cat.Type> iter = Registry.CAT_VARIANT.iterator(); iter.hasNext();)
 		{
+			org.bukkit.entity.Cat.Type i = iter.next();
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.getKey().getKey().toUpperCase())
 			{
 			default: break;
 			case "ALL_BLACK": ger = "Ganz Schwarz"; eng = "All Black"; break;
@@ -3586,7 +3633,7 @@ public class YamlManager
 			case "TABBY": ger = "Getigert"; eng = "Tabby"; break;
 			case "WHITE": ger = "Weiß"; eng = "White"; break;
 			}
-			cattypelanguageKeys.put(i.toString(), 
+			cattypelanguageKeys.put(i.getKey().getKey().toUpperCase(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -3611,11 +3658,12 @@ public class YamlManager
 	
 	public void initMapCursorType() //INFO:MapCursorType
 	{
-		for(org.bukkit.map.MapCursor.Type i : org.bukkit.Registry.MAP_DECORATION_TYPE.stream().collect(Collectors.toList()))
+		for(Iterator<org.bukkit.map.MapCursor.Type> iter = Registry.MAP_DECORATION_TYPE.iterator(); iter.hasNext();)
 		{
+			org.bukkit.map.MapCursor.Type i = iter.next();
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.getKey().getKey().toUpperCase())
 			{
 			default:
 			case "RED_MARKER": ger = "Rote Markierung"; eng = "RED_MARKER"; break;
@@ -3654,7 +3702,7 @@ public class YamlManager
 			case "VILLAGE_SNOWY": ger = "Verscheites Dorf"; eng = "SNOWY_VILLAGE"; break;
 			case "VILLAGE_TAIGA": ger = "Taigadorf"; eng = "TAIGA_VILLAGE"; break;
 			}
-			mapcursortypelanguageKeys.put(i.toString(), 
+			mapcursortypelanguageKeys.put(i.getKey().getKey().toUpperCase(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -3684,11 +3732,12 @@ public class YamlManager
 	
 	public void initVillagerType() //INFO:VillagerType
 	{
-		for(org.bukkit.entity.Villager.Type i : org.bukkit.Registry.VILLAGER_TYPE.stream().collect(Collectors.toList()))
+		for(Iterator<org.bukkit.entity.Villager.Type> iter = Registry.VILLAGER_TYPE.iterator(); iter.hasNext();)
 		{
+			org.bukkit.entity.Villager.Type i = iter.next();
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.getKey().getKey().toUpperCase())
 			{
 			default:
 			case "DESERT": ger = "Wüste"; eng = "Desert"; break;
@@ -3699,7 +3748,7 @@ public class YamlManager
 			case "SWAMP": ger = "Sumpf"; eng = "Swamp"; break;
 			case "TAIGA": ger = "Taiga"; eng = "Taiga"; break;
 			}
-			villagertypelanguageKeys.put(i.toString(), 
+			villagertypelanguageKeys.put(i.getKey().getKey().toUpperCase(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -3707,11 +3756,12 @@ public class YamlManager
 	
 	public void initVillagerProfession() //INFO:VillagerProfession
 	{
-		for(org.bukkit.entity.Villager.Profession i : org.bukkit.Registry.VILLAGER_PROFESSION.stream().collect(Collectors.toList()))
+		for(Iterator<org.bukkit.entity.Villager.Profession> iter = Registry.VILLAGER_PROFESSION.iterator(); iter.hasNext();)
 		{
+			org.bukkit.entity.Villager.Profession i = iter.next();
 			String eng = "";
 			String ger = "";
-			switch(i.getKey().getKey())
+			switch(i.getKey().getKey().toUpperCase())
 			{
 			case "ARMORER": ger = "Rüstungsschmied"; eng = "Armorer"; break;
 			case "BUTCHER": ger = "Metzger"; eng = "Butcher"; break;
@@ -3729,7 +3779,7 @@ public class YamlManager
 			case "TOOLSMITH": ger = "Werkzeugschmied"; eng = "Toolsmith"; break;
 			case "WEAPONSMITH": ger = "Waffenschmied"; eng = "Weaponsmith"; break;
 			}
-			villagerprofessionlanguageKeys.put(i.toString(), 
+			villagerprofessionlanguageKeys.put(i.getKey().getKey().toUpperCase(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {
 							ger, eng}));
 		}
@@ -3767,6 +3817,9 @@ public class YamlManager
 			case TALL_MANGROVE: ger = "Hohe Mangrove"; eng = "TALL_MANGROVE"; break;
 			case CHERRY: ger = "Kirschbaum"; eng = "CHERRY"; break;
 			case MEGA_PINE: ger = "Mega Kiefer"; eng = "Mega Pine"; break;
+			//1.21.3
+			case PALE_OAK: ger = "Blass Eiche"; eng = "Pale Oak"; break;
+			case PALE_OAK_CREAKING: ger = "Blass Eiche Knarzen"; eng = "Pale Oak Creaking"; break;
 			}
 			treetypelanguageKeys.put(i.toString(), 
 					new Language(new ISO639_2B[] {ISO639_2B.GER, ISO639_2B.ENG}, new Object[] {

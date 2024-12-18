@@ -13,7 +13,6 @@ import main.java.me.avankziar.roota.general.database.YamlManager;
 import main.java.me.avankziar.roota.spigot.database.MysqlHandler;
 import main.java.me.avankziar.roota.spigot.database.MysqlSetup;
 import main.java.me.avankziar.roota.spigot.ifh.AdministrationProvider;
-import main.java.me.avankziar.roota.spigot.ifh.EnumTranslationProvider;
 import main.java.me.avankziar.roota.spigot.ifh.InteractionBlockerProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ItemStackComparisonProvider;
 import main.java.me.avankziar.roota.spigot.ifh.ProxyOnlinePlayersProvider;
@@ -53,9 +52,8 @@ public class RootA extends JavaPlugin
 		setupIFHAdministration();
 		String path = plugin.getYamlHandler().getConfig().getString("IFHAdministrationPath");
 		boolean adm = plugin.getAdministration() != null 
-				&& plugin.getYamlHandler().getConfig().getBoolean("useIFHAdministration")
 				&& plugin.getAdministration().isMysqlPathActive(path);
-		if(adm || yamlHandler.getConfig().getBoolean("Mysql.Status", false) == true)
+		if(adm || yamlHandler.getConfig().getBoolean("Mysql.default.Status", false) == true)
 		{
 			mysqlSetup = new MysqlSetup(plugin, adm, path);
 			mysqlHandler = new MysqlHandler(plugin);

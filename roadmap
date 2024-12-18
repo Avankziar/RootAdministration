@@ -1,5 +1,11 @@
 Future Build
 
+Build 1-7-0
+- Spigot 1.21.4 Support
+- Api muss nun 1.21.3 oder höher sein.
+- Added Entitys
+- Added Treetyps
+
 Build 1-6-0
 - Spigot 1.21 support
 - Java 21 Dependency
