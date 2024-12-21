@@ -5,6 +5,7 @@ Build 1-7-0
 - Api muss nun 1.21.3 oder höher sein.
 - Added Entitys
 - Added Treetyps
+- EnumTranslation wurde im Spigot Code wieder angeschaltet, da die vorliegenden Probleme diesbezüglich behoben worden sind.
 
 Build 1-6-0
 - Spigot 1.21 support
