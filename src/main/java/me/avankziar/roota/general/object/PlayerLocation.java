@@ -69,8 +69,8 @@ public class PlayerLocation implements MysqlHandable
 					+ "`(`player_uuid`, `player_name`, `server_name`) " 
 					+ "VALUES(?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
-	        ps.setString(1, getPlayerName());
-	        ps.setString(2, getPlayerUUID().toString());
+	        ps.setString(1, getPlayerUUID().toString());
+	        ps.setString(2, getPlayerName());
 	        ps.setString(3, getServer());
 	        int i = ps.executeUpdate();
 	        MysqlBaseHandler.addRows(QueryType.INSERT, i);
@@ -91,8 +91,8 @@ public class PlayerLocation implements MysqlHandable
 				+ "` SET `player_uuid` = ?, `player_name` = ?, `server_name` = ?"
 				+ " WHERE "+whereColumn;
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, getPlayerName());
-	        ps.setString(2, getPlayerUUID().toString());
+			ps.setString(1, getPlayerUUID().toString());
+	        ps.setString(2, getPlayerName());
 	        ps.setString(3, getServer());
 			int i = 4;
 			for(Object o : whereObject)

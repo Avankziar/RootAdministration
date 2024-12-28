@@ -11,7 +11,7 @@ public enum MysqlType
 {
 	PLAYERLOCATION("rootaPlayerLocation", new PlayerLocation(), ServerType.ALL,
 			"CREATE TABLE IF NOT EXISTS `%%tablename%%"
-			+ "` (id int AUTO_INCREMENT PRIMARY KEY,"
+			+ "` (id bigint AUTO_INCREMENT PRIMARY KEY,"
 			+ " player_uuid char(36) NOT NULL UNIQUE,"
 			+ " player_name varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,"
 			+ " server_name text);");

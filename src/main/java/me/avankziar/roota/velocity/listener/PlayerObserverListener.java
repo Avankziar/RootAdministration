@@ -4,9 +4,7 @@ import java.util.UUID;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
-import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
-import com.velocitypowered.api.proxy.Player;
 
 import main.java.me.avankziar.roota.general.database.MysqlType;
 import main.java.me.avankziar.roota.general.object.PlayerLocation;
@@ -19,18 +17,6 @@ public class PlayerObserverListener
 	public PlayerObserverListener(RootA plugin)
 	{
 		this.plugin = plugin;
-	}
-	
-	@Subscribe
-	public void onPlayerJoin(PlayerChooseInitialServerEvent event)
-	{
-		if(plugin.getMysqlHandler() == null)
-		{
-			return;
-		}
-		Player pp = event.getPlayer();
-		pp.getCurrentServer().ifPresent(y -> plugin.getMysqlHandler().create(MysqlType.PLAYERLOCATION, new PlayerLocation(pp.getUsername(), pp.getUniqueId(),
-				y.getServerInfo().getName())));
 	}
 	
 	@Subscribe
@@ -47,7 +33,7 @@ public class PlayerObserverListener
 	@Subscribe
 	public void onPlayerSwitch(ServerConnectedEvent event)
 	{
-		if(plugin.getMysqlHandler() == null || event.getPreviousServer().isEmpty())
+		if(plugin.getMysqlHandler() == null )
 		{
 			return;
 		}
@@ -55,6 +41,8 @@ public class PlayerObserverListener
 				event.getPlayer().getUniqueId().toString());
 		if(pl == null)
 		{
+			plugin.getMysqlHandler().create(MysqlType.PLAYERLOCATION, new PlayerLocation(event.getPlayer().getUsername(), event.getPlayer().getUniqueId(),
+					event.getServer().getServerInfo().getName()));
 			return;
 		}
 		pl.setServer(event.getServer().getServerInfo().getName());

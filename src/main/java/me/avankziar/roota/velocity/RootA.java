@@ -144,7 +144,7 @@ public class RootA
     private void setListeners()
     {
     	EventManager em = server.getEventManager();
-    	em.register(this, new PlayerObserverListener(plugin));
+    	em.register(plugin, new PlayerObserverListener(plugin));
     }
     
     private void setupIFHProvider()

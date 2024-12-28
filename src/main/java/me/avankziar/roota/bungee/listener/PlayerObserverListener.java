@@ -54,6 +54,8 @@ public class PlayerObserverListener implements Listener
 		PlayerLocation pl = (PlayerLocation) plugin.getMysqlHandler().getData(MysqlType.PLAYERLOCATION, "player_uuid = ?", event.getPlayer().getUniqueId().toString());
 		if(pl == null)
 		{
+			ProxiedPlayer pp = event.getPlayer();
+			plugin.getMysqlHandler().create(MysqlType.PLAYERLOCATION, new PlayerLocation(pp.getName(), pp.getUniqueId(), pp.getServer().getInfo().getName()));
 			return;
 		}
 		pl.setServer(event.getFrom().getName());
