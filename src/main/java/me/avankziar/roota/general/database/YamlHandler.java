@@ -228,7 +228,7 @@ public class YamlHandler
 		{
 			directory.mkdir();
 		}
-		String f = languageString+"_material.yml";
+		String f = languageString+"_material";
 		try
 		{
 			matlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
@@ -258,105 +258,105 @@ public class YamlHandler
 			{
 				return false;
 			}
-			f = languageString+"_potiontype.yml";
+			f = languageString+"_potiontype";
 			potiontypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, potiontypelang, yamlManager.getPotionTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_potioneffecttype.yml";
+			f = languageString+"_potioneffecttype";
 			potioneffecttypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, potioneffecttypelang, yamlManager.getPotionEffectTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_entitytype.yml";
+			f = languageString+"_entitytype";
 			entitytypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, entitytypelang, yamlManager.getEntityTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_axolotlvariant.yml";
+			f = languageString+"_axolotlvariant";
 			axolotlvariantlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, axolotlvariantlang, yamlManager.getAxolotlVariantLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_bookmetageneration.yml";
+			f = languageString+"_bookmetageneration";
 			bookmetagenerationlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, bookmetagenerationlang, yamlManager.getBookMetaGenerationLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_color.yml";
+			f = languageString+"_color";
 			colorlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, colorlang, yamlManager.getColorLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_dyecolor.yml";
+			f = languageString+"_dyecolor";
 			dyecolorlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, dyecolorlang, yamlManager.getDyeColorLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_tropicalfishbucket.yml";
+			f = languageString+"_tropicalfishbucket";
 			tropicalfishbucketlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, tropicalfishbucketlang, yamlManager.getTropicalFishBucketLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_cattype.yml";
+			f = languageString+"_cattype";
 			cattypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, cattypelang, yamlManager.getCatTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_foxtype.yml";
+			f = languageString+"_foxtype";
 			foxtypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, foxtypelang, yamlManager.getFoxTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_mapcursortype.yml";
+			f = languageString+"_mapcursortype";
 			mapcursortypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, mapcursortypelang, yamlManager.getMapCursorTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_rabbittype.yml";
+			f = languageString+"_rabbittype";
 			rabbittypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, rabbittypelang, yamlManager.getRabbitTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_villagertype.yml";
+			f = languageString+"_villagertype";
 			villagertypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, villagertypelang, yamlManager.getVillagerTypeLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_villagerprofession.yml";
+			f = languageString+"_villagerprofession";
 			villagerprofessionlang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, villagerprofessionlang, yamlManager.getVillagerProfessionLanguageKey()))
 			{
 				return false;
 			}
-			f = languageString+"_treetype.yml";
+			f = languageString+"_treetype";
 			treetypelang = YamlDocument.create(new File(directory,"%f%.yml".replace("%f%", f)),
 					getClass().getResourceAsStream("/default.yml"),gsd,lsd,dsd,usd);
 			if(!setupStaticFile(f, treetypelang, yamlManager.getTreeTypeLanguageKey()))

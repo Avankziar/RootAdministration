@@ -1,4 +1,6 @@
 Future Build
+1-7-2
+- Doppelter Dateinamenendung bei allen Language-Dateien fix.
 
 1-7-1
 - Logik um Interface ProxyOnlinePlayer fix
